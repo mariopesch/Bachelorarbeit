@@ -55,5 +55,4 @@ Blockly.Blocks['vector_sum_block'] = {
     this.setHelpUrl("");
   }
 };
-
-
+//test
