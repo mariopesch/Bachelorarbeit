@@ -5,19 +5,19 @@ import 'blockly/javascript';
 Blockly.Blocks['string_input'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField(new Blockly.FieldTextInput("enter text"), "String");
+        .appendField("text input")
+        .appendField(new Blockly.FieldTextInput(""), "String");
     this.setOutput(true, "String");
     this.setColour(160);
-    this.setTooltip("");
-    this.setHelpUrl("");
-    this.setInputsInline(true);
+ this.setTooltip("");
+ this.setHelpUrl("");
   }
 };
 
 // Define the block to get the length of a string
 Blockly.Blocks['string_length'] = {
   init: function() {
-    this.appendValueInput("STRING")
+    this.appendValueInput("String")
         .setCheck("String")
         .appendField("length of");
     this.setOutput(true, "Number");
@@ -31,11 +31,10 @@ Blockly.Blocks['string_length'] = {
 Blockly.Blocks['vector_input_block'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Vector")
-        .appendField(new Blockly.FieldTextInput("1, 2, 3"), "VECTOR");
-    this.setOutput(true, "Array");
-    this.setInputsInline(true);
-    this.setColour(160);
+        .appendField("vector input")
+        .appendField(new Blockly.FieldTextInput(""), "vector");
+    this.setOutput(true, "vector");
+    this.setColour(230);
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -43,16 +42,14 @@ Blockly.Blocks['vector_input_block'] = {
 
 Blockly.Blocks['vector_sum_block'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("sum of");
-    this.appendValueInput("vector")
-        .setCheck("Array")
-        .appendField("vector");
-    this.setInputsInline(true);
+    this.appendValueInput("list")
+        .setCheck("vector")
+        .appendField("sum of vector");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour(230);
     this.setTooltip("");
     this.setHelpUrl("");
   }
 };
-//test
+
+
