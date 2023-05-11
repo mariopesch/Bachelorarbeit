@@ -1,7 +1,7 @@
 import '../blocks/R';
 import Blockly from 'blockly';
 import 'blockly/javascript';
-//import '../RScripts/script';
+//import '../RScripts/script'
 
 
 export const RGenerator = new Blockly.Generator('R');
