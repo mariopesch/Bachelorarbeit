@@ -32,7 +32,6 @@ import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
 import './blocks/R';
 import './blocks/customblocks';
 import './generator/R';
-//import './generator/generator';
 
 
 function App(props) {
@@ -55,8 +54,6 @@ function App(props) {
       `}>
             <Block type="string_length" />
             <Block type="string_input" />
-            <Block type="vector_sum_block" />
-            <Block type="vector_input_block" />
             <Block type="test_react_field" />
             <Block type="test_react_date_field" />
             <Block type="controls_ifelse" />

@@ -28,28 +28,5 @@ Blockly.Blocks['string_length'] = {
   }
 };
 
-Blockly.Blocks['vector_input_block'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("vector input")
-        .appendField(new Blockly.FieldTextInput(""), "vector");
-    this.setOutput(true, "vector");
-    this.setColour(230);
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['vector_sum_block'] = {
-  init: function() {
-    this.appendValueInput("list")
-        .setCheck("vector")
-        .appendField("sum of vector");
-    this.setOutput(true, "Number");
-    this.setColour(230);
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
 
 

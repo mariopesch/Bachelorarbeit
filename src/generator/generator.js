@@ -23,42 +23,17 @@
 
 // More on generating code:
 // https://developers.google.com/blockly/guides/create-custom-blocks/generating-code
+import Blockly from 'blockly';
+import '../blocks/customblocks';
+import {javascriptGenerator} from 'blockly/javascript';
 
-//import {javascriptGenerator} from 'blockly/javascript';
+javascriptGenerator['test_react_field'] = function (block) {
+     return 'console.log(\'custom block\');\n';
+};
 
-// javascriptGenerator['test_react_field'] = function (block) {
-//     return 'console.log(\'custom block\');\n';
-// };
+javascriptGenerator['test_react_date_field'] = function (block) {
+     return 'console.log(' + block.getField('DATE').getText() + ');\n';
+};
 
-// javascriptGenerator['test_react_date_field'] = function (block) {
-//     return 'console.log(' + block.getField('DATE').getText() + ');\n';
-// };
-// import Blockly from 'blockly';
-import {RGenerator} from './R';
 
-// Generate the code for the string input block
-RGenerator['string_input'] = function(block) {
-    var text_text = block.getFieldValue('STRING');
-    var code = '"' + text_text + '"';
-    return [code, RGenerator.ORDER_ATOMIC];
-  };
-  
-  // Generate the code for the string length block
-  RGenerator['string_length'] = function(block) {
-    var value_string = RGenerator.valueToCode(block, 'STRING', RGenerator.ORDER_ATOMIC);
-    var code = 'nchar(' + value_string + ')';
-    return [code, RGenerator.ORDER_ATOMIC];
-  };
-  
-  
-  RGenerator['vector_input_block'] = function(block) {
-    var vector = RGenerator.quote_(block.getFieldValue('VECTOR'));
-    var code = vector;
-    return [code, RGenerator.ORDER_ATOMIC];
-  };
-  
-  RGenerator['vector_sum_block'] = function(block) {
-    var value_vector = RGenerator.valueToCode(block, 'VECTOR', RGenerator.ORDER_ATOMIC);
-    var code = ('sum(', value_vector, ')');
-    return [code, RGenerator.ORDER_ATOMIC];
-  }; 
+

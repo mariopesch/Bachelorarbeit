@@ -1,7 +1,7 @@
 import '../blocks/R';
 import Blockly from 'blockly';
 import 'blockly/javascript';
-//import '../RScripts/script'
+import "/Users/maikeschroder/Documents/Geoinformatik/blocklyreact/blocklyreact/blockly-react/src/RScripts/script.Rmd";
 
 
 export const RGenerator = new Blockly.Generator('R');
@@ -38,30 +38,15 @@ RGenerator.scrub_ = function(block, code, thisOnly) {
 
 // Generate the code for the string input block
 RGenerator['string_input'] = function(block) {
-  var code = block.getFieldValue('String');
-  return [code, RGenerator.ORDER_ATOMIC];
+  var string = block.getFieldValue('String');
+  return [string, RGenerator.ORDER_ATOMIC];
 };
 
 // Generate the code for the string length block
 RGenerator['string_length'] = function(block) {
-  var value_string = RGenerator.valueToCode(block, 'String', RGenerator.ORDER_ATOMIC);
-  var code = 'nchar(' + value_string + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-
-
-
-RGenerator['vector_input_block'] = function(block) {
-  var text_vector = block.getFieldValue('vector');
-  var numeric_vector = text_vector.split(",").map(Number);
-  var code = numeric_vector;
-  return [code, RGenerator.ORDER_NONE];
-};
-
-RGenerator['vector_sum_block'] = function(block) {
-  var value_list = RGenerator.valueToCode(block, 'list', RGenerator.ORDER_ATOMIC);
-  var code = 'sum(' + value_list + ')';
-  return [code, RGenerator.ORDER_NONE];
+  var str = RGenerator.valueToCode(block, 'String', RGenerator.ORDER_ATOMIC);
+  var code = str.length;
+ return [code, RGenerator.ORDER_ATOMIC];
 };
 
  
