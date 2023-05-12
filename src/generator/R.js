@@ -8,6 +8,7 @@ export const RGenerator = new Blockly.Generator('R');
 
 RGenerator.ORDER_ATOMIC = 0;
 RGenerator.ORDER_UNARY_POSTFIX = 1; // expr++ expr-- () [] .
+RGenerator.ORDER_MEMBER = 1.2;         // . []
 RGenerator.ORDER_UNARY_PREFIX = 2; // -expr !expr ~expr ++expr --expr
 RGenerator.ORDER_MULTIPLICATIVE = 3; // * / % ~/
 RGenerator.ORDER_ADDITIVE = 4; // + -
@@ -42,15 +43,21 @@ RGenerator['string_input'] = function(block) {
   return [string, RGenerator.ORDER_ATOMIC];
 };
 
-// Generate the code for the string length block
-RGenerator['string_length'] = function(block) {
-  var str = RGenerator.valueToCode(block, 'String', RGenerator.ORDER_ATOMIC);
-  var code = str.length;
- return [code, RGenerator.ORDER_ATOMIC];
-};
+
+// Generate the code for the string length block with JS .length function
+// RGenerator['string_length'] = function(block) {
+//   var str = RGenerator.valueToCode(block, 'String', RGenerator.ORDER_ATOMIC);
+//   var code = str.length;
+//  return [code, RGenerator.ORDER_ATOMIC];
+// };
 
  
-
+RGenerator['string_length'] = function(block) {
+  // String or array length.
+  var text = RGenerator.valueToCode(block, 'String',
+  RGenerator.ORDER_MEMBER) || '\'\'';
+  return ['nchar(' + text + ')', RGenerator.ORDER_MEMBER];
+};
 
 
 
