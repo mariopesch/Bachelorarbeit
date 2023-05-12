@@ -46,10 +46,10 @@
     }
 
     const generateRCode = () => {
-        var code = RGenerator.workspaceToCode(
+        var Rcode = RGenerator.workspaceToCode(
           primaryWorkspace.current
         );
-        console.log(code);
+        console.log(Rcode);
     }
 
     useEffect(() => {
