@@ -24,7 +24,6 @@
 //import * as Blockly from 'blockly';
 import React from 'react';
 import './App.css';
-
 import logo from './logo.svg';
 
 import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
@@ -32,9 +31,10 @@ import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
 import './blocks/R';
 import './blocks/customblocks';
 import './generator/R';
-
+import RCodeSnippet from './RCodeSnippet';
 
 function App(props) {
+  //const defaultCode = 'print("Hello, world!")';
     return (
       <div className="App">
         <header className="App-header">
@@ -47,6 +47,7 @@ function App(props) {
             drag: true,
             wheel: false
           }}
+          
           initialXml={`
 <xml xmlns="http://www.w3.org/1999/xhtml">
 <block type="controls_ifelse" x="0" y="0"></block>
@@ -79,10 +80,13 @@ function App(props) {
               </Value>
             </Block>
           </BlocklyComponent>
+      <div className="body-container">
+        <RCodeSnippet/>
+      </div>
         </header>
       </div>
     );
-
+    
 }
 
 export default App;

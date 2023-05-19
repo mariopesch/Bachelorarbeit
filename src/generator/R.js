@@ -1,7 +1,7 @@
 import '../blocks/R';
 import Blockly from 'blockly';
 import 'blockly/javascript';
-import "/Users/maikeschroder/Documents/Geoinformatik/blocklyreact/blocklyreact/blockly-react/src/RScripts/script.Rmd";
+//import "/Users/maikeschroder/Documents/Geoinformatik/blocklyreact/blocklyreact/blockly-react/src/RScripts/script.Rmd";
 
 
 export const RGenerator = new Blockly.Generator('R');
