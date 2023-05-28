@@ -21,7 +21,7 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
- import React from 'react';
+import React, { useState } from 'react';
  import './BlocklyComponent.css';
  import {useEffect, useRef} from 'react';
 
@@ -30,10 +30,12 @@
  import 'blockly/blocks';
  import {javascriptGenerator} from 'blockly/javascript';
  import {RGenerator} from '../generator/R';
+ import RCodeSnippet from '../RCodeSnippet';
 
  Blockly.setLocale(locale);
 
  function BlocklyComponent(props) {
+    const [rcode, setRCode] = useState('');
     const blocklyDiv = useRef();
     const toolbox = useRef();
     let primaryWorkspace = useRef();
@@ -46,10 +48,13 @@
     }
 
     const generateRCode = () => {
-        var Rcode = RGenerator.workspaceToCode(
+        var rcode = RGenerator.workspaceToCode(
           primaryWorkspace.current
         );
-        console.log(Rcode);
+        console.log(rcode);
+        setRCode(rcode);
+        return rcode;
+        
     }
 
     useEffect(() => {
@@ -71,6 +76,7 @@
     <React.Fragment>
         <button onClick={generateCode}>Convert</button>
         <button onClick={generateRCode}>Convert R</button>
+        <RCodeSnippet  rcode={rcode}/>
         <div ref={blocklyDiv} id="blocklyDiv" />
         <div style={{ display: 'none' }} ref={toolbox}>
             {props.children}

@@ -22,25 +22,33 @@
  */
 
 //import * as Blockly from 'blockly';
-import React from 'react';
+import React, { useState } from 'react';
+//import React from 'react';
 import './App.css';
 import logo from './logo.svg';
 
 import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
 
+
 import './blocks/R';
 import './blocks/customblocks';
 import './generator/R';
-import RCodeSnippet from './RCodeSnippet';
+
 
 function App(props) {
-  //const defaultCode = 'print("Hello, world!")';
+  const [rcode, setRCode] = useState('');
+  const handleRCodeUpdate = (code) => {
+    setRCode(code);
+    console.log(code)
+  };
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>Erste Schritte in Blockly</h1>
-          <BlocklyComponent readOnly={false}
+          <BlocklyComponent onUpdate={handleRCodeUpdate}
+          readOnly={false}
+          rcode={rcode}
           trashcan={true} media={'media/'} stackSize={Infinity}
           move={{
             scrollbars: true,
@@ -80,9 +88,6 @@ function App(props) {
               </Value>
             </Block>
           </BlocklyComponent>
-      <div className="body-container">
-        <RCodeSnippet/>
-      </div>
         </header>
       </div>
     );

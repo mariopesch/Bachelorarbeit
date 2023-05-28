@@ -1,6 +1,8 @@
 import React from 'react';
 
-const RCodeSnippet = () => {
+
+const RCodeSnippet = ({ rcode }) => {
+
   return (
     <div>
       <h3>R Code Snippet:</h3>
@@ -17,12 +19,15 @@ const RCodeSnippet = () => {
             width: '100%',
             height: '100%',
           }}
-          src="https://rdrr.io/snippets/embed/?code=print(%22Hello%2C%20world!%22)"
+          src={`https://rdrr.io/snippets/embed/?code=${encodeURIComponent(
+          rcode
+        )}`}
           frameBorder="0"
         ></iframe>
       </div>
     </div>
   );
+  
 };
 
 export default RCodeSnippet;

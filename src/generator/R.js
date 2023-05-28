@@ -56,7 +56,9 @@ RGenerator['string_length'] = function(block) {
   // String or array length.
   var text = RGenerator.valueToCode(block, 'String',
   RGenerator.ORDER_MEMBER) || '\'\'';
-  return ['nchar(' + text + ')', RGenerator.ORDER_MEMBER];
+  var result = 'nchar(' + "'" + text + "'" + ')';
+  //return ['nchar(' + text + ')', RGenerator.ORDER_MEMBER];
+  return result;
 };
 
 
