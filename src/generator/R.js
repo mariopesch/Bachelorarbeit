@@ -43,14 +43,6 @@ RGenerator['string_input'] = function(block) {
   return [string, RGenerator.ORDER_ATOMIC];
 };
 
-
-// Generate the code for the string length block with JS .length function
-// RGenerator['string_length'] = function(block) {
-//   var str = RGenerator.valueToCode(block, 'String', RGenerator.ORDER_ATOMIC);
-//   var code = str.length;
-//  return [code, RGenerator.ORDER_ATOMIC];
-// };
-
  
 RGenerator['string_length'] = function(block) {
   // String or array length.

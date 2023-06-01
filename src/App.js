@@ -33,7 +33,8 @@ import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
 import './blocks/R';
 import './blocks/customblocks';
 import './generator/R';
-
+import MapComponent from './MapComponent';
+import Navbar from './navbar';
 
 function App(props) {
   const [rcode, setRCode] = useState('');
@@ -44,8 +45,9 @@ function App(props) {
     return (
       <div className="App">
         <header className="App-header">
+        <h1>Blockly4R Tool</h1>
           <img src={logo} className="App-logo" alt="logo" />
-          <h1>Erste Schritte in Blockly</h1>
+          
           <BlocklyComponent onUpdate={handleRCodeUpdate}
           readOnly={false}
           rcode={rcode}
@@ -88,7 +90,8 @@ function App(props) {
               </Value>
             </Block>
           </BlocklyComponent>
-        </header>
+          <Navbar/>
+          </header>
       </div>
     );
     

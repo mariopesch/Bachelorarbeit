@@ -6,11 +6,13 @@
     "@blockly/field-date": "^6.0.0",
     "axios": "^1.4.0",
     "blockly": "^9.0.0",
+    "leaflet": "^1.9.4",
     "react": "^17.0.1",
     "react-datepicker": "^3.3.0",
     "react-dom": "^17.0.1",
     "react-frame-component": "^5.2.6",
     "react-iframe": "^1.8.5",
+    "react-leaflet": "^4.2.1",
     "react-scripts": "^5.0.1",
     "react-syntax-highlighter": "^15.5.0"
   },
