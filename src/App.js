@@ -22,7 +22,7 @@
  */
 
 //import * as Blockly from 'blockly';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //import React from 'react';
 import './App.css';
 import logo from './logo.svg';
@@ -35,6 +35,8 @@ import './blocks/customblocks';
 import './generator/R';
 import MapComponent from './MapComponent';
 import Navbar from './navbar';
+import APIComponent from './APIComponent';
+
 
 function App(props) {
   const [rcode, setRCode] = useState('');
@@ -42,13 +44,23 @@ function App(props) {
     setRCode(code);
     console.log(code)
   };
+
+  const [fetchedData, setFetchedData] = useState(null);
+
+  // Callback function to receive the fetched data from DataFetcherComponent
+  const handleDataFetch = (data) => {
+    setFetchedData(data);
+  };
+
+
     return (
       <div className="App">
         <header className="App-header">
         <h1>Blockly4R Tool</h1>
           <img src={logo} className="App-logo" alt="logo" />
-          
+          <APIComponent onDataFetch={handleDataFetch} />
           <BlocklyComponent onUpdate={handleRCodeUpdate}
+          data={fetchedData}
           readOnly={false}
           rcode={rcode}
           trashcan={true} media={'media/'} stackSize={Infinity}
@@ -65,6 +77,7 @@ function App(props) {
       `}>
             <Block type="string_length" />
             <Block type="string_input" />
+            <Block type="scatter_plot" />
             <Block type="test_react_field" />
             <Block type="test_react_date_field" />
             <Block type="controls_ifelse" />
@@ -91,6 +104,7 @@ function App(props) {
             </Block>
           </BlocklyComponent>
           <Navbar/>
+
           </header>
       </div>
     );

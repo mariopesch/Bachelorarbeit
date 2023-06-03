@@ -53,6 +53,18 @@ RGenerator['string_length'] = function(block) {
   return result;
 };
 
+// Generate R code for the scatter plot block
+RGenerator['scatter_plot'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'Data', RGenerator.ORDER_ATOMIC);
+
+  var code = 'library(ggplot2)\n';
+  code += 'data <- ' + data + '\n';
+  code += 'ggplot(data, aes(x = timestamp, y = temperature)) + geom_point()\n';
+
+  return code;
+};
+
+
 
 
  

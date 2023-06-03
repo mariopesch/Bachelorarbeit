@@ -40,6 +40,21 @@ Blockly.Blocks['mapBlock'] = {
   }
 };
 
+// Define the block to create a scatter plot from temperature measurements
+Blockly.Blocks['scatter_plot'] = {
+  init: function() {
+    this.appendValueInput("Data")
+        .setCheck("Array")
+        .appendField("scatter plot");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.setTooltip("");
+    this.setHelpUrl("");
+    this.setInputsInline(true);
+  }
+};
+
 
 
 

@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import L from 'leaflet';
+import React from 'react';
+import { MapContainer, TileLayer } from 'react-leaflet';
 
 const MapComponent = () => {
-  useEffect(() => {
-    // Initialize the map
-    const map = L.map('map').setView([51.505, -0.09], 13);
-
-    // Add the tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data © OpenStreetMap contributors',
-    }).addTo(map);
-  }, []);
-
-  return <div id="map" style={{ width: '100%', height: '400px' }}></div>;
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+      <MapContainer
+        center={[51.505, -0.09]}
+        zoom={13}
+        style={{ height: '100%', width: '100%' }}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      </MapContainer>
+    </div>
+  );
 };
 
 export default MapComponent;
