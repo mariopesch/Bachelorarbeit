@@ -1,7 +1,8 @@
 import '../blocks/R';
 import Blockly from 'blockly';
 import 'blockly/javascript';
-//import "/Users/maikeschroder/Documents/Geoinformatik/blocklyreact/blocklyreact/blockly-react/src/RScripts/script.Rmd";
+import { getSenseBoxData } from '../senseBoxData';
+
 
 
 export const RGenerator = new Blockly.Generator('R');
@@ -63,6 +64,41 @@ RGenerator['scatter_plot'] = function(block) {
 
   return code;
 };
+
+RGenerator['temp'] = function(block) {
+  const boxId = RGenerator.valueToCode(block, 'BOX_ID', RGenerator.ORDER_ATOMIC) || '""';
+  const code = `
+get_temperature <- function(boxId) {
+  url <- paste0("https://api.opensensemap.org/boxes/", boxId)
+  response <- httr::GET(url)
+  if (httr::status_code(response) == 200) {
+    data <- httr::content(response, as = "parsed")
+    temperature <- NULL
+    for (sensor in data$sensors) {
+      if (sensor$title == "Temperatur") {
+        temperature <- sensor$value
+        break
+      }
+    }
+    return(temperature)
+  } else {
+    return(NULL)
+  }
+}
+
+temperature <- get_temperature("${boxId}")
+`;
+  return code;
+};
+
+
+
+RGenerator['box_id'] = function(block) {
+  const boxId = block.getFieldValue('String');
+  return [boxId, RGenerator.ORDER_ATOMIC];
+};
+
+
 
 
 

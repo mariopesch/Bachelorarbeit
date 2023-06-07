@@ -44,7 +44,6 @@ function App(props) {
     setRCode(code);
     console.log(code)
   };
-
   const [fetchedData, setFetchedData] = useState(null);
 
   // Callback function to receive the fetched data from DataFetcherComponent
@@ -77,6 +76,8 @@ function App(props) {
       `}>
             <Block type="string_length" />
             <Block type="string_input" />
+            <Block type="temp"/>
+            <Block type="box_id"/>
             <Block type="scatter_plot" />
             <Block type="test_react_field" />
             <Block type="test_react_date_field" />

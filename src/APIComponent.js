@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import BlocklyComponent from './Blockly/BlocklyComponent';
 
 function APIComponent() {
   const [data, setData] = useState(null);
@@ -10,7 +9,7 @@ function APIComponent() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e?format=json');
+      const response = await fetch('https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e');
       const jsonData = await response.json();
       console.log(jsonData);
       setData(jsonData);
@@ -21,7 +20,7 @@ function APIComponent() {
 
   return (
     <div>
-     <h4>API</h4>
+     <p>Beispiel Box ID: 615f2969c031ff001b118a3e</p>
     </div>
   );
 }
