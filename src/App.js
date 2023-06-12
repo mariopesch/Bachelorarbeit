@@ -33,9 +33,9 @@ import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
 import './blocks/R';
 import './blocks/customblocks';
 import './generator/R';
-import MapComponent from './MapComponent';
 import Navbar from './navbar';
 import APIComponent from './APIComponent';
+import DataContext from './DataContext';
 
 
 function App(props) {
@@ -57,6 +57,7 @@ function App(props) {
         <header className="App-header">
         <h1>Blockly4R Tool</h1>
           <img src={logo} className="App-logo" alt="logo" />
+          <DataContext.Provider value={fetchedData}>
           <APIComponent onDataFetch={handleDataFetch} />
           <BlocklyComponent onUpdate={handleRCodeUpdate}
           data={fetchedData}
@@ -77,6 +78,7 @@ function App(props) {
             <Block type="string_length" />
             <Block type="string_input" />
             <Block type="temp"/>
+            <Block type="get_temperature"/>
             <Block type="box_id"/>
             <Block type="scatter_plot" />
             <Block type="test_react_field" />
@@ -104,6 +106,7 @@ function App(props) {
               </Value>
             </Block>
           </BlocklyComponent>
+          </DataContext.Provider>
           <Navbar/>
 
           </header>

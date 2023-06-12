@@ -1,8 +1,6 @@
 import '../blocks/R';
 import Blockly from 'blockly';
 import 'blockly/javascript';
-import { getSenseBoxData } from '../senseBoxData';
-
 
 
 export const RGenerator = new Blockly.Generator('R');
@@ -66,37 +64,36 @@ RGenerator['scatter_plot'] = function(block) {
 };
 
 RGenerator['temp'] = function(block) {
-  const boxId = RGenerator.valueToCode(block, 'BOX_ID', RGenerator.ORDER_ATOMIC) || '""';
-  const code = `
-get_temperature <- function(boxId) {
-  url <- paste0("https://api.opensensemap.org/boxes/", boxId)
-  response <- httr::GET(url)
-  if (httr::status_code(response) == 200) {
-    data <- httr::content(response, as = "parsed")
-    temperature <- NULL
-    for (sensor in data$sensors) {
-      if (sensor$title == "Temperatur") {
-        temperature <- sensor$value
-        break
-      }
-    }
-    return(temperature)
-  } else {
-    return(NULL)
-  }
-}
+  const boxId = RGenerator.valueToCode(
+    block,
+    'BOX_ID',
+    RGenerator.ORDER_ATOMIC
+  );
 
-temperature <- get_temperature("${boxId}")
-`;
-  return code;
+  const code = `${boxId}$data$sensors$0$lastMeasurement$temperature`;
+
+  return [code, RGenerator.ORDER_ATOMIC];
 };
-
-
 
 RGenerator['box_id'] = function(block) {
   const boxId = block.getFieldValue('String');
   return [boxId, RGenerator.ORDER_ATOMIC];
 };
+
+RGenerator['extract_temperature'] = function (block) {
+  const code = `
+    temperature <- ${JSON.stringify(block.boxData)}$temperature
+    temperature`;
+  
+  return code;
+};
+
+RGenerator['get_temperature'] = function(block) {
+  const code = "boxData <- jsonlite::fromJSON(boxData)\n" +
+    "boxData[['properties']][['sensors']][[1]][['lastMeasurement']][['value']]";
+  return code;
+};
+
 
 
 
