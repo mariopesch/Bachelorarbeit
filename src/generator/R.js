@@ -89,11 +89,26 @@ RGenerator['extract_temperature'] = function (block) {
 };
 
 RGenerator['get_temperature'] = function(block) {
-  const code = "boxData <- jsonlite::fromJSON(boxData)\n" +
-    "boxData[['properties']][['sensors']][[1]][['lastMeasurement']][['value']]";
-  return code;
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchData <- function() {\n` +
+  `  boxData <- GET("https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e?format=geojson")\n`+
+  //`  boxTemp <- boxData$properties$sensors[[1]]$lastMeasurement$value\n` +
+  //`  print(boxTemp)\n` +
+  `}\n\n` +
+  `fetchData()\n`;
+
+return [code, RGenerator.ORDER_NONE];
 };
 
+// R code from R Studio:
+// library(httr)
+// library(jsonlite)
+// url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"
+// req <- fromJSON(paste0(url))
+// Richtige Ausgabe: JSON object mit 12 Einträgen
+// req$sensors$lastMeasurement$value[[1]] und req$sensors$lastMeasurement$value[1] geben
+// beide die letzte Temperaturmessung
 
 
 
