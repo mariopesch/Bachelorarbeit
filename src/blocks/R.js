@@ -89,10 +89,84 @@ Blockly.Blocks['extract_temperature'] = {
 
 Blockly.Blocks['get_temperature'] = {
   init: function() {
-    this.appendDummyInput().appendField('Get Temperature');
+    this.appendDummyInput().appendField('Temperatur');
     this.setOutput(true, 'Number');
     this.setColour(230);
     this.setTooltip('Get the temperature data');
+    this.setHelpUrl('');
+  },
+};
+
+Blockly.Blocks['get_humidity'] = {
+  init: function() {
+    this.appendDummyInput().appendField('Rel. Luftfeuchte');
+    this.setOutput(true, 'Number');
+    this.setColour(230);
+    this.setHelpUrl('');
+  },
+};
+
+Blockly.Blocks['get_distanceLeft'] = {
+  init: function() {
+    this.appendDummyInput().appendField('Abstand nach links');
+    this.setOutput(true, 'Number');
+    this.setColour(230);
+    this.setHelpUrl('');
+  },
+};
+Blockly.Blocks['get_distanceRight'] = {
+  init: function() {
+    this.appendDummyInput().appendField('Abstand nach rechts');
+    this.setOutput(true, 'Number');
+    this.setColour(230);
+    this.setHelpUrl('');
+  },
+};
+Blockly.Blocks['get_PM10'] = {
+  init: function() {
+    this.appendDummyInput().appendField('Feinstaub PM10');
+    this.setOutput(true, 'Number');
+    this.setColour(230);
+    this.setHelpUrl('');
+  },
+};
+Blockly.Blocks['get_PM25'] = {
+  init: function() {
+    this.appendDummyInput().appendField('Feinstaub PM25');
+    this.setOutput(true, 'Number');
+    this.setColour(230);
+    this.setHelpUrl('');
+  },
+};
+Blockly.Blocks['get_accelerationX'] = {
+  init: function() {
+    this.appendDummyInput().appendField('Beschleunigung X-Achse');
+    this.setOutput(true, 'Number');
+    this.setColour(230);
+    this.setHelpUrl('');
+  },
+};
+Blockly.Blocks['get_accelerationY'] = {
+  init: function() {
+    this.appendDummyInput().appendField('Beschleunigung Y-Achse');
+    this.setOutput(true, 'Number');
+    this.setColour(230);
+    this.setHelpUrl('');
+  },
+};
+Blockly.Blocks['get_accelerationZ'] = {
+  init: function() {
+    this.appendDummyInput().appendField('Beschleunigung Z-Achse');
+    this.setOutput(true, 'Number');
+    this.setColour(230);
+    this.setHelpUrl('');
+  },
+};
+Blockly.Blocks['get_speed'] = {
+  init: function() {
+    this.appendDummyInput().appendField('Geschwindigkeit');
+    this.setOutput(true, 'Number');
+    this.setColour(230);
     this.setHelpUrl('');
   },
 };

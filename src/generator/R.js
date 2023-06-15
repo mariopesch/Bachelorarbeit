@@ -91,16 +91,129 @@ RGenerator['extract_temperature'] = function (block) {
 RGenerator['get_temperature'] = function(block) {
   const code = `library(jsonlite)\n` +
   `library(httr)\n` +
-  `fetchData <- function() {\n` +
-  `  boxData <- GET("https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e?format=geojson")\n`+
-  //`  boxTemp <- boxData$properties$sensors[[1]]$lastMeasurement$value\n` +
-  //`  print(boxTemp)\n` +
+  `fetchTemp <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[1]]\n` +
   `}\n\n` +
-  `fetchData()\n`;
+  `fetchTemp()\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
+RGenerator['get_humidity'] = function(block) {
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchHumidity <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[2]]\n` +
+  `}\n\n` +
+  `fetchHumidity()\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
 
+RGenerator['get_distanceLeft'] = function(block) {
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchDistanceLeft <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[3]]\n` +
+  `}\n\n` +
+  `fetchDistanceLeft()\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
+RGenerator['get_distanceRight'] = function(block) {
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchDistanceRight <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[4]]\n` +
+  `}\n\n` +
+  `fetchDistanceRight()\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
+
+RGenerator['get_PM10'] = function(block) {
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchPM10 <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[5]]\n` +
+  `}\n\n` +
+  `fetchPM10()\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
+RGenerator['get_PM25'] = function(block) {
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchPM25 <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[6]]\n` +
+  `}\n\n` +
+  `fetchPM25()\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
+
+RGenerator['get_accelerationX'] = function(block) {
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchAccelerationX <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[7]]\n` +
+  `}\n\n` +
+  `fetchAccelerationX()\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
+
+RGenerator['get_accelerationY'] = function(block) {
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchAccelerationY <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[8]]\n` +
+  `}\n\n` +
+  `fetchAccelerationY()\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
+
+RGenerator['get_accelerationZ'] = function(block) {
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchAccelerationZ <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[9]]\n` +
+  `}\n\n` +
+  `fetchAccelerationZ()\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
+
+RGenerator['get_speed'] = function(block) {
+  const code = `library(jsonlite)\n` +
+  `library(httr)\n` +
+  `fetchSpeed <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$sensors$lastMeasurement$value[[10]]\n` +
+  `}\n\n` +
+  `fetchSpeed()\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
 // R code from R Studio:
 // library(httr)
 // library(jsonlite)
@@ -109,6 +222,18 @@ return [code, RGenerator.ORDER_NONE];
 // Richtige Ausgabe: JSON object mit 12 Einträgen
 // req$sensors$lastMeasurement$value[[1]] und req$sensors$lastMeasurement$value[1] geben
 // beide die letzte Temperaturmessung
+
+//Funktioniert auh in R Studio:
+//library(jsonlite)
+//library(httr)
+//fetchTemp <- function() {
+  //con <- url("https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e", "rb")
+  //con <- fromJSON(paste0(url))
+  //con$sensors$lastMeasurement$value[[1]]
+//}
+
+//fetchTemp()
+
 
 
 

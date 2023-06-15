@@ -27,7 +27,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import logo from './logo.svg';
 
-import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
+import BlocklyComponent, { Block, Value, Field, Shadow, Category } from './Blockly';
 
 
 import './blocks/R';
@@ -56,7 +56,6 @@ function App(props) {
       <div className="App">
         <header className="App-header">
         <h1>Blockly4R Tool</h1>
-          <img src={logo} className="App-logo" alt="logo" />
           <DataContext.Provider value={fetchedData}>
           <APIComponent onDataFetch={handleDataFetch} />
           <BlocklyComponent onUpdate={handleRCodeUpdate}
@@ -75,14 +74,30 @@ function App(props) {
 <block type="controls_ifelse" x="0" y="0"></block>
 </xml>
       `}>
+        <div className="custom-toolbox-wrapper"></div>
+          <Category name="Test-Blöcke">
             <Block type="string_length" />
             <Block type="string_input" />
+          </Category>
+          <Category name="Box-Anfragen">
             <Block type="temp"/>
-            <Block type="get_temperature"/>
             <Block type="box_id"/>
+          </Category>  
+          <Category name="Sensor-Daten">
+            <Block type="get_temperature"/>
+            <Block type="get_humidity"/>
+            <Block type="get_distanceLeft"/>
+            <Block type="get_distanceRight"/>
+            <Block type="get_PM10"/>
+            <Block type="get_PM25"/>
+            <Block type="get_accelerationX"/>
+            <Block type="get_accelerationY"/>
+            <Block type="get_accelerationY"/>
+            <Block type="get_speed"/>
+          </Category>
+          <Category name="Datenvisualisierung">
             <Block type="scatter_plot" />
-            <Block type="test_react_field" />
-            <Block type="test_react_date_field" />
+          </Category>  
             <Block type="controls_ifelse" />
             <Block type="logic_compare" />
             <Block type="logic_operation" />
