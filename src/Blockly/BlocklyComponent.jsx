@@ -78,7 +78,9 @@ import React, { useState } from 'react';
     <React.Fragment>
         <button onClick={generateCode}>Convert</button>
         <button onClick={generateRCode}>Convert R</button>
-        <RCodeSnippet  rcode={rcode}/>
+        <div className="CodeSnippetContainer">
+        <RCodeSnippet rcode={rcode} />
+        </div>
         <div ref={blocklyDiv} id="blocklyDiv" />
         <div style={{ display: 'none' }} ref={toolbox}>
             {props.children}

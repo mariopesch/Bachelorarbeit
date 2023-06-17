@@ -129,8 +129,17 @@ function App(props) {
               </Block>
             </BlocklyComponent>
           </div>
-          <div className="map-container">
-            <LeafletMap />
+          <div className="result-container">
+          <nav className="Navbar">
+          <ul className="NavList">
+          <li className="NavItem">Ergebnisse</li>
+          <li className="NavItem">Map</li>
+          <li className="NavItem">Wiki</li>
+          </ul>
+          </nav>
+          
+           
+           
           </div>
         </div>
       </DataContext.Provider>
@@ -139,5 +148,9 @@ function App(props) {
   
     
 }
-
+/**
+ *  <div className="map-container">
+              <LeafletMap />
+            </div>
+ */
 export default App;
