@@ -35,8 +35,7 @@ import './generator/R';
 import Navbar from './navbar';
 import APIComponent from './APIComponent';
 import DataContext from './DataContext';
-import LeafletMap from './MapComponent';
-
+import MapComponent from './MapComponent';
 
 function App(props) {
   const [rcode, setRCode] = useState('');
@@ -51,6 +50,11 @@ function App(props) {
     setFetchedData(data);
   };
 
+  const [showMap, setShowMap] = useState(false);
+
+  const handleMapItemClick = () => {
+    setShowMap(true);
+  };
 
   return (
     <div className="App">
@@ -133,13 +137,11 @@ function App(props) {
           <nav className="Navbar">
           <ul className="NavList">
           <li className="NavItem">Ergebnisse</li>
-          <li className="NavItem">Map</li>
+          <li className="NavItem" onClick={handleMapItemClick} >Map</li>
           <li className="NavItem">Wiki</li>
           </ul>
           </nav>
-          
-           
-           
+          {showMap && <MapComponent />}
           </div>
         </div>
       </DataContext.Provider>
