@@ -71,22 +71,6 @@ Blockly.Blocks['box_id'] = {
   }
 };
 
-Blockly.Blocks['extract_temperature'] = {
-  init: function () {
-    this.appendDummyInput()
-      .appendField("Extract Temperature");
-    this.setOutput(true, "Number");
-    this.setColour(230);
-    this.setTooltip("Extracts the temperature measurement from the Sensebox JSON object.");
-    this.setHelpUrl("");
-  },
-  
-  // Define a custom method to set the fetched data as a block parameter
-  setBoxData: function (boxData) {
-    this.boxData = boxData;
-  }
-};
-
 Blockly.Blocks['get_temperature'] = {
   init: function() {
     this.appendDummyInput().appendField('Temperatur');
@@ -170,6 +154,7 @@ Blockly.Blocks['get_speed'] = {
     this.setHelpUrl('');
   },
 };
+
 
 
 

@@ -25,7 +25,6 @@
 import React, { useEffect, useState } from 'react';
 //import React from 'react';
 import './App.css';
-import logo from './logo.svg';
 
 import BlocklyComponent, { Block, Value, Field, Shadow, Category } from './Blockly';
 
@@ -36,6 +35,7 @@ import './generator/R';
 import Navbar from './navbar';
 import APIComponent from './APIComponent';
 import DataContext from './DataContext';
+import LeafletMap from './MapComponent';
 
 
 function App(props) {
@@ -52,81 +52,91 @@ function App(props) {
   };
 
 
-    return (
-      <div className="App">
-        <header className="App-header">
+  return (
+    <div className="App">
+      <header className="App-header">
         <h1>Blockly4R Tool</h1>
-          <DataContext.Provider value={fetchedData}>
-          <APIComponent onDataFetch={handleDataFetch} />
-          <BlocklyComponent onUpdate={handleRCodeUpdate}
-          data={fetchedData}
-          readOnly={false}
-          rcode={rcode}
-          trashcan={true} media={'media/'} stackSize={Infinity}
-          move={{
-            scrollbars: true,
-            drag: true,
-            wheel: false
-          }}
-          
-          initialXml={`
-<xml xmlns="http://www.w3.org/1999/xhtml">
-<block type="controls_ifelse" x="0" y="0"></block>
-</xml>
-      `}>
-        <div className="custom-toolbox-wrapper"></div>
-          <Category name="Test-Blöcke">
-            <Block type="string_length" />
-            <Block type="string_input" />
-          </Category>
-          <Category name="Box-Anfragen">
-            <Block type="temp"/>
-            <Block type="box_id"/>
-          </Category>  
-          <Category name="Sensor-Daten">
-            <Block type="get_temperature"/>
-            <Block type="get_humidity"/>
-            <Block type="get_distanceLeft"/>
-            <Block type="get_distanceRight"/>
-            <Block type="get_PM10"/>
-            <Block type="get_PM25"/>
-            <Block type="get_accelerationX"/>
-            <Block type="get_accelerationY"/>
-            <Block type="get_accelerationY"/>
-            <Block type="get_speed"/>
-          </Category>
-          <Category name="Datenvisualisierung">
-            <Block type="scatter_plot" />
-          </Category>  
-            <Block type="controls_ifelse" />
-            <Block type="logic_compare" />
-            <Block type="logic_operation" />
-            <Block type="controls_repeat_ext">
-              <Value name="TIMES">
-                <Shadow type="math_number">
-                  <Field name="NUM">10</Field>
-                </Shadow>
-              </Value>
-            </Block>
-            <Block type="logic_operation" />
-            <Block type="logic_negate" />
-            <Block type="logic_boolean" />
-            <Block type="logic_null" disabled="true" />
-            <Block type="logic_ternary" />
-            <Block type="text_charAt">
-              <Value name="VALUE">
-                <Block type="variables_get">
-                  <Field name="VAR">text</Field>
-                </Block>
-              </Value>
-            </Block>
-          </BlocklyComponent>
-          </DataContext.Provider>
-          <Navbar/>
-
-          </header>
-      </div>
-    );
+      </header>
+      <DataContext.Provider value={fetchedData}>
+        <APIComponent onDataFetch={handleDataFetch} />
+        <div className="container">
+          <div className="blockly-container">
+            <BlocklyComponent
+              onUpdate={handleRCodeUpdate}
+              data={fetchedData}
+              readOnly={false}
+              rcode={rcode}
+              trashcan={true}
+              media={'media/'}
+              stackSize={Infinity}
+              move={{
+                scrollbars: true,
+                drag: true,
+                wheel: false
+              }}
+              initialXml={`
+                <xml xmlns="http://www.w3.org/1999/xhtml">
+                  <block type="controls_ifelse" x="0" y="0"></block>
+                </xml>
+              `}
+            >
+              <div className="custom-toolbox-wrapper"></div>
+              <Category name="Test-Blöcke">
+                <Block type="string_length" />
+                <Block type="string_input" />
+              </Category>
+              <Category name="Box-Anfragen">
+                <Block type="temp" />
+                <Block type="box_id" />
+              </Category>
+              <Category name="Sensor-Daten">
+                <Block type="get_temperature" />
+                <Block type="get_humidity" />
+                <Block type="get_distanceLeft" />
+                <Block type="get_distanceRight" />
+                <Block type="get_PM10" />
+                <Block type="get_PM25" />
+                <Block type="get_accelerationX" />
+                <Block type="get_accelerationY" />
+                <Block type="get_speed" />
+              </Category>
+              <Category name="Datenvisualisierung">
+                <Block type="scatter_plot" />
+              </Category>
+              <Category name="Karte">
+                <Block type="map" />
+              </Category>
+              <Block type="controls_ifelse" />
+              <Block type="logic_compare" />
+              <Block type="logic_operation" />
+              <Block type="controls_repeat_ext">
+                <Value name="TIMES">
+                  <Shadow type="math_number">
+                    <Field name="NUM">10</Field>
+                  </Shadow>
+                </Value>
+              </Block>
+              <Block type="logic_negate" />
+              <Block type="logic_boolean" />
+              <Block type="logic_null" disabled="true" />
+              <Block type="logic_ternary" />
+              <Block type="text_charAt">
+                <Value name="VALUE">
+                  <Block type="variables_get">
+                    <Field name="VAR">text</Field>
+                  </Block>
+                </Value>
+              </Block>
+            </BlocklyComponent>
+          </div>
+          <div className="map-container">
+            <LeafletMap />
+          </div>
+        </div>
+      </DataContext.Provider>
+    </div>
+  );
+  
     
 }
 

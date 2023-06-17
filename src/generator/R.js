@@ -214,6 +214,7 @@ RGenerator['get_speed'] = function(block) {
 
 return [code, RGenerator.ORDER_NONE];
 };
+
 // R code from R Studio:
 // library(httr)
 // library(jsonlite)
