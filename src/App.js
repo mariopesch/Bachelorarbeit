@@ -26,7 +26,7 @@ import React, { useEffect, useState } from 'react';
 //import React from 'react';
 import './App.css';
 
-import BlocklyComponent, { Block, Value, Field, Shadow, Category } from './Blockly';
+import BlocklyComponent, { Block, Category } from './Blockly';
 
 
 import './blocks/R';
@@ -36,6 +36,9 @@ import Navbar from './navbar';
 import APIComponent from './APIComponent';
 import DataContext from './DataContext';
 import MapComponent from './MapComponent';
+import WikiComponent from './WikiComponent';
+import IdeaComponent from './IdeaComponent';
+import ResultsComponent from './ResultsComponent';
 
 function App(props) {
   const [rcode, setRCode] = useState('');
@@ -50,10 +53,38 @@ function App(props) {
     setFetchedData(data);
   };
 
-  const [showMap, setShowMap] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const handleResultsClick = () => {
+    setShowResults(!showResults);
+    setShowLinks(false);
+    setShowIdeas(false);
+    setShowMap(false);
 
-  const handleMapItemClick = () => {
-    setShowMap(true);
+  };
+
+  const [showMap, setShowMap] = useState(false);
+  const handleMapClick = () => {
+    setShowMap(!showMap);
+    setShowLinks(false);
+    setShowIdeas(false);
+    setShowResults(false);
+
+
+  };
+  const [showLinks, setShowLinks] = useState(false);
+  const handleWikiClick = () => {
+    setShowLinks(!showLinks);
+    setShowMap(false);
+    setShowIdeas(false);
+    setShowResults(false);
+
+
+  };
+  const [showIdeas, setShowIdeas] = useState(false);
+  const handleIdeasClick = () => {
+    setShowIdeas(!showIdeas);
+    setShowMap(false);
+    setShowLinks(false);
   };
 
   return (
@@ -78,22 +109,16 @@ function App(props) {
                 drag: true,
                 wheel: false
               }}
-              initialXml={`
-                <xml xmlns="http://www.w3.org/1999/xhtml">
-                  <block type="controls_ifelse" x="0" y="0"></block>
-                </xml>
-              `}
             >
               <div className="custom-toolbox-wrapper"></div>
-              <Category name="Test-Blöcke">
+              <Category name="Test & Hilfe">
                 <Block type="string_length" />
                 <Block type="string_input" />
+                <Block type="array_input" />
+                <Block type="load_data" />
               </Category>
               <Category name="Box-Anfragen">
-                <Block type="temp" />
                 <Block type="box_id" />
-              </Category>
-              <Category name="Sensor-Daten">
                 <Block type="get_temperature" />
                 <Block type="get_humidity" />
                 <Block type="get_distanceLeft" />
@@ -110,38 +135,18 @@ function App(props) {
               <Category name="Karte">
                 <Block type="map" />
               </Category>
-              <Block type="controls_ifelse" />
-              <Block type="logic_compare" />
-              <Block type="logic_operation" />
-              <Block type="controls_repeat_ext">
-                <Value name="TIMES">
-                  <Shadow type="math_number">
-                    <Field name="NUM">10</Field>
-                  </Shadow>
-                </Value>
-              </Block>
-              <Block type="logic_negate" />
-              <Block type="logic_boolean" />
-              <Block type="logic_null" disabled="true" />
-              <Block type="logic_ternary" />
-              <Block type="text_charAt">
-                <Value name="VALUE">
-                  <Block type="variables_get">
-                    <Field name="VAR">text</Field>
-                  </Block>
-                </Value>
-              </Block>
             </BlocklyComponent>
           </div>
           <div className="result-container">
-          <nav className="Navbar">
-          <ul className="NavList">
-          <li className="NavItem">Ergebnisse</li>
-          <li className="NavItem" onClick={handleMapItemClick} >Map</li>
-          <li className="NavItem">Wiki</li>
-          </ul>
-          </nav>
+          <Navbar 
+          handleResultsClick={handleResultsClick}
+          handleMapClick={handleMapClick} 
+          handleWikiClick={handleWikiClick}
+          handleIdeasClick={handleIdeasClick}/>
+          {showResults && <ResultsComponent/>}
           {showMap && <MapComponent />}
+          {showLinks && <WikiComponent/>}
+          {showIdeas && <IdeaComponent/>}
           </div>
         </div>
       </DataContext.Provider>
