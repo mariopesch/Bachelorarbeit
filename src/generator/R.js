@@ -71,6 +71,21 @@ RGenerator['string_length'] = function(block) {
   //return ['nchar(' + text + ')', RGenerator.ORDER_MEMBER];
   return result;
 };
+RGenerator['load_data'] = function(block) {
+  const dataset = block.getFieldValue('DATASET');
+  const code = `
+data(${dataset})
+`;
+  return [code, RGenerator.ORDER_NONE];
+};
+RGenerator['save_variable'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var variableName = RGenerator.valueToCode(block, 'VARIABLE_NAME', RGenerator.ORDER_ATOMIC);
+  var code = variableName + ' <- ' + data + '\n';
+  return code;
+};
+
+
 
 RGenerator['box_id'] = function(block) {
   const boxId = block.getFieldValue('String');
@@ -263,8 +278,6 @@ RGenerator['scatter_plot'] = function(block) {
   const xTitle = RGenerator.valueToCode(block, 'X_AXIS_TITLE', RGenerator.ORDER_NONE) || '""';
   const yTitle = RGenerator.valueToCode(block, 'Y_AXIS_TITLE', RGenerator.ORDER_NONE) || '""';
 
-
-
   const code = `
   plot(${x}, ${y},
        xlab = "${xTitle}", ylab = "${yTitle}",
@@ -272,17 +285,50 @@ RGenerator['scatter_plot'] = function(block) {
   abline(lm(${y} ~ ${x}), col = "blue")
   `;
     return code;
- 
+};
+RGenerator['bar_chart'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
+  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
+  var code = 'barplot(' + data + ', xlab=' + xLabel + ', ylab=' + yLabel + ')';
+  return code;
+};
+RGenerator['line_chart'] = function(block) {
+  var data = Blockly.R.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
+  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
+  var code = 'plot(' + data + ', type="l", xlab=' + xLabel + ', ylab=' + yLabel + ')';
+  return code;
+};
+RGenerator['histogram'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
+  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
+  var code = 'hist(' + data + ', xlab=' + xLabel + ', ylab=' + yLabel + ')';
+  return code;
 };
 
-RGenerator['load_data'] = function(block) {
-  const dataset = block.getFieldValue('DATASET');
 
-  const code = `
-data(${dataset})
-`;
-  return [code, RGenerator.ORDER_NONE];
+
+
+
+
+RGenerator['mean'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var code = 'mean(' + data + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
 };
+RGenerator['median'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var code = 'median(' + data + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+RGenerator['sd'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var code = 'sd(' + data + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
 
 
 // 1,1,2,4,5,6,7,7,7,11,15,60,100

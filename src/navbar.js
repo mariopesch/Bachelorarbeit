@@ -17,4 +17,3 @@ function Navbar({ handleResultsClick, handleMapClick, handleWikiClick, handleIde
 
 export default Navbar;
 
-

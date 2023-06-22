@@ -23,6 +23,7 @@
 
 import React, { useState } from 'react';
  import './BlocklyComponent.css';
+ import '../App.css';
  import {useEffect, useRef} from 'react';
  
 
@@ -41,14 +42,14 @@ import React, { useState } from 'react';
     const blocklyDiv = useRef();
     const toolbox = useRef();
     let primaryWorkspace = useRef();
-
+/*
     const generateCode = () => {
         var code = javascriptGenerator.workspaceToCode(
           primaryWorkspace.current
         );
         console.log(code);
     }
-
+**/
     const generateRCode = () => {
         var rcode = RGenerator.workspaceToCode(
           primaryWorkspace.current
@@ -76,11 +77,10 @@ import React, { useState } from 'react';
 
     return (
     <React.Fragment>
-        <button onClick={generateCode}>Convert</button>
-        <button onClick={generateRCode}>Convert R</button>
-        <div className="CodeSnippetContainer">
+        <button className="convert-button" onClick={generateRCode}>Convert R</button>        
+     
         <RCodeSnippet rcode={rcode} />
-        </div>
+        
         <div ref={blocklyDiv} id="blocklyDiv" />
         <div style={{ display: 'none' }} ref={toolbox}>
             {props.children}

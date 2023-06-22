@@ -21,13 +21,11 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
-//import * as Blockly from 'blockly';
+
 import React, { useEffect, useState } from 'react';
-//import React from 'react';
 import './App.css';
 
 import BlocklyComponent, { Block, Category } from './Blockly';
-
 
 import './blocks/R';
 import './blocks/customblocks';
@@ -39,6 +37,7 @@ import MapComponent from './MapComponent';
 import WikiComponent from './WikiComponent';
 import IdeaComponent from './IdeaComponent';
 import ResultsComponent from './ResultsComponent';
+import RCodeSnippet from './RCodeSnippet';
 
 function App(props) {
   const [rcode, setRCode] = useState('');
@@ -55,11 +54,10 @@ function App(props) {
 
   const [showResults, setShowResults] = useState(false);
   const handleResultsClick = () => {
-    setShowResults(!showResults);
+    setShowResults(true);
+    setShowMap(false);
     setShowLinks(false);
     setShowIdeas(false);
-    setShowMap(false);
-
   };
 
   const [showMap, setShowMap] = useState(false);
@@ -93,9 +91,9 @@ function App(props) {
         <h1>Blockly4R Tool</h1>
       </header>
       <DataContext.Provider value={fetchedData}>
-        <APIComponent onDataFetch={handleDataFetch} />
         <div className="container">
           <div className="blockly-container">
+          <APIComponent onDataFetch={handleDataFetch} />
             <BlocklyComponent
               onUpdate={handleRCodeUpdate}
               data={fetchedData}
@@ -116,6 +114,7 @@ function App(props) {
                 <Block type="string_input" />
                 <Block type="array_input" />
                 <Block type="load_data" />
+                <Block type="save_variable" />
               </Category>
               <Category name="Box-Anfragen">
                 <Block type="box_id" />
@@ -129,24 +128,36 @@ function App(props) {
                 <Block type="get_accelerationY" />
                 <Block type="get_speed" />
               </Category>
+              <Category name="Datenanalyse">
+                <Block type="mean" />
+                <Block type="median" />
+                <Block type="sd" />
+              </Category>
               <Category name="Datenvisualisierung">
                 <Block type="scatter_plot" />
+                <Block type="bar_chart" />
+                <Block type="line_chart" />
+                <Block type="histogram" />
               </Category>
               <Category name="Karte">
                 <Block type="map" />
               </Category>
-            </BlocklyComponent>
+              </BlocklyComponent>
           </div>
           <div className="result-container">
-          <Navbar 
-          handleResultsClick={handleResultsClick}
-          handleMapClick={handleMapClick} 
-          handleWikiClick={handleWikiClick}
-          handleIdeasClick={handleIdeasClick}/>
-          {showResults && <ResultsComponent/>}
-          {showMap && <MapComponent />}
-          {showLinks && <WikiComponent/>}
-          {showIdeas && <IdeaComponent/>}
+            <Navbar
+              handleResultsClick={handleResultsClick}
+              handleMapClick={handleMapClick}
+              handleWikiClick={handleWikiClick}
+              handleIdeasClick={handleIdeasClick}
+            />
+            {showResults && (
+              <ResultsComponent rcode={rcode}>
+              </ResultsComponent>
+            )}
+            {showMap && <MapComponent />}
+            {showLinks && <WikiComponent />}
+            {showIdeas && <IdeaComponent />}
           </div>
         </div>
       </DataContext.Provider>
@@ -155,9 +166,4 @@ function App(props) {
   
     
 }
-/**
- *  <div className="map-container">
-              <LeafletMap />
-            </div>
- */
 export default App;

@@ -9,7 +9,7 @@ const RCodeSnippet = ({ rcode }) => {
       <div
         style={{
           width: '100%',
-          height: '100px',
+          height: '200px',
           overflow: 'auto',
         }}
       >
@@ -18,6 +18,7 @@ const RCodeSnippet = ({ rcode }) => {
           style={{
             width: '100%',
             height: '100%',
+            
           }}
           src={`https://rdrr.io/snippets/embed/?code=${encodeURIComponent(
           rcode

@@ -15,6 +15,22 @@ Blockly.Blocks['load_data'] = {
     this.setHelpUrl("");
   }
 };
+Blockly.Blocks['save_variable'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck(null)
+        .appendField("Variable");
+    this.appendValueInput("VARIABLE_NAME")
+        .setCheck("String")
+        .appendField("Variable name");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(160);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
 
 
 // Define the string input block
@@ -212,7 +228,42 @@ Blockly.Blocks['get_speed'] = {
   }
 };
 
-// Define the block to create a scatter plot from measurements
+Blockly.Blocks['mean'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck("Array")
+        .appendField("Mittelwert");
+    this.setOutput(true, "Number");
+    this.setColour(160);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['median'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck("Array")
+        .appendField("Median");
+    this.setOutput(true, "Number");
+    this.setColour(160);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['sd'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck("Array")
+        .appendField("Standardabweichung");
+    this.setOutput(true, "Number");
+    this.setColour(160);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+
+
 Blockly.Blocks['scatter_plot'] = {
   init: function() {
     this.appendValueInput('X')
@@ -235,6 +286,68 @@ Blockly.Blocks['scatter_plot'] = {
     this.setHelpUrl('');
   }
 };
+Blockly.Blocks['bar_chart'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck("Array")
+        .appendField("Balkendiagramm");
+    this.appendValueInput("X_AXIS")
+        .setCheck("String")
+        .appendField("X-axis label");
+    this.appendValueInput("Y_AXIS")
+        .setCheck("String")
+        .appendField("Y-axis label");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(260);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['line_chart'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck("Array")
+        .appendField("Säulendiagramm");
+    this.appendValueInput("X_AXIS")
+        .setCheck("String")
+        .appendField("X-axis label");
+    this.appendValueInput("Y_AXIS")
+        .setCheck("String")
+        .appendField("Y-axis label");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(260);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['histogram'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck("Array")
+        .appendField("Histogramm");
+    this.appendValueInput("X_AXIS")
+        .setCheck("String")
+        .appendField("X-axis label");
+    this.appendValueInput("Y_AXIS")
+        .setCheck("String")
+        .appendField("Y-axis label");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(260);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+
+
+
+
 
 
 
