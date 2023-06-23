@@ -54,7 +54,7 @@ function App(props) {
 
   const [showResults, setShowResults] = useState(false);
   const handleResultsClick = () => {
-    setShowResults(true);
+    setShowResults(!showResults);
     setShowMap(false);
     setShowLinks(false);
     setShowIdeas(false);
@@ -152,8 +152,7 @@ function App(props) {
               handleIdeasClick={handleIdeasClick}
             />
             {showResults && (
-              <ResultsComponent rcode={rcode}>
-              </ResultsComponent>
+              <ResultsComponent />
             )}
             {showMap && <MapComponent />}
             {showLinks && <WikiComponent />}

@@ -77,7 +77,8 @@ import React, { useState } from 'react';
 
     return (
     <React.Fragment>
-        <button className="convert-button" onClick={generateRCode}>Convert R</button>        
+        <button className="convert-button" onClick={generateRCode}>Convert R</button> 
+        <button className="convert-button">Zwischenablage</button>               
      
         <RCodeSnippet rcode={rcode} />
         
