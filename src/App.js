@@ -30,7 +30,6 @@ import BlocklyComponent, { Block, Category } from './Blockly';
 import './blocks/R';
 import './blocks/customblocks';
 import './generator/R';
-import Navbar from './navbar';
 import APIComponent from './APIComponent';
 import DataContext from './DataContext';
 import MapComponent from './MapComponent';
@@ -38,6 +37,8 @@ import WikiComponent from './WikiComponent';
 import IdeaComponent from './IdeaComponent';
 import ResultsComponent from './ResultsComponent';
 import RCodeSnippet from './RCodeSnippet';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 function App(props) {
   const [rcode, setRCode] = useState('');
@@ -52,39 +53,6 @@ function App(props) {
     setFetchedData(data);
   };
 
-  const [showResults, setShowResults] = useState(false);
-  const handleResultsClick = () => {
-    setShowResults(!showResults);
-    setShowMap(false);
-    setShowLinks(false);
-    setShowIdeas(false);
-  };
-
-  const [showMap, setShowMap] = useState(false);
-  const handleMapClick = () => {
-    setShowMap(!showMap);
-    setShowLinks(false);
-    setShowIdeas(false);
-    setShowResults(false);
-
-
-  };
-  const [showLinks, setShowLinks] = useState(false);
-  const handleWikiClick = () => {
-    setShowLinks(!showLinks);
-    setShowMap(false);
-    setShowIdeas(false);
-    setShowResults(false);
-
-
-  };
-  const [showIdeas, setShowIdeas] = useState(false);
-  const handleIdeasClick = () => {
-    setShowIdeas(!showIdeas);
-    setShowMap(false);
-    setShowLinks(false);
-  };
-
   return (
     <div className="App">
       <header className="App-header">
@@ -94,7 +62,7 @@ function App(props) {
         <div className="container">
           <div className="blockly-container">
           <APIComponent onDataFetch={handleDataFetch} />
-            <BlocklyComponent
+          <BlocklyComponent
               onUpdate={handleRCodeUpdate}
               data={fetchedData}
               readOnly={false}
@@ -145,18 +113,27 @@ function App(props) {
               </BlocklyComponent>
           </div>
           <div className="result-container">
-            <Navbar
-              handleResultsClick={handleResultsClick}
-              handleMapClick={handleMapClick}
-              handleWikiClick={handleWikiClick}
-              handleIdeasClick={handleIdeasClick}
-            />
-            {showResults && (
-              <ResultsComponent />
-            )}
-            {showMap && <MapComponent />}
-            {showLinks && <WikiComponent />}
-            {showIdeas && <IdeaComponent />}
+          <Tabs>
+    <TabList>
+      <Tab>Ergebnisse</Tab>
+      <Tab>Map</Tab>
+      <Tab>Wiki</Tab>
+      <Tab>Analyseideen</Tab>
+    </TabList>
+
+    <TabPanel>
+      <ResultsComponent />
+    </TabPanel>
+    <TabPanel>
+      <MapComponent />
+    </TabPanel>
+    <TabPanel>
+      <WikiComponent />
+    </TabPanel>
+    <TabPanel>
+      <IdeaComponent />
+    </TabPanel>
+  </Tabs>
           </div>
         </div>
       </DataContext.Provider>
