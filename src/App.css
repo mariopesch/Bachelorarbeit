@@ -69,11 +69,12 @@ html, body {
 
 .map-container {
   width: 80%;
-  height: 400px; /* Adjust the height as needed */
+  height: 50vh; /* Adjust the height as needed */
   border: 1px solid black;
   overflow: hidden; /* Prevent map from overflowing */
   position: relative;
 }
+
 .convert-button {
   width: 150px; /* Adjust the width as per your preference */
   padding: 10px 20px;

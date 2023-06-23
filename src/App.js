@@ -38,6 +38,8 @@ import WikiComponent from './WikiComponent';
 import IdeaComponent from './IdeaComponent';
 import ResultsComponent from './ResultsComponent';
 import RCodeSnippet from './RCodeSnippet';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 function App(props) {
   const [rcode, setRCode] = useState('');
@@ -94,7 +96,7 @@ function App(props) {
         <div className="container">
           <div className="blockly-container">
           <APIComponent onDataFetch={handleDataFetch} />
-            <BlocklyComponent
+          <BlocklyComponent
               onUpdate={handleRCodeUpdate}
               data={fetchedData}
               readOnly={false}
@@ -145,7 +147,21 @@ function App(props) {
               </BlocklyComponent>
           </div>
           <div className="result-container">
-            <Navbar
+          <Tabs>
+    <TabList>
+      <Tab>Map</Tab>
+      <Tab>Wiki</Tab>
+    </TabList>
+
+    <TabPanel>
+      <MapComponent />
+    </TabPanel>
+    <TabPanel>
+      <WikiComponent />
+    </TabPanel>
+  </Tabs>
+
+            {/* <Navbar
               handleResultsClick={handleResultsClick}
               handleMapClick={handleMapClick}
               handleWikiClick={handleWikiClick}
@@ -156,7 +172,7 @@ function App(props) {
             )}
             {showMap && <MapComponent />}
             {showLinks && <WikiComponent />}
-            {showIdeas && <IdeaComponent />}
+            {showIdeas && <IdeaComponent />} */}
           </div>
         </div>
       </DataContext.Provider>
