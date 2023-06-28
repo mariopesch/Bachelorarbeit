@@ -50,15 +50,20 @@ import React, { useState } from 'react';
         console.log(code);
     }
 **/
-    const generateRCode = () => {
-        var rcode = RGenerator.workspaceToCode(
-          primaryWorkspace.current
-        );
-        console.log(rcode);
-        setRCode(rcode);
-        return rcode;
-        
-    }
+const generateRCode = () => {
+    const data = {
+      // Load your data here or from any external source
+      key1: 'value1',
+      key2: 'value2',
+      // ...
+    };
+  
+    // Generate the R code using the loaded data
+    const rcode = RGenerator.workspaceToCode(primaryWorkspace.current, { data });
+    console.log(rcode);
+    setRCode(rcode);
+    return rcode;
+  };
 
     useEffect(() => {
         const { initialXml, children, ...rest } = props;

@@ -78,6 +78,21 @@ data(${dataset})
 `;
   return [code, RGenerator.ORDER_NONE];
 };
+
+RGenerator['load_boxData'] = function(block) {
+  // Load data from the local file
+  const jsonData = require('../senseboxData.json');
+
+  // Generate R code to create a variable with the loaded data
+  const code = `data <- list(
+    name = "${jsonData.name}",
+    age = ${jsonData.age},
+    email = "${jsonData.email}"
+  )\n`;
+
+  return code;
+};
+
 RGenerator['save_variable'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
   var variableName = RGenerator.valueToCode(block, 'VARIABLE_NAME', RGenerator.ORDER_ATOMIC);

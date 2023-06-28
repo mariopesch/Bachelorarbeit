@@ -15,6 +15,18 @@ Blockly.Blocks['load_data'] = {
     this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['load_boxData'] = {
+  init: function() {
+    this.appendDummyInput().appendField('SenseBox Daten laden');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
 Blockly.Blocks['save_variable'] = {
   init: function() {
     this.appendValueInput("DATA")

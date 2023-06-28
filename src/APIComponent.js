@@ -36,10 +36,11 @@ function APIComponent() {
 
     
   })
-  
+
 }
 
   return (
+    
     <div>
      <p>Beispiel Box ID: 615f2969c031ff001b118a3e</p>
     </div>

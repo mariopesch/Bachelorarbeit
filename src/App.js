@@ -36,7 +36,7 @@ import MapComponent from './MapComponent';
 import WikiComponent from './WikiComponent';
 import IdeaComponent from './IdeaComponent';
 import ResultsComponent from './ResultsComponent';
-import RCodeSnippet from './RCodeSnippet';
+import DataComponent from './DataComponent';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
@@ -48,7 +48,6 @@ function App(props) {
   };
   const [fetchedData, setFetchedData] = useState(null);
 
-  // Callback function to receive the fetched data from DataFetcherComponent
   const handleDataFetch = (data) => {
     setFetchedData(data);
   };
@@ -77,11 +76,14 @@ function App(props) {
               }}
             >
               <div className="custom-toolbox-wrapper"></div>
+              <Category name="Daten">
+              <Block type="load_data" />
+              <Block type="load_boxData" />
+              </Category>
               <Category name="Test & Hilfe">
                 <Block type="string_length" />
                 <Block type="string_input" />
                 <Block type="array_input" />
-                <Block type="load_data" />
                 <Block type="save_variable" />
               </Category>
               <Category name="Box-Anfragen">
@@ -115,6 +117,7 @@ function App(props) {
           <div className="result-container">
           <Tabs>
     <TabList>
+      <Tab>Daten</Tab>
       <Tab>Ergebnisse</Tab>
       <Tab>Map</Tab>
       <Tab>Wiki</Tab>
@@ -122,7 +125,10 @@ function App(props) {
     </TabList>
 
     <TabPanel>
-      <ResultsComponent />
+      <DataComponent/>
+    </TabPanel>
+    <TabPanel>
+      <ResultsComponent/>
     </TabPanel>
     <TabPanel>
       <MapComponent />

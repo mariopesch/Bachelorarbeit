@@ -1,0 +1,16 @@
+[
+    {
+      "sensorName": "Temperature",
+      "value": 25.5
+    },
+    {
+      "sensorName": "Humidity",
+      "value": 60
+    },
+    {
+      "sensorName": "Pressure",
+      "value": 1013.25
+    }
+  ]
+  
+  
