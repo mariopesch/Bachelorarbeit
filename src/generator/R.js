@@ -50,6 +50,64 @@ return [code, RGenerator.ORDER_NONE];
 };
 */
 
+RGenerator['choose_box'] = function(block) {
+  var number = block.getFieldValue('Number');
+  var uniqueID = generateUniqueID(number);
+  return [uniqueID, RGenerator.ORDER_ATOMIC];
+};
+
+function generateUniqueID(number) {
+  // Logic to generate a unique ID based on the provided number
+  if (number === '2') {
+    return '615f2945c031ff001b117bae';
+  } else if (number === '3') {
+    return '615f295ac031ff001b118211';
+  } else if (number === '5') {
+    return '615f2964c031ff001b118911';
+  } else if (number === '6') {
+    return '615f2969c031ff001b118a3e';
+  } else if (number === '10') {
+    return '615f298fc031ff001b119a83';
+  } else if (number === '11') {
+    return '615f2994c031ff001b119d04';
+  } else if (number === '12') {
+    return '615f2999c031ff001b119efb';
+  } else if (number === '13') {
+    return '615f299fc031ff001b11a172';
+  } else if (number === '14') {
+    return '615f29a4c031ff001b11a396';
+  } else if (number === '17') {
+    return '615f29b4c031ff001b11a8cb';
+  } else if (number === '18') {
+    return '616015adc031ff001b713f7f';
+  } else if (number === '19') {
+    return '615f29bfc031ff001b11adcb';
+  } else if (number === '20') {
+    return '616015c4c031ff001b714683';
+  } else if (number === '22') {
+    return '616015cfc031ff001b7148d3';
+  } else if (number === '23') {
+    return '615f29d4c031ff001b11b5f1';
+  } else if (number === '24') {
+    return '616015d5c031ff001b714e93';
+  } else if (number === '25') {
+    return '615f29dec031ff001b11b9e4';
+  } else if (number === '26') {
+    return '616015dcc031ff001b715497';
+  } else if (number === '28') {
+    return '616015e4c031ff001b7156b4';
+  } else if (number === '29') {
+    return '615f29f3c031ff001b11c1a6';
+  } else if (number === '615f292bc031ff001b117192') {
+    return 'boxID';
+  } 
+  // Add more conditions for other numbers if needed
+  // ...
+  
+  // Return a default unique ID if no specific condition matches
+  return 'default_unique_id';
+}
+
 // Generate the code for the string input block
 RGenerator['string_input'] = function(block) {
   var string = block.getFieldValue('String');
@@ -71,27 +129,6 @@ RGenerator['string_length'] = function(block) {
   //return ['nchar(' + text + ')', RGenerator.ORDER_MEMBER];
   return result;
 };
-RGenerator['load_data'] = function(block) {
-  const dataset = block.getFieldValue('DATASET');
-  const code = `
-data(${dataset})
-`;
-  return [code, RGenerator.ORDER_NONE];
-};
-
-RGenerator['load_boxData'] = function(block) {
-  // Load data from the local file
-  const jsonData = require('../senseboxData.json');
-
-  // Generate R code to create a variable with the loaded data
-  const code = `data <- list(
-    name = "${jsonData.name}",
-    age = ${jsonData.age},
-    email = "${jsonData.email}"
-  )\n`;
-
-  return code;
-};
 
 RGenerator['save_variable'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
@@ -99,8 +136,6 @@ RGenerator['save_variable'] = function(block) {
   var code = variableName + ' <- ' + data + '\n';
   return code;
 };
-
-
 
 RGenerator['box_id'] = function(block) {
   const boxId = block.getFieldValue('String');

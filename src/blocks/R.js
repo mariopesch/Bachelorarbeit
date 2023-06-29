@@ -1,31 +1,26 @@
 import * as Blockly from 'blockly';
 import 'blockly/javascript';
 
-Blockly.Blocks['load_data'] = {
+Blockly.Blocks['choose_box'] = {
   init: function() {
+    var numberOptions = [];
+    for (var i = 1; i <= 31; i++) {
+      if (![1, 4, 7, 8, 9, 15, 16, 21, 27, 31].includes(i)) {
+        numberOptions.push([String(i), String(i)]);
+      }
+    }
+    
     this.appendDummyInput()
-        .appendField("Load data")
-        .appendField(new Blockly.FieldDropdown([
-          ["Iris", "iris"],
-          // Add more dataset options here if desired
-        ]), "DATASET");
+        .appendField("Sensebox #")
+        .appendField(new Blockly.FieldDropdown(numberOptions), "Number");
     this.setOutput(true, "String");
-    this.setColour(230);
-    this.setTooltip("Load a specific dataset");
+    this.setColour(160);
+    this.setTooltip("");
     this.setHelpUrl("");
   }
 };
 
-Blockly.Blocks['load_boxData'] = {
-  init: function() {
-    this.appendDummyInput().appendField('SenseBox Daten laden');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(230);
-    this.setTooltip('');
-    this.setHelpUrl('');
-  }
-};
+
 
 Blockly.Blocks['save_variable'] = {
   init: function() {
@@ -106,7 +101,7 @@ Blockly.Blocks['get_temperature'] = {
         .appendField("Temperatur");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");
@@ -120,7 +115,7 @@ Blockly.Blocks['get_humidity'] = {
         .appendField("Rel.Luftfeuchte");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");
@@ -134,7 +129,7 @@ Blockly.Blocks['get_distanceLeft'] = {
         .appendField("Abstand links");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");
@@ -148,7 +143,7 @@ Blockly.Blocks['get_distanceRight'] = {
         .appendField("Abstand rechts");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");
@@ -162,7 +157,7 @@ Blockly.Blocks['get_PM10'] = {
         .appendField("Feinstaub PM10");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");
@@ -176,7 +171,7 @@ Blockly.Blocks['get_PM25'] = {
         .appendField("Feinstaub PM25");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");
@@ -190,7 +185,7 @@ Blockly.Blocks['get_accelerationX'] = {
         .appendField("Beschleunigung X-Achse");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");
@@ -204,7 +199,7 @@ Blockly.Blocks['get_accelerationY'] = {
         .appendField("Beschleunigung Y-Achse");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");
@@ -218,7 +213,7 @@ Blockly.Blocks['get_accelerationZ'] = {
         .appendField("Beschleunigung Z-Achse");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");
@@ -232,7 +227,7 @@ Blockly.Blocks['get_speed'] = {
         .appendField("Geschwindigkeit");
     this.appendValueInput("BOX_ID")
         .setCheck("String")
-        .appendField("Box ID");
+        .appendField("Box");
     this.setOutput(true, "Number");
     this.setColour(160);
     this.setTooltip("");

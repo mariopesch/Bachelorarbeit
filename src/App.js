@@ -76,9 +76,8 @@ function App(props) {
               }}
             >
               <div className="custom-toolbox-wrapper"></div>
-              <Category name="Daten">
-              <Block type="load_data" />
-              <Block type="load_boxData" />
+              <Category name="Senseboxen">
+              <Block type="choose_box" />
               </Category>
               <Category name="Test & Hilfe">
                 <Block type="string_length" />
