@@ -35,20 +35,6 @@ RGenerator.scrub_ = function(block, code, thisOnly) {
   }
   return code;
 };
-/** Block mit fester SenseBox ID
-RGenerator['get_temperature'] = function(block) {
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
-  `fetchTemp <- function() {\n` +
-  `  url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"\n`+
-  `  req <- fromJSON(paste0(url))\n` +
-  `  req$sensors$lastMeasurement$value[[1]]\n` +
-  `}\n\n` +
-  `fetchTemp()\n`;
-
-return [code, RGenerator.ORDER_NONE];
-};
-*/
 
 RGenerator['choose_box'] = function(block) {
   var number = block.getFieldValue('Number');
@@ -379,44 +365,6 @@ RGenerator['sd'] = function(block) {
   return [code, RGenerator.ORDER_ATOMIC];
 };
 
-
-
-// 1,1,2,4,5,6,7,7,7,11,15,60,100
-
-
-// R code from R Studio:
-// library(httr)
-// library(jsonlite)
-// url <- "https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e"
-// req <- fromJSON(paste0(url))
-// Richtige Ausgabe: JSON object mit 12 Einträgen
-// req$sensors$lastMeasurement$value[[1]] und req$sensors$lastMeasurement$value[1] geben
-// beide die letzte Temperaturmessung
-
-//Funktioniert auh in R Studio:
-//library(jsonlite)
-//library(httr)
-//fetchTemp <- function() {
-  //con <- url("https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e", "rb")
-  //con <- fromJSON(paste0(url))
-  //con$sensors$lastMeasurement$value[[1]]
-//}
-
-//fetchTemp()
-
-// Test Scatter Plot R Code:
-/**
- *  const code = `
-  x <- mtcars$wt
-  y <- mtcars$mpg
-# Add regression line
-plot(x, y, main = "Main title",
-     xlab = "X axis title", ylab = "Y axis title",
-     pch = 19, frame = FALSE)
-abline(lm(y ~ x, data = mtcars), col = "blue")
-  `;
-    return code;
- */
 
 
 

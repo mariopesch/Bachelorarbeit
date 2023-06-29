@@ -1,97 +1,84 @@
-/**
- * @license
- *
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
- * @fileoverview Blockly React Component.
- * @author samelh@google.com (Sam El-Husseini)
- */
-
 import React, { useState } from 'react';
- import './BlocklyComponent.css';
- import '../App.css';
- import {useEffect, useRef} from 'react';
- 
+import './BlocklyComponent.css';
+import '../App.css';
+import { useEffect, useRef } from 'react';
+import Blockly from 'blockly/core';
+import locale from 'blockly/msg/en';
+import 'blockly/blocks';
+import { javascriptGenerator } from 'blockly/javascript';
+import { RGenerator } from '../generator/R';
+import RCodeSnippet from '../RCodeSnippet';
 
- import Blockly from 'blockly/core';
- import locale from 'blockly/msg/en';
- import 'blockly/blocks';
- import {javascriptGenerator} from 'blockly/javascript';
- import {RGenerator} from '../generator/R';
- import RCodeSnippet from '../RCodeSnippet';
- 
+Blockly.setLocale(locale);
 
- Blockly.setLocale(locale);
+function BlocklyComponent(props) {
+  const [rcode, setRCode] = useState('');
+  const blocklyDiv = useRef();
+  const toolbox = useRef();
+  let primaryWorkspace = useRef();
+  const textareaRef = useRef(null);
 
- function BlocklyComponent(props) {
-    const [rcode, setRCode] = useState('');
-    const blocklyDiv = useRef();
-    const toolbox = useRef();
-    let primaryWorkspace = useRef();
-/*
-    const generateCode = () => {
-        var code = javascriptGenerator.workspaceToCode(
-          primaryWorkspace.current
-        );
-        console.log(code);
-    }
-**/
-const generateRCode = () => {
+  const generateRCode = () => {
     const data = {
       // Load your data here or from any external source
       key1: 'value1',
       key2: 'value2',
       // ...
     };
-  
-    // Generate the R code using the loaded data
+
     const rcode = RGenerator.workspaceToCode(primaryWorkspace.current, { data });
     console.log(rcode);
     setRCode(rcode);
     return rcode;
   };
 
-    useEffect(() => {
-        const { initialXml, children, ...rest } = props;
-            primaryWorkspace.current = Blockly.inject(
-                blocklyDiv.current,
-                {
-                    toolbox: toolbox.current,
-                    ...rest
-                },
-            );
+  const copyCodeToClipboard = () => {
+    const textArea = textareaRef.current;
+    textArea.value = rcode;
+    textArea.select();
+    document.execCommand('copy');
+  };
 
-            if (initialXml) {
-                Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(initialXml), primaryWorkspace.current);
-            }
-    }, [primaryWorkspace, toolbox, blocklyDiv, props]);
+  useEffect(() => {
+    const { initialXml, children, ...rest } = props;
+    primaryWorkspace.current = Blockly.inject(blocklyDiv.current, {
+      toolbox: toolbox.current,
+      ...rest,
+    });
 
-    return (
+    if (initialXml) {
+      Blockly.Xml.domToWorkspace(
+        Blockly.Xml.textToDom(initialXml),
+        primaryWorkspace.current
+      );
+    }
+  }, [primaryWorkspace, toolbox, blocklyDiv, props]);
+
+  return (
     <React.Fragment>
-        <button className="convert-button" onClick={generateRCode}>Convert R</button> 
-        <button className="convert-button">Zwischenablage</button>               
-     
-        <RCodeSnippet rcode={rcode} />
-        
-        <div ref={blocklyDiv} id="blocklyDiv" />
-        <div style={{ display: 'none' }} ref={toolbox}>
-            {props.children}
-        </div>
-    </React.Fragment>);
+      <div className="button-container">
+        <button className="convert-button" onClick={generateRCode}>
+          R Code anzeigen
+        </button>
+        <button className="copy-button" onClick={copyCodeToClipboard}>
+          R Code in Zwischenablage
+        </button>
+      </div>
+
+      <RCodeSnippet rcode={rcode} />
+
+      <textarea
+        ref={textareaRef}
+        style={{ position: 'absolute', left: '-9999px' }}
+        readOnly
+      />
+
+      <div ref={blocklyDiv} id="blocklyDiv" />
+      <div style={{ display: 'none' }} ref={toolbox}>
+        {props.children}
+      </div>
+    </React.Fragment>
+  );
 }
 
 export default BlocklyComponent;

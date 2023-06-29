@@ -14,7 +14,7 @@ Blockly.Blocks['choose_box'] = {
         .appendField("Sensebox #")
         .appendField(new Blockly.FieldDropdown(numberOptions), "Number");
     this.setOutput(true, "String");
-    this.setColour(160);
+    this.setColour("#789ac0");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -33,7 +33,7 @@ Blockly.Blocks['save_variable'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(160);
+    this.setColour("#D5C7BC");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -47,7 +47,7 @@ Blockly.Blocks['string_input'] = {
         .appendField("text input")
         .appendField(new Blockly.FieldTextInput(""), "String");
     this.setOutput(true, "String");
-    this.setColour(160);
+    this.setColour("#D5C7BC");
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -60,7 +60,7 @@ Blockly.Blocks['array_input'] = {
         .appendField("Array")
         .appendField(new Blockly.FieldTextInput("1, 2, 3"), "ARRAY");
     this.setOutput(true, "Array");
-    this.setColour(260);
+    this.setColour("#D5C7BC");
     this.setTooltip("Provide an array input");
     this.setHelpUrl("");
     this.setInputsInline(true);
@@ -74,7 +74,7 @@ Blockly.Blocks['string_length'] = {
         .setCheck("String")
         .appendField("length of");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#D5C7BC");
     this.setTooltip("");
     this.setHelpUrl("");
     this.setInputsInline(true);
@@ -88,7 +88,7 @@ Blockly.Blocks['box_id'] = {
         .appendField("SenseBox ID")
         .appendField(new Blockly.FieldTextInput(""), "String");
     this.setOutput(true, "String");
-    this.setColour(160);
+    this.setColour("#789ac0");
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -103,7 +103,7 @@ Blockly.Blocks['get_temperature'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -117,7 +117,7 @@ Blockly.Blocks['get_humidity'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -131,7 +131,7 @@ Blockly.Blocks['get_distanceLeft'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -145,7 +145,7 @@ Blockly.Blocks['get_distanceRight'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -159,7 +159,7 @@ Blockly.Blocks['get_PM10'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -173,7 +173,7 @@ Blockly.Blocks['get_PM25'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -187,7 +187,7 @@ Blockly.Blocks['get_accelerationX'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -201,7 +201,7 @@ Blockly.Blocks['get_accelerationY'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -215,7 +215,7 @@ Blockly.Blocks['get_accelerationZ'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -229,7 +229,7 @@ Blockly.Blocks['get_speed'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#b7bdc9");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -241,7 +241,7 @@ Blockly.Blocks['mean'] = {
         .setCheck("Array")
         .appendField("Mittelwert");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#af9cb1");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -252,7 +252,7 @@ Blockly.Blocks['median'] = {
         .setCheck("Array")
         .appendField("Median");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#af9cb1");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -263,7 +263,7 @@ Blockly.Blocks['sd'] = {
         .setCheck("Array")
         .appendField("Standardabweichung");
     this.setOutput(true, "Number");
-    this.setColour(160);
+    this.setColour("#af9cb1");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -288,7 +288,7 @@ Blockly.Blocks['scatter_plot'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(260);
+    this.setColour("#866475");
     this.setTooltip('Create a scatter plot using ggplot2 library');
     this.setHelpUrl('');
   }
@@ -307,7 +307,7 @@ Blockly.Blocks['bar_chart'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(260);
+    this.setColour("#866475");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -326,7 +326,7 @@ Blockly.Blocks['line_chart'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(260);
+    this.setColour("#866475");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -345,7 +345,7 @@ Blockly.Blocks['histogram'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(260);
+    this.setColour("#866475");
     this.setTooltip("");
     this.setHelpUrl("");
   }

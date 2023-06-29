@@ -11,7 +11,7 @@ html, body {
 }
 
 .App-header {
-  background-color: #679ee5;
+  background-color: #789ac0;
   color: #fff;
   padding: 20px;
 }
@@ -36,7 +36,7 @@ html, body {
 
 .Navbar {
   height: 50px;
-  background-color: #f0f0f0;
+  background-color: #b7bdc9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,18 +69,25 @@ html, body {
 
 .map-container {
   width: 80%;
-  height: 50vh; /* Adjust the height as needed */
+  height: 400px; /* Adjust the height as needed */
   border: 1px solid black;
   overflow: hidden; /* Prevent map from overflowing */
   position: relative;
 }
 
-.convert-button {
+.button-container {
+  display: flex;
+}
+
+.convert-button,
+.copy-button {
   width: 150px; /* Adjust the width as per your preference */
+  flex: 1;
+  margin-right: 10px;
   padding: 10px 20px;
-  background-color: #679ee5;
+  background-color: #b7bdc9;
   color: #fff;
-  border: none;
+  border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;

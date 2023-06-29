@@ -76,17 +76,11 @@ function App(props) {
               }}
             >
               <div className="custom-toolbox-wrapper"></div>
-              <Category name="Senseboxen">
+              <Category name="Senseboxen" colour="#789ac0">
               <Block type="choose_box" />
+              <Block type="box_id" />
               </Category>
-              <Category name="Test & Hilfe">
-                <Block type="string_length" />
-                <Block type="string_input" />
-                <Block type="array_input" />
-                <Block type="save_variable" />
-              </Category>
-              <Category name="Box-Anfragen">
-                <Block type="box_id" />
+              <Category name="Box-Anfragen" colour="#b7bdc9">
                 <Block type="get_temperature" />
                 <Block type="get_humidity" />
                 <Block type="get_distanceLeft" />
@@ -97,19 +91,22 @@ function App(props) {
                 <Block type="get_accelerationY" />
                 <Block type="get_speed" />
               </Category>
-              <Category name="Datenanalyse">
+              <Category name="Operationen" colour="#D5C7BC">
+                <Block type="string_length" />
+                <Block type="string_input" />
+                <Block type="array_input" />
+                <Block type="save_variable" />
+              </Category>
+              <Category name="Datenanalyse" colour="#af9cb1">
                 <Block type="mean" />
                 <Block type="median" />
                 <Block type="sd" />
               </Category>
-              <Category name="Datenvisualisierung">
+              <Category name="Datenvisualisierung" colour="#866475">
                 <Block type="scatter_plot" />
                 <Block type="bar_chart" />
                 <Block type="line_chart" />
                 <Block type="histogram" />
-              </Category>
-              <Category name="Karte">
-                <Block type="map" />
               </Category>
               </BlocklyComponent>
           </div>
