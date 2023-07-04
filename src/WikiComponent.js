@@ -9,6 +9,8 @@ const WikiComponent = () => {
           <li>https://opensensemap.org/explore/615f2969c031ff001b118a3e</li>
             {/* Add more links as needed */}
           </ul>
+          <p>Wie zitiere ich Daten?</p>
+          <p>Was sind Metadaten?</p>
         </div>
       </div>
     

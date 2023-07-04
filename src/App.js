@@ -22,7 +22,7 @@
  */
 
 
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import './App.css';
 
 import BlocklyComponent, { Block, Category } from './Blockly';
@@ -36,7 +36,6 @@ import MapComponent from './MapComponent';
 import WikiComponent from './WikiComponent';
 import IdeaComponent from './IdeaComponent';
 import ResultsComponent from './ResultsComponent';
-import DataComponent from './DataComponent';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
@@ -80,7 +79,7 @@ function App(props) {
               <Block type="choose_box" />
               <Block type="box_id" />
               </Category>
-              <Category name="Box-Anfragen" colour="#b7bdc9">
+              <Category name="Sensor-Anfragen" colour="#b7bdc9">
                 <Block type="get_temperature" />
                 <Block type="get_humidity" />
                 <Block type="get_distanceLeft" />
@@ -94,35 +93,36 @@ function App(props) {
               <Category name="Operationen" colour="#D5C7BC">
                 <Block type="string_length" />
                 <Block type="string_input" />
+                <Block type="number" />
                 <Block type="array_input" />
+                <Block type="matrix" />
                 <Block type="save_variable" />
               </Category>
               <Category name="Datenanalyse" colour="#af9cb1">
                 <Block type="mean" />
                 <Block type="median" />
                 <Block type="sd" />
+                <Block type="correlation_analysis" />
               </Category>
               <Category name="Datenvisualisierung" colour="#866475">
+                <Block type="boxplot" />
                 <Block type="scatter_plot" />
                 <Block type="bar_chart" />
                 <Block type="line_chart" />
                 <Block type="histogram" />
+                <Block type="heatmap" />
               </Category>
               </BlocklyComponent>
           </div>
           <div className="result-container">
           <Tabs>
     <TabList>
-      <Tab>Daten</Tab>
       <Tab>Ergebnisse</Tab>
       <Tab>Map</Tab>
       <Tab>Wiki</Tab>
       <Tab>Analyseideen</Tab>
     </TabList>
 
-    <TabPanel>
-      <DataComponent/>
-    </TabPanel>
     <TabPanel>
       <ResultsComponent/>
     </TabPanel>

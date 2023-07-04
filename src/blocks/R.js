@@ -66,6 +66,37 @@ Blockly.Blocks['array_input'] = {
     this.setInputsInline(true);
   }
 };
+Blockly.Blocks['number'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldNumber(0), "VALUE");
+    this.setOutput(true, "Number");
+    this.setColour("#D5C7BC");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['matrix'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("m x n Matrix");
+    this.appendValueInput("ROWS")
+        .setCheck("Number")
+        .appendField("Rows m");
+    this.appendValueInput("COLS")
+        .setCheck("Number")
+        .appendField("Columns n");
+    this.appendValueInput("VALUES")
+        .setCheck("Array")
+        .appendField("Values");
+    this.setOutput(true, "Array");
+    this.setColour("#D5C7BC");
+    this.setInputsInline(false);
+    this.setTooltip("Zuerst werden die Spalten von oben nach unten gefüllt");
+    this.setHelpUrl("");
+  }
+};
+
 
 // Define the block to get the length of a string
 Blockly.Blocks['string_length'] = {
@@ -268,31 +299,76 @@ Blockly.Blocks['sd'] = {
     this.setHelpUrl("");
   }
 };
-
-
-
-Blockly.Blocks['scatter_plot'] = {
+Blockly.Blocks['correlation_analysis'] = {
   init: function() {
-    this.appendValueInput('X')
-        .setCheck('Array')
-        .appendField('x-Achse');
-    this.appendValueInput('Y')
-        .setCheck('Array')
-        .appendField('y-Achse');
-    this.appendValueInput('X_AXIS_TITLE')
-        .setCheck('String')
-        .appendField('Titel X-Achse');    
-    this.appendValueInput('Y_AXIS_TITLE')
-        .setCheck('String')
-        .appendField('Titel Y-Achse');   
+    this.appendValueInput("VAR1")
+        .setCheck(null)
+        .appendField("Perform Correlation Analysis");
+    this.appendValueInput("VAR2")
+        .setCheck(null)
+        .appendField("with");
+    this.appendDummyInput()
+        .appendField("Method")
+        .appendField(new Blockly.FieldDropdown([["Pearson", "pearson"], ["Spearman", "spearman"], ["Kendall", "kendall"]]), "METHOD");
     this.setInputsInline(false);
+    this.setOutput(true, "Number");
+    this.setColour("#af9cb1");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+
+
+
+Blockly.Blocks['boxplot'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck(null)
+        .appendField("Box Plot");
+    this.appendDummyInput()
+        .appendField("Title")
+        .appendField(new Blockly.FieldTextInput(""), "TITLE");
+    this.appendDummyInput()
+        .appendField("X-Axis Label")
+        .appendField(new Blockly.FieldTextInput("Value"), "X_LABEL");
+    this.appendDummyInput()
+        .appendField("Y-Axis Label")
+        .appendField(new Blockly.FieldTextInput("Frequency"), "Y_LABEL");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#866475");
-    this.setTooltip('Create a scatter plot using ggplot2 library');
-    this.setHelpUrl('');
+    this.setTooltip("");
+    this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['scatter_plot'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck(null)
+        .appendField("Scatter Plot");
+    this.appendDummyInput()
+        .appendField("Title")
+        .appendField(new Blockly.FieldTextInput(""), "TITLE");
+    this.appendDummyInput()
+        .appendField("X-Axis Label")
+        .appendField(new Blockly.FieldTextInput("Value"), "X_LABEL");
+    this.appendDummyInput()
+        .appendField("Y-Axis Label")
+        .appendField(new Blockly.FieldTextInput("Frequency"), "Y_LABEL");
+    this.appendDummyInput()
+        .appendField("Regressionslinie")
+        .appendField(new Blockly.FieldCheckbox("TRUE"), "SHOW_TRENDLINE");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#866475");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+
 Blockly.Blocks['bar_chart'] = {
   init: function() {
     this.appendValueInput("DATA")
@@ -334,15 +410,17 @@ Blockly.Blocks['line_chart'] = {
 Blockly.Blocks['histogram'] = {
   init: function() {
     this.appendValueInput("DATA")
-        .setCheck("Array")
+        .setCheck(null)
         .appendField("Histogramm");
-    this.appendValueInput("X_AXIS")
-        .setCheck("String")
-        .appendField("X-axis label");
-    this.appendValueInput("Y_AXIS")
-        .setCheck("String")
-        .appendField("Y-axis label");
-    this.setInputsInline(false);
+    this.appendDummyInput()
+        .appendField("Title")
+        .appendField(new Blockly.FieldTextInput(""), "TITLE");
+    this.appendDummyInput()
+        .appendField("X-Axis Label")
+        .appendField(new Blockly.FieldTextInput("Value"), "X_LABEL");
+    this.appendDummyInput()
+        .appendField("Y-Axis Label")
+        .appendField(new Blockly.FieldTextInput("Frequency"), "Y_LABEL");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#866475");
@@ -350,6 +428,23 @@ Blockly.Blocks['histogram'] = {
     this.setHelpUrl("");
   }
 };
+Blockly.Blocks['heatmap'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck(null)
+        .appendField("Create Heatmap with data");
+    this.appendDummyInput()
+        .appendField("Color Scheme")
+        .appendField(new Blockly.FieldDropdown([["Red", "red"], ["Blue", "blue"], ["Green", "green"]]), "COLOR_SCHEME");
+    this.setInputsInline(false);
+    this.setOutput(true, null);
+    this.setColour("#866475");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+
 
 
 

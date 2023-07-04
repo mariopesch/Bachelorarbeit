@@ -100,10 +100,25 @@ RGenerator['string_input'] = function(block) {
   return [string, RGenerator.ORDER_ATOMIC];
 };
 
+RGenerator['number'] = function(block) {
+  var value = block.getFieldValue('VALUE');
+  return [value, RGenerator.ORDER_ATOMIC];
+};
+
+
 RGenerator['array_input'] = function(block) {
   const array = block.getFieldValue('ARRAY').split(',').map(element => element.trim()).join(', ');
   
   const code = `c(${array})`;
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['matrix'] = function(block) {
+  var rows = RGenerator.valueToCode(block, 'ROWS', RGenerator.ORDER_ATOMIC) || '0';
+  var cols = RGenerator.valueToCode(block, 'COLS', RGenerator.ORDER_ATOMIC) || '0';
+  var values = RGenerator.valueToCode(block, 'VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
+
+  var code = 'matrix(c(' + values + '), nrow = ' + rows + ', ncol = ' + cols + ')';
   return [code, RGenerator.ORDER_ATOMIC];
 };
 
@@ -307,21 +322,31 @@ RGenerator['get_speed'] = function(block) {
 return [code, RGenerator.ORDER_NONE];
 };
 
-// Generate R code for the scatter plot block
-RGenerator['scatter_plot'] = function(block) {
-  const x = RGenerator.valueToCode(block, 'X', RGenerator.ORDER_NONE);
-  const y = RGenerator.valueToCode(block, 'Y', RGenerator.ORDER_NONE);
-  const xTitle = RGenerator.valueToCode(block, 'X_AXIS_TITLE', RGenerator.ORDER_NONE) || '""';
-  const yTitle = RGenerator.valueToCode(block, 'Y_AXIS_TITLE', RGenerator.ORDER_NONE) || '""';
-
-  const code = `
-  plot(${x}, ${y},
-       xlab = "${xTitle}", ylab = "${yTitle}",
-       pch = 19, frame = FALSE)
-  abline(lm(${y} ~ ${x}), col = "blue")
-  `;
-    return code;
+RGenerator['boxplot'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var title = block.getFieldValue('TITLE');
+  var xLabel = block.getFieldValue('X_LABEL');
+  var yLabel = block.getFieldValue('Y_LABEL');
+  
+  var code = 'boxplot(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
+  return code;
 };
+
+RGenerator['scatter_plot'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var title = block.getFieldValue('TITLE');
+  var xLabel = block.getFieldValue('X_LABEL');
+  var yLabel = block.getFieldValue('Y_LABEL');
+  var showTrendline = block.getFieldValue('SHOW_TRENDLINE') === 'TRUE' ? 'TRUE' : 'FALSE';
+  
+  var code = 'plot(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
+  code += 'if (' + showTrendline + ') {\n';
+  code += '  abline(lm(' + yLabel + ' ~ ' + xLabel + ', data = ' + data + '), col = "blue")\n';
+  code += '}\n';
+  return code;
+};
+
+
 RGenerator['bar_chart'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
   var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
@@ -330,7 +355,7 @@ RGenerator['bar_chart'] = function(block) {
   return code;
 };
 RGenerator['line_chart'] = function(block) {
-  var data = Blockly.R.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
   var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
   var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
   var code = 'plot(' + data + ', type="l", xlab=' + xLabel + ', ylab=' + yLabel + ')';
@@ -338,11 +363,21 @@ RGenerator['line_chart'] = function(block) {
 };
 RGenerator['histogram'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
-  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
-  var code = 'hist(' + data + ', xlab=' + xLabel + ', ylab=' + yLabel + ')';
+  var title = block.getFieldValue('TITLE');
+  var xLabel = block.getFieldValue('X_LABEL');
+  var yLabel = block.getFieldValue('Y_LABEL');
+  
+  var code = 'hist(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
   return code;
 };
+RGenerator['heatmap'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var colorScheme = block.getFieldValue('COLOR_SCHEME');
+  
+  var code = 'heatmap(' + data + ', col = "' + colorScheme + '")\n';
+  return code;
+};
+
 
 
 
@@ -364,6 +399,17 @@ RGenerator['sd'] = function(block) {
   var code = 'sd(' + data + ')';
   return [code, RGenerator.ORDER_ATOMIC];
 };
+RGenerator['correlation_analysis'] = function(block) {
+  var var1 = RGenerator.valueToCode(block, 'VAR1', RGenerator.ORDER_ATOMIC);
+  var var2 = RGenerator.valueToCode(block, 'VAR2', RGenerator.ORDER_ATOMIC);
+  var method = block.getFieldValue('METHOD');
+  
+  var code = 'cor.test(' + var1 + ', ' + var2 + ', method = "' + method + '")$estimate\n';
+  return code;
+};
+
+
+
 
 
 
