@@ -36,6 +36,8 @@ RGenerator.scrub_ = function(block, code, thisOnly) {
   return code;
 };
 
+// Kategorie Senseboxen
+
 RGenerator['choose_box'] = function(block) {
   var number = block.getFieldValue('Number');
   var uniqueID = generateUniqueID(number);
@@ -94,185 +96,12 @@ function generateUniqueID(number) {
   return 'default_unique_id';
 }
 
-// Generate the code for the string input block
-RGenerator['string_input'] = function(block) {
-  var string = block.getFieldValue('String');
-  return [string, RGenerator.ORDER_ATOMIC];
-};
-
-RGenerator['number'] = function(block) {
-  var value = block.getFieldValue('VALUE');
-  return [value, RGenerator.ORDER_ATOMIC];
-};
-
-RGenerator['print'] = function(block) {
-  var value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_NONE) || '';
-  var code = 'print(' + value + ')\n';
-  return code;
-};
-
-
-RGenerator['array_input'] = function(block) {
-  const array = block.getFieldValue('ARRAY').split(',').map(element => element.trim()).join(', ');
-  
-  const code = `c(${array})`;
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-
-RGenerator['matrix'] = function(block) {
-  var rows = RGenerator.valueToCode(block, 'ROWS', RGenerator.ORDER_ATOMIC) || '0';
-  var cols = RGenerator.valueToCode(block, 'COLS', RGenerator.ORDER_ATOMIC) || '0';
-  var values = RGenerator.valueToCode(block, 'VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
-
-  var code = 'matrix(c(' + values + '), nrow = ' + rows + ', ncol = ' + cols + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-RGenerator['round_number'] = function(block) {
-  var number = RGenerator.valueToCode(block, 'NUMBER', RGenerator.ORDER_NONE) || '';
-
-  var code = 'round(' + number + ', 1)';
-
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-RGenerator['square_root'] = function(block) {
-  var number = RGenerator.valueToCode(block, 'NUMBER', RGenerator.ORDER_NONE) || '';
-
-  var code = 'sqrt(' + number + ')';
-
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-
-RGenerator['lists_sort'] = function(block) {
-  var list = RGenerator.valueToCode(block, 'LIST', RGenerator.ORDER_ATOMIC) || '[]';
-  var order = block.getFieldValue('ORDER');
-  var code = '';
-
-  if (order === 'ASCENDING') {
-    code = 'sort(' + list + ')';
-  } else if (order === 'DESCENDING') {
-    code = 'sort(' + list + ', decreasing = TRUE)';
-  }
-
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-
-
-RGenerator['string_length'] = function(block) {
-  // String or array length.
-  var text = RGenerator.valueToCode(block, 'String',
-  RGenerator.ORDER_MEMBER) || '\'\'';
-  var result = 'nchar(' + "'" + text + "'" + ')';
-  //return ['nchar(' + text + ')', RGenerator.ORDER_MEMBER];
-  return result;
-};
-
-RGenerator['boolean'] = function(block) {
-  var value = block.getFieldValue('VALUE');
-  return [value, RGenerator.ORDER_ATOMIC];
-};
-
-RGenerator['arithmetic'] = function(block) {
-  var left = RGenerator.valueToCode(block, 'LEFT', RGenerator.ORDER_ATOMIC) || '0';
-  var operator = block.getFieldValue('OPERATOR');
-  var right = RGenerator.valueToCode(block, 'RIGHT', RGenerator.ORDER_ATOMIC) || '0';
-
-  var code = left + ' ' + operator + ' ' + right;
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-
-RGenerator['max_min'] = function(block) {
-  var func = block.getFieldValue('FUNCTION');
-  var values = RGenerator.valueToCode(block, 'VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
-
-  var code = func + '(' + values + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-
-RGenerator['save_as_array'] = function(block) {
-  const value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_ATOMIC) || '';
-  const array = RGenerator.valueToCode(block, 'ARRAY', RGenerator.ORDER_ATOMIC) || '';
-  const code = `${array} <- c(${array}, ${value})\n`;
-  return code;
-};
-
-RGenerator['load_libraries'] = function(block) {
-  var code = 'library(jsonlite)\nlibrary(httr)\n';
-  return code;
-};
-RGenerator['if_else'] = function(block) {
-  var conditionType = block.getFieldValue('CONDITION_TYPE');
-  var condition = RGenerator.valueToCode(block, 'CONDITION', RGenerator.ORDER_NONE) || 'FALSE';
-  var ifBody = RGenerator.statementToCode(block, 'IF_BODY');
-
-  var code = '';
-  if (conditionType === 'IF') {
-    code += 'if (' + condition + ') {\n' + ifBody + '}\n';
-  } else if (conditionType === 'ELSEIF') {
-    code += 'else if (' + condition + ') {\n' + ifBody + '}\n';
-  } else if (conditionType === 'ELSE') {
-    code += 'else {\n' + ifBody + '}\n';
-  }
-  
-  return code;
-};
-
-RGenerator['comparison'] = function(block) {
-  var left = RGenerator.valueToCode(block, 'LEFT', RGenerator.ORDER_NONE) || '';
-  var operator = block.getFieldValue('OPERATOR');
-  var right = RGenerator.valueToCode(block, 'RIGHT', RGenerator.ORDER_NONE) || '';
-
-  var code = left + ' ' + operator + ' ' + right;
-
-  // Add parentheses to improve readability
-  if (operator === '>=' || operator === '<=' || operator === '!=' || operator === '==') {
-    code = '(' + code + ')';
-  }
-
-  return [code, RGenerator.ORDER_RELATIONAL];
-};
-RGenerator['logic_operations'] = function(block) {
-  var operator = block.getFieldValue('OPERATOR');
-  var a = RGenerator.valueToCode(block, 'A', RGenerator.ORDER_NONE) || '';
-  var b = RGenerator.valueToCode(block, 'B', RGenerator.ORDER_NONE) || '';
-
-  var code = '';
-
-  if (operator === '!') {
-    code = operator + ' ' + a;
-  } else {
-    code = a + ' ' + operator + ' ' + b;
-  }
-
-  return [code, RGenerator.ORDER_LOGICAL];
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-RGenerator['save_variable'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var variableName = RGenerator.valueToCode(block, 'VARIABLE_NAME', RGenerator.ORDER_ATOMIC);
-  var code = variableName + ' <- ' + data + '\n';
-  return code;
-};
-
 RGenerator['box_id'] = function(block) {
   const boxId = block.getFieldValue('String');
   return [boxId, RGenerator.ORDER_ATOMIC];
 };
+
+// Kategorie Sensor-Anfragen
 
 RGenerator['get_temperature'] = function (block) {
   const boxId = RGenerator.valueToCode(
@@ -449,126 +278,20 @@ RGenerator['get_coordinates'] = function(block) {
     RGenerator.ORDER_ATOMIC
   );
   const code = 
-  `fetchcoordinates <- function() {\n` +
+  `fetchCoordinates <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
-  `  req$coordinates\n` +
+  `   coordinates <- req$currentLocation$coordinates\n` +
+  `  lat <- coordinates[2] \n` +
+  `  lon <- coordinates[1] \n` +
+  `  list(lat = lat, lon = lon)  \n` +
   `}\n\n` +
-  `c(fetchcoordinates())\n`;
+  `c(fetchCoordinates())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
 
-RGenerator['boxplot'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var title = block.getFieldValue('TITLE');
-  var xLabel = block.getFieldValue('X_LABEL');
-  var yLabel = block.getFieldValue('Y_LABEL');
-  
-  var code = 'boxplot(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
-  return code;
-};
-
-RGenerator['scatter_plot'] = function(block) {
-  var xValues = RGenerator.valueToCode(block, 'X_VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
-  var yValues = RGenerator.valueToCode(block, 'Y_VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
-  var showLine = block.getFieldValue('SHOW_LINE') === 'TRUE';
-
-  var code = 'plot(' + xValues + ', ' + yValues + ', pch = 19, frame = FALSE)\n';
-  if (showLine) {
-    code += 'abline(lm(' + yValues + ' ~ ' + xValues + '), col = "blue")\n';
-  }
-  return code;
-};
-
-
-
-
-
-
-RGenerator['bar_chart'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
-  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
-  var code = 'barplot(' + data + ', xlab=' + xLabel + ', ylab=' + yLabel + ')';
-  return code;
-};
-RGenerator['line_chart'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
-  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
-  var code = 'plot(' + data + ', type="l", xlab=' + xLabel + ', ylab=' + yLabel + ')';
-  return code;
-};
-RGenerator['histogram'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var title = block.getFieldValue('TITLE');
-  var xLabel = block.getFieldValue('X_LABEL');
-  var yLabel = block.getFieldValue('Y_LABEL');
-  
-  var code = 'hist(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
-  return code;
-};
-RGenerator['heatmap'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var colorScheme = block.getFieldValue('COLOR_SCHEME');
-  
-  var code = 'heatmap(' + data + ', col = "' + colorScheme + '")\n';
-  return code;
-};
-RGenerator['display_table'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC) || '';
-
-  var code = 'print(as.data.frame(' + data + '))\n';
-  return code;
-};
-
-
-
-
-
-
-
-
-RGenerator['mean'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var code = 'mean(' + data + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-RGenerator['median'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var code = 'median(' + data + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-RGenerator['sd'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var code = 'sd(' + data + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-RGenerator['correlation_analysis'] = function(block) {
-  var var1 = RGenerator.valueToCode(block, 'VAR1', RGenerator.ORDER_ATOMIC);
-  var var2 = RGenerator.valueToCode(block, 'VAR2', RGenerator.ORDER_ATOMIC);
-  var method = block.getFieldValue('METHOD');
-  
-  var code = 'cor.test(' + var1 + ', ' + var2 + ', method = "' + method + '")$estimate\n';
-  return code;
-};
-
-RGenerator['one_sample_t_test'] = function(block) {
-  var sample = RGenerator.valueToCode(block, 'SAMPLE', RGenerator.ORDER_ATOMIC) || 'NULL';
-  var populationMean = RGenerator.valueToCode(block, 'POPULATION_MEAN', RGenerator.ORDER_ATOMIC) || 'NULL';
-
-  var code = 't.test(' + sample + ', mu = ' + populationMean + ')$p.value';
-  return code;
-};
-
-RGenerator['two_sample_t_test'] = function(block) {
-  var sample1 = RGenerator.valueToCode(block, 'SAMPLE_1', RGenerator.ORDER_ATOMIC) || 'NULL';
-  var sample2 = RGenerator.valueToCode(block, 'SAMPLE_2', RGenerator.ORDER_ATOMIC) || 'NULL';
-
-  var code = 't.test(' + sample1 + ', ' + sample2 + ')$p.value';
-  return code;
-};
+// Kategorie Listen und Text 
 
 RGenerator['lists_create_with'] = function(block) {
   var elements = new Array(block.itemCount_);
@@ -596,3 +319,296 @@ RGenerator['lists_create_with_item'] = function(block) {
   var code = '';
   return code;
 };
+
+RGenerator['string_length'] = function(block) {
+  // String or array length.
+  var text = RGenerator.valueToCode(block, 'String',
+  RGenerator.ORDER_MEMBER) || '\'\'';
+  var result = 'nchar(' + "'" + text + "'" + ')';
+  //return ['nchar(' + text + ')', RGenerator.ORDER_MEMBER];
+  return result;
+};
+
+RGenerator['string_input'] = function(block) {
+  var string = block.getFieldValue('String');
+  return [string, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['print'] = function(block) {
+  var value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_NONE) || '';
+  var code = 'print(' + value + ')\n';
+  return code;
+};
+
+// Kategorie Operationen 
+
+RGenerator['load_libraries'] = function(block) {
+  var code = 'library(jsonlite)\nlibrary(httr)\n';
+  return code;
+};
+
+RGenerator['save_variable'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var variableName = RGenerator.valueToCode(block, 'VARIABLE_NAME', RGenerator.ORDER_ATOMIC);
+  var code = variableName + ' <- ' + data + '\n';
+  return code;
+};
+
+RGenerator['save_as_array'] = function(block) {
+  const value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_ATOMIC) || '';
+  const array = RGenerator.valueToCode(block, 'ARRAY', RGenerator.ORDER_ATOMIC) || '';
+  const code = `${array} <- c(${array}, ${value})\n`;
+  return code;
+};
+
+RGenerator['lists_sort'] = function(block) {
+  var list = RGenerator.valueToCode(block, 'LIST', RGenerator.ORDER_ATOMIC) || '[]';
+  var order = block.getFieldValue('ORDER');
+  var code = '';
+
+  if (order === 'ASCENDING') {
+    code = 'sort(' + list + ')';
+  } else if (order === 'DESCENDING') {
+    code = 'sort(' + list + ', decreasing = TRUE)';
+  }
+
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['convert_data_type'] = function(block) {
+  var value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_ATOMIC);
+  var dataType = block.getFieldValue('TYPE');
+  
+  var code = dataType + '(' + value + ')';
+  
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+
+// Kategorie Mathematik 
+
+RGenerator['number'] = function(block) {
+  var value = block.getFieldValue('VALUE');
+  return [value, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['array_input'] = function(block) {
+  const array = block.getFieldValue('ARRAY').split(',').map(element => element.trim()).join(', ');
+  
+  const code = `c(${array})`;
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['matrix'] = function(block) {
+  var rows = RGenerator.valueToCode(block, 'ROWS', RGenerator.ORDER_ATOMIC) || '0';
+  var cols = RGenerator.valueToCode(block, 'COLS', RGenerator.ORDER_ATOMIC) || '0';
+  var values = RGenerator.valueToCode(block, 'VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
+
+  var code = 'matrix(c(' + values + '), nrow = ' + rows + ', ncol = ' + cols + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['arithmetic'] = function(block) {
+  var left = RGenerator.valueToCode(block, 'LEFT', RGenerator.ORDER_ATOMIC) || '0';
+  var operator = block.getFieldValue('OPERATOR');
+  var right = RGenerator.valueToCode(block, 'RIGHT', RGenerator.ORDER_ATOMIC) || '0';
+
+  var code = left + ' ' + operator + ' ' + right;
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['round_number'] = function(block) {
+  var number = RGenerator.valueToCode(block, 'NUMBER', RGenerator.ORDER_NONE) || '';
+
+  var code = 'round(' + number + ', 1)';
+
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['square_root'] = function(block) {
+  var number = RGenerator.valueToCode(block, 'NUMBER', RGenerator.ORDER_NONE) || '';
+
+  var code = 'sqrt(' + number + ')';
+
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['max_min'] = function(block) {
+  var func = block.getFieldValue('FUNCTION');
+  var values = RGenerator.valueToCode(block, 'VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
+
+  var code = func + '(' + values + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+// Kategorie Logik
+
+RGenerator['boolean'] = function(block) {
+  var value = block.getFieldValue('VALUE');
+  return [value, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['logic_operations'] = function(block) {
+  var operator = block.getFieldValue('OPERATOR');
+  var a = RGenerator.valueToCode(block, 'A', RGenerator.ORDER_NONE) || '';
+  var b = RGenerator.valueToCode(block, 'B', RGenerator.ORDER_NONE) || '';
+
+  var code = '';
+
+  if (operator === '!') {
+    code = operator + ' ' + a;
+  } else {
+    code = a + ' ' + operator + ' ' + b;
+  }
+
+  return [code, RGenerator.ORDER_LOGICAL];
+};
+
+RGenerator['comparison'] = function(block) {
+  var left = RGenerator.valueToCode(block, 'LEFT', RGenerator.ORDER_NONE) || '';
+  var operator = block.getFieldValue('OPERATOR');
+  var right = RGenerator.valueToCode(block, 'RIGHT', RGenerator.ORDER_NONE) || '';
+
+  var code = left + ' ' + operator + ' ' + right;
+
+  // Add parentheses to improve readability
+  if (operator === '>=' || operator === '<=' || operator === '!=' || operator === '==') {
+    code = '(' + code + ')';
+  }
+
+  return [code, RGenerator.ORDER_RELATIONAL];
+};
+
+RGenerator['if_else'] = function(block) {
+  var conditionType = block.getFieldValue('CONDITION_TYPE');
+  var condition = RGenerator.valueToCode(block, 'CONDITION', RGenerator.ORDER_NONE) || 'FALSE';
+  var ifBody = RGenerator.statementToCode(block, 'IF_BODY');
+
+  var code = '';
+  if (conditionType === 'IF') {
+    code += 'if (' + condition + ') {\n' + ifBody + '}\n';
+  } else if (conditionType === 'ELSEIF') {
+    code += 'else if (' + condition + ') {\n' + ifBody + '}\n';
+  } else if (conditionType === 'ELSE') {
+    code += 'else {\n' + ifBody + '}\n';
+  }
+  
+  return code;
+};
+
+// Kategorie Datenanalyse
+
+RGenerator['mean'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var code = 'mean(' + data + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['median'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var code = 'median(' + data + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['sd'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var code = 'sd(' + data + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['correlation_analysis'] = function(block) {
+  var var1 = RGenerator.valueToCode(block, 'VAR1', RGenerator.ORDER_ATOMIC);
+  var var2 = RGenerator.valueToCode(block, 'VAR2', RGenerator.ORDER_ATOMIC);
+  var method = block.getFieldValue('METHOD');
+  
+  var code = 'cor.test(' + var1 + ', ' + var2 + ', method = "' + method + '")$estimate\n';
+  return code;
+};
+
+RGenerator['one_sample_t_test'] = function(block) {
+  var sample = RGenerator.valueToCode(block, 'SAMPLE', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var populationMean = RGenerator.valueToCode(block, 'POPULATION_MEAN', RGenerator.ORDER_ATOMIC) || 'NULL';
+
+  var code = 't.test(' + sample + ', mu = ' + populationMean + ')$p.value';
+  return code;
+};
+
+RGenerator['two_sample_t_test'] = function(block) {
+  var sample1 = RGenerator.valueToCode(block, 'SAMPLE_1', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var sample2 = RGenerator.valueToCode(block, 'SAMPLE_2', RGenerator.ORDER_ATOMIC) || 'NULL';
+
+  var code = 't.test(' + sample1 + ', ' + sample2 + ')$p.value';
+  return code;
+};
+
+// Kategorie Datenvisualisierung
+
+RGenerator['boxplot'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var title = block.getFieldValue('TITLE');
+  var xLabel = block.getFieldValue('X_LABEL');
+  var yLabel = block.getFieldValue('Y_LABEL');
+  
+  var code = 'boxplot(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
+  return code;
+};
+
+RGenerator['scatter_plot'] = function(block) {
+  var xValues = RGenerator.valueToCode(block, 'X_VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var yValues = RGenerator.valueToCode(block, 'Y_VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var showLine = block.getFieldValue('SHOW_LINE') === 'TRUE';
+
+  var code = 'plot(' + xValues + ', ' + yValues + ', pch = 19, frame = FALSE)\n';
+  if (showLine) {
+    code += 'abline(lm(' + yValues + ' ~ ' + xValues + '), col = "blue")\n';
+  }
+  return code;
+};
+
+RGenerator['bar_chart'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
+  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
+  var code = 'barplot(' + data + ', xlab=' + xLabel + ', ylab=' + yLabel + ')';
+  return code;
+};
+
+RGenerator['line_chart'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
+  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
+  var code = 'plot(' + data + ', type="l", xlab=' + xLabel + ', ylab=' + yLabel + ')';
+  return code;
+};
+
+RGenerator['histogram'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var title = block.getFieldValue('TITLE');
+  var xLabel = block.getFieldValue('X_LABEL');
+  var yLabel = block.getFieldValue('Y_LABEL');
+  
+  var code = 'hist(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
+  return code;
+};
+
+RGenerator['heatmap'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var colorScheme = block.getFieldValue('COLOR_SCHEME');
+  
+  var code = 'heatmap(' + data + ', col = "' + colorScheme + '")\n';
+  return code;
+};
+
+RGenerator['display_table'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC) || '';
+
+  var code = 'print(as.data.frame(' + data + '))\n';
+  return code;
+};
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@ html, body {
 }
 
 .App-header {
-  background-color: #789ac0;
+  background-color: #A3A380;
   color: #fff;
   padding: 20px;
 }
@@ -85,7 +85,7 @@ html, body {
   flex: 1;
   margin-right: 10px;
   padding: 10px 20px;
-  background-color: #b7bdc9;
+  background-color: #BDB98A;
   color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
