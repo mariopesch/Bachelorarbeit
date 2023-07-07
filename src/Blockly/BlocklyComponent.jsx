@@ -5,7 +5,6 @@ import { useEffect, useRef } from 'react';
 import Blockly from 'blockly/core';
 import locale from 'blockly/msg/en';
 import 'blockly/blocks';
-import { javascriptGenerator } from 'blockly/javascript';
 import { RGenerator } from '../generator/R';
 import RCodeSnippet from '../RCodeSnippet';
 

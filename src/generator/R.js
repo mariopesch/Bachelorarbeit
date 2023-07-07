@@ -105,6 +105,12 @@ RGenerator['number'] = function(block) {
   return [value, RGenerator.ORDER_ATOMIC];
 };
 
+RGenerator['print'] = function(block) {
+  var value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_NONE) || '';
+  var code = 'print(' + value + ')\n';
+  return code;
+};
+
 
 RGenerator['array_input'] = function(block) {
   const array = block.getFieldValue('ARRAY').split(',').map(element => element.trim()).join(', ');
@@ -121,6 +127,35 @@ RGenerator['matrix'] = function(block) {
   var code = 'matrix(c(' + values + '), nrow = ' + rows + ', ncol = ' + cols + ')';
   return [code, RGenerator.ORDER_ATOMIC];
 };
+RGenerator['round_number'] = function(block) {
+  var number = RGenerator.valueToCode(block, 'NUMBER', RGenerator.ORDER_NONE) || '';
+
+  var code = 'round(' + number + ', 1)';
+
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+RGenerator['square_root'] = function(block) {
+  var number = RGenerator.valueToCode(block, 'NUMBER', RGenerator.ORDER_NONE) || '';
+
+  var code = 'sqrt(' + number + ')';
+
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['lists_sort'] = function(block) {
+  var list = RGenerator.valueToCode(block, 'LIST', RGenerator.ORDER_ATOMIC) || '[]';
+  var order = block.getFieldValue('ORDER');
+  var code = '';
+
+  if (order === 'ASCENDING') {
+    code = 'sort(' + list + ')';
+  } else if (order === 'DESCENDING') {
+    code = 'sort(' + list + ', decreasing = TRUE)';
+  }
+
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
 
 RGenerator['string_length'] = function(block) {
   // String or array length.
@@ -130,6 +165,102 @@ RGenerator['string_length'] = function(block) {
   //return ['nchar(' + text + ')', RGenerator.ORDER_MEMBER];
   return result;
 };
+
+RGenerator['boolean'] = function(block) {
+  var value = block.getFieldValue('VALUE');
+  return [value, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['arithmetic'] = function(block) {
+  var left = RGenerator.valueToCode(block, 'LEFT', RGenerator.ORDER_ATOMIC) || '0';
+  var operator = block.getFieldValue('OPERATOR');
+  var right = RGenerator.valueToCode(block, 'RIGHT', RGenerator.ORDER_ATOMIC) || '0';
+
+  var code = left + ' ' + operator + ' ' + right;
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['max_min'] = function(block) {
+  var func = block.getFieldValue('FUNCTION');
+  var values = RGenerator.valueToCode(block, 'VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
+
+  var code = func + '(' + values + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['save_as_array'] = function(block) {
+  const value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_ATOMIC) || '';
+  const array = RGenerator.valueToCode(block, 'ARRAY', RGenerator.ORDER_ATOMIC) || '';
+  const code = `${array} <- c(${array}, ${value})\n`;
+  return code;
+};
+
+RGenerator['load_libraries'] = function(block) {
+  var code = 'library(jsonlite)\nlibrary(httr)\n';
+  return code;
+};
+RGenerator['if_else'] = function(block) {
+  var conditionType = block.getFieldValue('CONDITION_TYPE');
+  var condition = RGenerator.valueToCode(block, 'CONDITION', RGenerator.ORDER_NONE) || 'FALSE';
+  var ifBody = RGenerator.statementToCode(block, 'IF_BODY');
+
+  var code = '';
+  if (conditionType === 'IF') {
+    code += 'if (' + condition + ') {\n' + ifBody + '}\n';
+  } else if (conditionType === 'ELSEIF') {
+    code += 'else if (' + condition + ') {\n' + ifBody + '}\n';
+  } else if (conditionType === 'ELSE') {
+    code += 'else {\n' + ifBody + '}\n';
+  }
+  
+  return code;
+};
+
+RGenerator['comparison'] = function(block) {
+  var left = RGenerator.valueToCode(block, 'LEFT', RGenerator.ORDER_NONE) || '';
+  var operator = block.getFieldValue('OPERATOR');
+  var right = RGenerator.valueToCode(block, 'RIGHT', RGenerator.ORDER_NONE) || '';
+
+  var code = left + ' ' + operator + ' ' + right;
+
+  // Add parentheses to improve readability
+  if (operator === '>=' || operator === '<=' || operator === '!=' || operator === '==') {
+    code = '(' + code + ')';
+  }
+
+  return [code, RGenerator.ORDER_RELATIONAL];
+};
+RGenerator['logic_operations'] = function(block) {
+  var operator = block.getFieldValue('OPERATOR');
+  var a = RGenerator.valueToCode(block, 'A', RGenerator.ORDER_NONE) || '';
+  var b = RGenerator.valueToCode(block, 'B', RGenerator.ORDER_NONE) || '';
+
+  var code = '';
+
+  if (operator === '!') {
+    code = operator + ' ' + a;
+  } else {
+    code = a + ' ' + operator + ' ' + b;
+  }
+
+  return [code, RGenerator.ORDER_LOGICAL];
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 RGenerator['save_variable'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
@@ -149,17 +280,16 @@ RGenerator['get_temperature'] = function (block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code =
   `fetchTemp <- function() {\n` +
-  `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
+  `  url <- "https://api.opensensemap.org/boxes/${boxId}/count/50"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[1]]\n` +
   `}\n\n` +
-  `fetchTemp()\n`;
+  `c(fetchTemp())\n`;
 
   return [code, RGenerator.ORDER_NONE];
-  };
+};
 
 RGenerator['get_humidity'] = function(block) {
   const boxId = RGenerator.valueToCode(
@@ -167,14 +297,13 @@ RGenerator['get_humidity'] = function(block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code = 
   `fetchHumidity <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[2]]\n` +
   `}\n\n` +
-  `fetchHumidity()\n`;
+  `c(fetchHumidity())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -185,14 +314,13 @@ RGenerator['get_distanceLeft'] = function(block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code = 
   `fetchDistanceLeft <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[3]]\n` +
   `}\n\n` +
-  `fetchDistanceLeft()\n`;
+  `c(fetchDistanceLeft())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -203,14 +331,13 @@ RGenerator['get_distanceRight'] = function(block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code = 
   `fetchDistanceRight <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[4]]\n` +
   `}\n\n` +
-  `fetchDistanceRight()\n`;
+  `c(fetchDistanceRight())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -221,14 +348,13 @@ RGenerator['get_PM10'] = function(block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code = 
   `fetchPM10 <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[5]]\n` +
   `}\n\n` +
-  `fetchPM10()\n`;
+  `c(fetchPM10())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -238,14 +364,13 @@ RGenerator['get_PM25'] = function(block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code = 
   `fetchPM25 <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[6]]\n` +
   `}\n\n` +
-  `fetchPM25()\n`;
+  `c(fetchPM25())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -256,14 +381,13 @@ RGenerator['get_accelerationX'] = function(block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code = 
   `fetchAccelerationX <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[7]]\n` +
   `}\n\n` +
-  `fetchAccelerationX()\n`;
+  `c(fetchAccelerationX())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -274,14 +398,13 @@ RGenerator['get_accelerationY'] = function(block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code = 
   `fetchAccelerationY <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[8]]\n` +
   `}\n\n` +
-  `fetchAccelerationY()\n`;
+  `c(fetchAccelerationY())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -292,14 +415,13 @@ RGenerator['get_accelerationZ'] = function(block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code = 
   `fetchAccelerationZ <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[9]]\n` +
   `}\n\n` +
-  `fetchAccelerationZ()\n`;
+  `c(fetchAccelerationZ())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -310,14 +432,29 @@ RGenerator['get_speed'] = function(block) {
     'BOX_ID',
     RGenerator.ORDER_ATOMIC
   );
-  const code = `library(jsonlite)\n` +
-  `library(httr)\n` +
+  const code = 
   `fetchSpeed <- function() {\n` +
   `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
   `  req <- fromJSON(paste0(url))\n` +
   `  req$sensors$lastMeasurement$value[[10]]\n` +
   `}\n\n` +
-  `fetchSpeed()\n`;
+  `c(fetchSpeed())\n`;
+
+return [code, RGenerator.ORDER_NONE];
+};
+RGenerator['get_coordinates'] = function(block) {
+  const boxId = RGenerator.valueToCode(
+    block,
+    'BOX_ID',
+    RGenerator.ORDER_ATOMIC
+  );
+  const code = 
+  `fetchcoordinates <- function() {\n` +
+  `  url <- "https://api.opensensemap.org/boxes/${boxId}"\n`+
+  `  req <- fromJSON(paste0(url))\n` +
+  `  req$coordinates\n` +
+  `}\n\n` +
+  `c(fetchcoordinates())\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -333,18 +470,20 @@ RGenerator['boxplot'] = function(block) {
 };
 
 RGenerator['scatter_plot'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var title = block.getFieldValue('TITLE');
-  var xLabel = block.getFieldValue('X_LABEL');
-  var yLabel = block.getFieldValue('Y_LABEL');
-  var showTrendline = block.getFieldValue('SHOW_TRENDLINE') === 'TRUE' ? 'TRUE' : 'FALSE';
-  
-  var code = 'plot(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
-  code += 'if (' + showTrendline + ') {\n';
-  code += '  abline(lm(' + yLabel + ' ~ ' + xLabel + ', data = ' + data + '), col = "blue")\n';
-  code += '}\n';
+  var xValues = RGenerator.valueToCode(block, 'X_VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var yValues = RGenerator.valueToCode(block, 'Y_VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var showLine = block.getFieldValue('SHOW_LINE') === 'TRUE';
+
+  var code = 'plot(' + xValues + ', ' + yValues + ', pch = 19, frame = FALSE)\n';
+  if (showLine) {
+    code += 'abline(lm(' + yValues + ' ~ ' + xValues + '), col = "blue")\n';
+  }
   return code;
 };
+
+
+
+
 
 
 RGenerator['bar_chart'] = function(block) {
@@ -377,6 +516,13 @@ RGenerator['heatmap'] = function(block) {
   var code = 'heatmap(' + data + ', col = "' + colorScheme + '")\n';
   return code;
 };
+RGenerator['display_table'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC) || '';
+
+  var code = 'print(as.data.frame(' + data + '))\n';
+  return code;
+};
+
 
 
 
@@ -408,18 +554,45 @@ RGenerator['correlation_analysis'] = function(block) {
   return code;
 };
 
+RGenerator['one_sample_t_test'] = function(block) {
+  var sample = RGenerator.valueToCode(block, 'SAMPLE', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var populationMean = RGenerator.valueToCode(block, 'POPULATION_MEAN', RGenerator.ORDER_ATOMIC) || 'NULL';
 
+  var code = 't.test(' + sample + ', mu = ' + populationMean + ')$p.value';
+  return code;
+};
 
+RGenerator['two_sample_t_test'] = function(block) {
+  var sample1 = RGenerator.valueToCode(block, 'SAMPLE_1', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var sample2 = RGenerator.valueToCode(block, 'SAMPLE_2', RGenerator.ORDER_ATOMIC) || 'NULL';
 
+  var code = 't.test(' + sample1 + ', ' + sample2 + ')$p.value';
+  return code;
+};
 
+RGenerator['lists_create_with'] = function(block) {
+  var elements = new Array(block.itemCount_);
+  for (var i = 0; i < block.itemCount_; i++) {
+    elements[i] = RGenerator.valueToCode(block, 'ADD' + i, RGenerator.ORDER_NONE) || 'NULL';
+  }
 
+  var code = 'c(' + elements.join(', ') + ')';
+  
+  for(var i = 0; i < elements.length; i++){
+    if(/^c\(/.test(elements[i])){
+      code = 'cbind(' + elements.join(', ') + ')';
+    }
+  }
 
+  return [code, RGenerator.ORDER_ATOMIC];
+};
 
+RGenerator['lists_create_with_container'] = function(block) {
+  var code = '';
+  return code;
+};
 
- 
-
-
-
-
-
-
+RGenerator['lists_create_with_item'] = function(block) {
+  var code = '';
+  return code;
+};

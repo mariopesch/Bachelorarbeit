@@ -73,6 +73,11 @@ function App(props) {
                 drag: true,
                 wheel: false
               }}
+              toolboxXml={`
+    <xml xmlns="https://developers.google.com/blockly/xml">
+      <block type="load_libraries"></block>
+    </xml>
+  `}
             >
               <div className="custom-toolbox-wrapper"></div>
               <Category name="Senseboxen" colour="#789ac0">
@@ -89,20 +94,38 @@ function App(props) {
                 <Block type="get_accelerationX" />
                 <Block type="get_accelerationY" />
                 <Block type="get_speed" />
+                <Block type="get_coordinates" />
+              </Category>
+              <Category name="Logik" colour="#789ac0">
+              <Block type="boolean" />
+              <Block type="logic_operations" />
+              <Block type="comparison" />
+              <Block type="if_else" />
               </Category>
               <Category name="Operationen" colour="#D5C7BC">
+              <Block type="lists_create_with" />
                 <Block type="string_length" />
                 <Block type="string_input" />
+                <Block type="print" />
                 <Block type="number" />
+                <Block type="round_number" />
+                <Block type="square_root" />
                 <Block type="array_input" />
+                <Block type="lists_sort" />
                 <Block type="matrix" />
                 <Block type="save_variable" />
+                <Block type="arithmetic" />
+                <Block type="max_min" />
+                <Block type="save_as_array" />
+                <Block type="load_libraries" />
               </Category>
               <Category name="Datenanalyse" colour="#af9cb1">
                 <Block type="mean" />
                 <Block type="median" />
                 <Block type="sd" />
                 <Block type="correlation_analysis" />
+                <Block type="one_sample_t_test" />
+                <Block type="two_sample_t_test" />
               </Category>
               <Category name="Datenvisualisierung" colour="#866475">
                 <Block type="boxplot" />
@@ -111,6 +134,7 @@ function App(props) {
                 <Block type="line_chart" />
                 <Block type="histogram" />
                 <Block type="heatmap" />
+                <Block type="display_table" />
               </Category>
               </BlocklyComponent>
           </div>
