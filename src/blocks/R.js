@@ -15,7 +15,7 @@ Blockly.Blocks['choose_box'] = {
         .appendField("Sensebox #")
         .appendField(new Blockly.FieldDropdown(numberOptions), "Number");
     this.setOutput(true, "String");
-    this.setColour("#A3A380");
+    this.setColour("#4F6272");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -27,9 +27,164 @@ Blockly.Blocks['box_id'] = {
         .appendField("SenseBox ID")
         .appendField(new Blockly.FieldTextInput(""), "String");
     this.setOutput(true, "String");
-    this.setColour("#A3A380");
+    this.setColour("#4F6272");
  this.setTooltip("");
  this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_temperature_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Temperatur (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("Gibt die zuletzt gemessene Temperatur in °C an");
+    this.setHelpUrl("");
+  }
+};
+
+
+Blockly.Blocks['get_humidity_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Rel.Luftfeuchte (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_distanceLeft_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Abstand links (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_distanceRight_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Abstand rechts (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_PM10_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Feinstaub PM10 (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_PM25_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Feinstaub PM25 (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_accelerationX_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Beschleunigung X-Achse (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_accelerationY_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Beschleunigung Y-Achse (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_accelerationZ_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Beschleunigung Z-Achse (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_speed_latest'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Geschwindigkeit (zuletzt)");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_coordinates'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Aktuelle Koordinaten");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#4F6272");
+    this.setTooltip("Letzter Standort der Box");
+    this.setHelpUrl("");
   }
 };
 
@@ -43,11 +198,12 @@ Blockly.Blocks['get_temperature'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
 };
+
 
 Blockly.Blocks['get_humidity'] = {
   init: function() {
@@ -57,7 +213,7 @@ Blockly.Blocks['get_humidity'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -71,7 +227,7 @@ Blockly.Blocks['get_distanceLeft'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -85,7 +241,7 @@ Blockly.Blocks['get_distanceRight'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -99,7 +255,7 @@ Blockly.Blocks['get_PM10'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -113,7 +269,7 @@ Blockly.Blocks['get_PM25'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -127,7 +283,7 @@ Blockly.Blocks['get_accelerationX'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -141,7 +297,7 @@ Blockly.Blocks['get_accelerationY'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -155,7 +311,7 @@ Blockly.Blocks['get_accelerationZ'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -169,21 +325,7 @@ Blockly.Blocks['get_speed'] = {
         .setCheck("String")
         .appendField("Box");
     this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_coordinates'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Koordinaten");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#BDB98A");
+    this.setColour("#697B93");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -194,7 +336,7 @@ Blockly.Blocks['get_coordinates'] = {
 Blockly.Blocks['lists_create_with'] = {
   init: function() {
     this.setStyle('list_blocks');
-    this.setColour("#D6CE93");
+    this.setColour("#8393B3");
     this.itemCount_ = 2;
     this.updateShape_();
     this.setOutput(true, 'Array');
@@ -290,7 +432,7 @@ Blockly.Blocks['string_length'] = {
         .setCheck("String")
         .appendField("length of");
     this.setOutput(true, "Number");
-    this.setColour("#D6CE93");
+    this.setColour("#8393B3");
     this.setTooltip("");
     this.setHelpUrl("");
     this.setInputsInline(true);
@@ -303,7 +445,7 @@ Blockly.Blocks['string_input'] = {
         .appendField("text input")
         .appendField(new Blockly.FieldTextInput(""), "String");
     this.setOutput(true, "String");
-    this.setColour("#D6CE93");
+    this.setColour("#8393B3");
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -316,7 +458,7 @@ Blockly.Blocks['print'] = {
         .appendField('Print');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#D6CE93");
+    this.setColour("#8393B3");
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -330,7 +472,7 @@ Blockly.Blocks['load_libraries'] = {
         .appendField("Load R Libraries");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("E4D3B0");
+    this.setColour("#B7C3F3");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -347,7 +489,7 @@ Blockly.Blocks['save_variable'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("E4D3B0");
+    this.setColour("#B7C3F3");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -363,7 +505,7 @@ Blockly.Blocks['save_as_array'] = {
         .appendField("Array");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("E4D3B0");
+    this.setColour("#B7C3F3");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -380,7 +522,7 @@ Blockly.Blocks['lists_sort'] = {
           ['descending', 'DESCENDING']
         ]), 'ORDER');
     this.setOutput(true, 'Array');
-    this.setColour("E4D3B0");
+    this.setColour("#B7C3F3");
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -399,7 +541,7 @@ Blockly.Blocks['convert_data_type'] = {
           ['logical', 'as.logical']
         ]), 'TYPE');
     this.setOutput(true, null);
-    this.setColour("E4D3B0");
+    this.setColour("#B7C3F3");
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -413,7 +555,7 @@ Blockly.Blocks['number'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldNumber(0), "VALUE");
     this.setOutput(true, "Number");
-    this.setColour("#E4C8AF");
+    this.setColour("#C1B0DC");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -425,7 +567,7 @@ Blockly.Blocks['array_input'] = {
         .appendField("Array")
         .appendField(new Blockly.FieldTextInput("1, 2, 3"), "ARRAY");
     this.setOutput(true, "Array");
-    this.setColour("#E4C8AF");
+    this.setColour("#C1B0DC");
     this.setTooltip("Provide an array input");
     this.setHelpUrl("");
     this.setInputsInline(true);
@@ -446,7 +588,7 @@ Blockly.Blocks['matrix'] = {
         .setCheck("Array")
         .appendField("Values");
     this.setOutput(true, "Array");
-    this.setColour("#E4C8AF");
+    this.setColour("#C1B0DC");
     this.setInputsInline(false);
     this.setTooltip("Zuerst werden die Spalten von oben nach unten gefüllt");
     this.setHelpUrl("");
@@ -468,7 +610,7 @@ Blockly.Blocks['arithmetic'] = {
     this.appendValueInput("RIGHT")
         .setCheck("Number");
     this.setOutput(true, "Number");
-    this.setColour("#E4C8AF");
+    this.setColour("#C1B0DC");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -482,7 +624,7 @@ Blockly.Blocks['round_number'] = {
     this.appendDummyInput()
         .appendField('to 1 decimal place');
     this.setOutput(true, 'Number');
-    this.setColour("#E4C8AF");
+    this.setColour("#C1B0DC");
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -493,7 +635,7 @@ Blockly.Blocks['square_root'] = {
         .setCheck('Number')
         .appendField('square root of');
     this.setOutput(true, 'Number');
-    this.setColour("#E4C8AF");
+    this.setColour("#C1B0DC");
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -510,7 +652,7 @@ Blockly.Blocks['max_min'] = {
     this.appendValueInput("VALUES")
         .setCheck("Array");
     this.setOutput(true, "Number");
-    this.setColour("#E4C8AF");
+    this.setColour("#C1B0DC");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -526,7 +668,7 @@ Blockly.Blocks['boolean'] = {
           ["false", "FALSE"]
         ]), "VALUE");
     this.setOutput(true, "Boolean");
-    this.setColour("#D8A48F");
+    this.setColour("#CA9CC5");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -544,7 +686,7 @@ Blockly.Blocks['logic_operations'] = {
     this.appendValueInput('B')
         .setCheck('Boolean');
     this.setOutput(true, 'Boolean');
-    this.setColour("#D8A48F");
+    this.setColour("#CA9CC5");
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -566,7 +708,7 @@ Blockly.Blocks['comparison'] = {
     this.appendValueInput('RIGHT')
         .setCheck(null);
     this.setOutput(true, 'Boolean');
-    this.setColour("#D8A48F");
+    this.setColour("#CA9CC5");
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -585,7 +727,7 @@ Blockly.Blocks['if_else'] = {
         .appendField('do');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#D8A48F");
+    this.setColour("#CA9CC5");
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -599,7 +741,7 @@ Blockly.Blocks['mean'] = {
         .setCheck("Array")
         .appendField("Mittelwert");
     this.setOutput(true, "Number");
-    this.setColour("#CA958C");
+    this.setColour("#DD7596");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -610,7 +752,7 @@ Blockly.Blocks['median'] = {
         .setCheck("Array")
         .appendField("Median");
     this.setOutput(true, "Number");
-    this.setColour("#CA958C");
+    this.setColour("#DD7596");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -621,7 +763,7 @@ Blockly.Blocks['sd'] = {
         .setCheck("Array")
         .appendField("Standardabweichung");
     this.setOutput(true, "Number");
-    this.setColour("#CA958C");
+    this.setColour("#DD7596");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -639,7 +781,7 @@ Blockly.Blocks['correlation_analysis'] = {
         .appendField(new Blockly.FieldDropdown([["Pearson", "pearson"], ["Spearman", "spearman"], ["Kendall", "kendall"]]), "METHOD");
     this.setInputsInline(false);
     this.setOutput(true, "Number");
-    this.setColour("#CA958C");
+    this.setColour("#DD7596");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -654,7 +796,7 @@ Blockly.Blocks['one_sample_t_test'] = {
         .appendField("Population Mean");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
-    this.setColour("#CA958C");
+    this.setColour("#DD7596");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -669,7 +811,7 @@ Blockly.Blocks['two_sample_t_test'] = {
         .appendField("Sample 2");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
-    this.setColour("#CA958C");
+    this.setColour("#DD7596");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -693,7 +835,7 @@ Blockly.Blocks['boxplot'] = {
         .appendField(new Blockly.FieldTextInput("Frequency"), "Y_LABEL");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#BB8588");
+    this.setColour("#DA5D87");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -714,7 +856,7 @@ Blockly.Blocks['scatter_plot'] = {
         .appendField(new Blockly.FieldCheckbox("TRUE"), "SHOW_LINE");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#BB8588");
+    this.setColour("#DA5D87");
     this.setTooltip("");
     this.setHelpUrl("");
     this.setInputsInline(false);
@@ -735,7 +877,7 @@ Blockly.Blocks['bar_chart'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#BB8588");
+    this.setColour("#DA5D87");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -754,7 +896,7 @@ Blockly.Blocks['line_chart'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#BB8588");
+    this.setColour("#DA5D87");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -775,7 +917,7 @@ Blockly.Blocks['histogram'] = {
         .appendField(new Blockly.FieldTextInput("Frequency"), "Y_LABEL");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#BB8588");
+    this.setColour("#DA5D87");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -790,7 +932,7 @@ Blockly.Blocks['heatmap'] = {
         .appendField(new Blockly.FieldDropdown([["Red", "red"], ["Blue", "blue"], ["Green", "green"]]), "COLOR_SCHEME");
     this.setInputsInline(false);
     this.setOutput(true, null);
-    this.setColour("#BB8588");
+    this.setColour("#DA5D87");
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -802,7 +944,7 @@ Blockly.Blocks['display_table'] = {
         .appendField("Tabelle");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#BB8588");
+    this.setColour("#DA5D87");
     this.setTooltip("");
     this.setHelpUrl("");
   }

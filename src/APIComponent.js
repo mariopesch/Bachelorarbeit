@@ -8,7 +8,8 @@ function APIComponent() {
   }, []);
 
   const fetchData = async () => {
-    fetch(`https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e?format=geojson`).then(function(response) {
+    fetch(`https://api.opensensemap.org/boxes/615f292bc031ff001b117192`)
+    .then(function(response) {
       return response.json();
   }).then(function(boxData) {
       console.log(boxData);

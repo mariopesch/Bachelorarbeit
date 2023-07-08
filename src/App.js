@@ -80,11 +80,21 @@ function App(props) {
   `}
             >
               <div className="custom-toolbox-wrapper"></div>
-              <Category name="Senseboxen" colour="#A3A380">
+              <Category name="Senseboxen" colour="#4F6272">
               <Block type="choose_box" />
               <Block type="box_id" />
+              <Block type="get_temperature_latest" />
+              <Block type="get_humidity_latest" />
+              <Block type="get_distanceLeft_latest" />
+              <Block type="get_distanceRight_latest" />
+              <Block type="get_PM10_latest" />
+              <Block type="get_PM25_latest" />
+              <Block type="get_accelerationX_latest" />
+              <Block type="get_accelerationY_latest" />
+              <Block type="get_speed_latest" />
+              <Block type="get_coordinates" />
               </Category>
-              <Category name="Sensor-Anfragen" colour="#BDB98A">
+              <Category name="Sensor-Anfragen" colour="#697B93">
                 <Block type="get_temperature" />
                 <Block type="get_humidity" />
                 <Block type="get_distanceLeft" />
@@ -94,22 +104,21 @@ function App(props) {
                 <Block type="get_accelerationX" />
                 <Block type="get_accelerationY" />
                 <Block type="get_speed" />
-                <Block type="get_coordinates" />
               </Category>
-              <Category name="Listen und Text" colour="#D6CE93">
+              <Category name="Listen und Text" colour="#8393B3">
               <Block type="lists_create_with" />
                 <Block type="string_length" />
                 <Block type="string_input" />
                 <Block type="print" />
               </Category>
-              <Category name="Operationen" colour="#E4D3B0">
+              <Category name="Operationen" colour="#B7C3F3">
               <Block type="load_libraries" />
               <Block type="save_variable" />
               <Block type="save_as_array" />
               <Block type="lists_sort" />  
               <Block type="convert_data_type" />      
               </Category>
-              <Category name="Mathematik" colour="#E4C8AF">
+              <Category name="Mathematik" colour="#C1B0DC">
               <Block type="number" />
               <Block type="array_input" />
               <Block type="matrix" />
@@ -118,13 +127,13 @@ function App(props) {
               <Block type="square_root" />
               <Block type="max_min" />
               </Category>
-              <Category name="Logik" colour="#D8A48F">
+              <Category name="Logik" colour="#CA9CC5">
               <Block type="boolean" />
               <Block type="logic_operations" />
               <Block type="comparison" />
               <Block type="if_else" />
               </Category>
-              <Category name="Datenanalyse" colour="#CA958C">
+              <Category name="Datenanalyse" colour="#DD7596">
                 <Block type="mean" />
                 <Block type="median" />
                 <Block type="sd" />
@@ -132,7 +141,7 @@ function App(props) {
                 <Block type="one_sample_t_test" />
                 <Block type="two_sample_t_test" />
               </Category>
-              <Category name="Datenvisualisierung" colour="#BB8588">
+              <Category name="Datenvisualisierung" colour="#DA5D87">
                 <Block type="boxplot" />
                 <Block type="scatter_plot" />
                 <Block type="bar_chart" />
