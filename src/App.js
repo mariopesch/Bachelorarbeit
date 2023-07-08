@@ -134,21 +134,26 @@ function App(props) {
               <Block type="if_else" />
               </Category>
               <Category name="Datenanalyse" colour="#DD7596">
-                <Block type="mean" />
-                <Block type="median" />
-                <Block type="sd" />
-                <Block type="correlation_analysis" />
-                <Block type="one_sample_t_test" />
-                <Block type="two_sample_t_test" />
+              <Block type="mean" />
+              <Block type="median" />
+              <Block type="sd" />
+              <Block type="summary" />
+              <Block type="moving_average" />
+              <Block type="lm" />
+              <Block type="anova" />
+              <Block type="correlation_analysis" />
+              <Block type="one_sample_t_test" />
+              <Block type="two_sample_t_test" />
               </Category>
               <Category name="Datenvisualisierung" colour="#DA5D87">
-                <Block type="boxplot" />
-                <Block type="scatter_plot" />
-                <Block type="bar_chart" />
-                <Block type="line_chart" />
-                <Block type="histogram" />
-                <Block type="heatmap" />
-                <Block type="display_table" />
+              <Block type="data_frame" />
+              <Block type="boxplot" />
+              <Block type="scatter_plot" />
+              <Block type="bar_chart" />
+              <Block type="line_chart" />
+              <Block type="histogram" />
+              <Block type="heatmap" />
+              <Block type="display_table" />
               </Category>
               </BlocklyComponent>
           </div>

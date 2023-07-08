@@ -1255,7 +1255,7 @@ RGenerator['print'] = function(block) {
 // Kategorie Operationen 
 
 RGenerator['load_libraries'] = function(block) {
-  var code = 'library(jsonlite)\nlibrary(httr)\n';
+  var code = 'library(jsonlite)\nlibrary(httr)\nlibrary(ggplot2)\nlibrary(ggpubr)\nlibrary(tidyverse)\nlibrary(broom)\nlibrary(AICcmodavg)';
   return code;
 };
 
@@ -1428,6 +1428,50 @@ RGenerator['sd'] = function(block) {
   return [code, RGenerator.ORDER_ATOMIC];
 };
 
+RGenerator['summary'] = function(block) {
+  var code = '';
+  for (var i = 0; i < block.itemCount_; i++) {
+    var data = RGenerator.valueToCode(block, 'INPUT' + i, RGenerator.ORDER_ATOMIC);
+    code += 'summary(' + data + ')\n';
+  }
+  return code;
+};
+
+RGenerator['moving_average'] = function(block) {
+  var arrayInput = RGenerator.valueToCode(block, 'ARRAY', RGenerator.ORDER_ATOMIC);
+  var windowSizeInput = RGenerator.valueToCode(block, 'WINDOW_SIZE', RGenerator.ORDER_ATOMIC);
+
+  var code =
+    'simple_moving_average(' + arrayInput + ', ' + windowSizeInput + ')';
+
+  return [code, RGenerator.ORDER_NONE];
+};
+
+RGenerator['lm'] = function(block) {
+  var yVariable = RGenerator.valueToCode(block, 'Y', RGenerator.ORDER_ATOMIC);
+  var xVariable = RGenerator.valueToCode(block, 'X', RGenerator.ORDER_ATOMIC);
+
+  var code = 'model <- lm(' + yVariable + ' ~ ' + xVariable + ')\n';
+  return [code, RGenerator.ORDER_NONE];
+};
+
+RGenerator['anova'] = function(block) {
+  var code = 'result <- anova(';
+  var groups = [];
+
+  for (var i = 0; i < block.itemCount_; i++) {
+    var values = RGenerator.valueToCode(block, 'GROUP' + i, RGenerator.ORDER_ATOMIC) || 'NULL';
+    groups.push(values);
+  }
+
+  code += groups.join(', ') + ')\n';
+  code += 'summary(result)\n';
+
+  return code;
+};
+
+
+
 RGenerator['correlation_analysis'] = function(block) {
   var var1 = RGenerator.valueToCode(block, 'VAR1', RGenerator.ORDER_ATOMIC);
   var var2 = RGenerator.valueToCode(block, 'VAR2', RGenerator.ORDER_ATOMIC);
@@ -1518,6 +1562,21 @@ RGenerator['display_table'] = function(block) {
   return code;
 };
 
+RGenerator['data_frame'] = function(block) {
+  var code = 'data.frame(';
+  var dataBlocks = block.getChildren('data_frame_data');
+  for (var i = 0; i < dataBlocks.length; i++) {
+    var dataBlock = dataBlocks[i];
+    var name = RGenerator.valueToCode(dataBlock, 'NAME', RGenerator.ORDER_ATOMIC) || 'NULL';
+    var vector = RGenerator.valueToCode(dataBlock, 'VECTOR', RGenerator.ORDER_ATOMIC) || 'NULL';
+    if (i > 0) {
+      code += ', ';
+    }
+    code += name + ' = ' + vector;
+  }
+  code += ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
 
 
 

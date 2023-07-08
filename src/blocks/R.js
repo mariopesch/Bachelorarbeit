@@ -768,6 +768,249 @@ Blockly.Blocks['sd'] = {
     this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['summary'] = {
+  init: function() {
+    this.setStyle('list_blocks');
+    this.appendDummyInput()
+      .appendField("Summary");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.itemCount_ = 1;
+    this.updateShape_();
+    this.setMutator(new Blockly.Mutator(['summary_input']));
+    this.setColour("#DD7596");
+    this.setTooltip("Generate a summary of the given data");
+    this.setHelpUrl("");
+  },
+  
+  mutationToDom: function() {
+    var container = Blockly.utils.xml.createElement('mutation');
+    container.setAttribute('items', this.itemCount_);
+    return container;
+  },
+  
+  domToMutation: function(xmlElement) {
+    this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
+    this.updateShape_();
+  },
+  
+  decompose: function(workspace) {
+    var containerBlock = workspace.newBlock('summary_container');
+    containerBlock.initSvg();
+    var connection = containerBlock.getInput('STACK').connection;
+    for (var i = 0; i < this.itemCount_; i++) {
+      var itemBlock = workspace.newBlock('summary_input');
+      itemBlock.initSvg();
+      connection.connect(itemBlock.previousConnection);
+      connection = itemBlock.nextConnection;
+    }
+    return containerBlock;
+  },
+  
+  compose: function(containerBlock) {
+    var itemBlock = containerBlock.getInputTargetBlock('STACK');
+    var connections = [];
+    while (itemBlock) {
+      connections.push(itemBlock.valueConnection_);
+      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+    }
+    this.itemCount_ = connections.length;
+    this.updateShape_();
+    for (var i = 0; i < this.itemCount_; i++) {
+      Blockly.Mutator.reconnect(connections[i], this, 'INPUT' + i);
+    }
+  },
+  
+  saveConnections: function(containerBlock) {
+    var itemBlock = containerBlock.getInputTargetBlock('STACK');
+    var i = 0;
+    while (itemBlock) {
+      var input = this.getInput('INPUT' + i);
+      itemBlock.valueConnection_ = input && input.connection.targetConnection;
+      i++;
+      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+    }
+  },
+  
+  updateShape_: function() {
+    for (var i = 0; i < this.itemCount_; i++) {
+      var inputExists = this.getInput('INPUT' + i);
+      if (!inputExists) {
+        this.appendValueInput('INPUT' + i)
+          .setAlign(Blockly.ALIGN_RIGHT)
+          .appendField('Data');
+      }
+    }
+    while (this.getInput('INPUT' + i)) {
+      this.removeInput('INPUT' + i);
+      i++;
+    }
+  }
+};
+
+
+Blockly.Blocks['summary_input'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('Data');
+    this.setPreviousStatement(true, 'summary_input');
+    this.setNextStatement(true, 'summary_input');
+    this.setColour('#DD7596');
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['summary_container'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('Data');
+    this.appendStatementInput('STACK');
+    this.setColour('#DD7596');
+    this.setTooltip('');
+    this.setHelpUrl('');
+    this.contextMenu = false;
+  }
+};
+
+
+Blockly.Blocks['moving_average'] = {
+  init: function() {
+    this.appendValueInput('ARRAY')
+        .setCheck('Array')
+        .appendField('Moving Average');
+    this.appendValueInput('WINDOW_SIZE')
+        .setCheck('Number')
+        .appendField('Fenstergröße');
+    this.setOutput(true, 'Array');
+    this.setColour('#DD7596');
+    this.setTooltip('Calculate the simple moving average of an array');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['lm'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Lineares Regressions Modell");
+    this.appendValueInput("Y")
+        .setCheck("Array")
+        .appendField("Abhängige Variable Y");
+    this.appendValueInput("X")
+        .setCheck("Array")
+        .appendField("Unabhängige Variable X");
+    this.setInputsInline(false);
+    this.setOutput(true, "String");
+    this.setColour("#DD7596");
+    this.setTooltip("Fits a linear regression model using lm()");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['anova'] = {
+  init: function() {
+    this.appendDummyInput()
+    .appendField("ANOVA");
+    this.setStyle('list_blocks');
+    this.setColour("#DD7596");
+    this.itemCount_ = 2;
+    this.updateShape_();
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setMutator(new Blockly.Mutator(['anova_item']));
+    this.setTooltip('Perform ANOVA on the given data with a variable number of groups');
+  },
+  
+  mutationToDom: function() {
+    var container = Blockly.utils.xml.createElement('mutation');
+    container.setAttribute('items', this.itemCount_);
+    return container;
+  },
+  
+  domToMutation: function(xmlElement) {
+    this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
+    this.updateShape_();
+  },
+  
+  decompose: function(workspace) {
+    var containerBlock = workspace.newBlock('anova_container');
+    containerBlock.initSvg();
+    var connection = containerBlock.getInput('STACK').connection;
+    for (var i = 0; i < this.itemCount_; i++) {
+      var itemBlock = workspace.newBlock('anova_item');
+      itemBlock.initSvg();
+      connection.connect(itemBlock.previousConnection);
+      connection = itemBlock.nextConnection;
+    }
+    return containerBlock;
+  },
+  
+  compose: function(containerBlock) {
+    var itemBlock = containerBlock.getInputTargetBlock('STACK');
+    var connections = [];
+    while (itemBlock) {
+      connections.push(itemBlock.valueConnection_);
+      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+    }
+    this.itemCount_ = connections.length;
+    this.updateShape_();
+    for (var i = 0; i < this.itemCount_; i++) {
+      Blockly.Mutator.reconnect(connections[i], this, 'ITEM' + i);
+    }
+  },
+  
+  saveConnections: function(containerBlock) {
+    var itemBlock = containerBlock.getInputTargetBlock('STACK');
+    var i = 0;
+    while (itemBlock) {
+      var input = this.getInput('ITEM' + i);
+      itemBlock.valueConnection_ = input && input.connection.targetConnection;
+      i++;
+      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+    }
+  },
+  
+  updateShape_: function() {
+    for (var i = 0; i < this.itemCount_; i++) {
+      var inputExists = this.getInput('ITEM' + i);
+      if (!inputExists) {
+        this.appendValueInput('ITEM' + i)
+          .setAlign(Blockly.ALIGN_RIGHT)
+          .appendField('Gruppe');
+      }
+    }
+    while (this.getInput('ITEM' + i)) {
+      this.removeInput('ITEM' + i);
+      i++;
+    }
+  }
+};
+
+Blockly.Blocks['anova_container'] = {
+  init: function() {
+    this.setColour("#DD7596");
+    this.appendDummyInput()
+        .appendField('Gruppen');
+    this.appendStatementInput('STACK');
+    this.setTooltip('');
+    this.contextMenu = false;
+  }
+};
+
+Blockly.Blocks['anova_item'] = {
+  init: function() {
+    this.setColour("#DD7596");
+    this.appendDummyInput()
+        .appendField('Gruppe');
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('');
+    this.contextMenu = false;
+  }
+};
+
+
 Blockly.Blocks['correlation_analysis'] = {
   init: function() {
     this.appendValueInput("VAR1")
@@ -949,3 +1192,127 @@ Blockly.Blocks['display_table'] = {
     this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['data_frame'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Data Frame");
+    this.setColour("#DA5D87");
+    this.setTooltip("Create a data frame with the specified data and vectors");
+    this.setHelpUrl("");
+    this.dataCount_ = 1;
+    this.updateShape_();
+    this.setMutator(new Blockly.Mutator(['data_frame_data']));
+  },
+  
+  mutationToDom: function() {
+    var container = Blockly.utils.xml.createElement('mutation');
+    container.setAttribute('dataCount', this.dataCount_);
+    return container;
+  },
+  
+  domToMutation: function(xmlElement) {
+    this.dataCount_ = parseInt(xmlElement.getAttribute('dataCount'), 10);
+    this.updateShape_();
+  },
+  
+  decompose: function(workspace) {
+    var containerBlock = workspace.newBlock('data_frame_data_container');
+    containerBlock.initSvg();
+    var connection = containerBlock.getInput('STACK').connection;
+    for (var i = 0; i < this.dataCount_; i++) {
+      var dataBlock = workspace.newBlock('data_frame_data');
+      dataBlock.initSvg();
+      connection.connect(dataBlock.previousConnection);
+      connection = dataBlock.nextConnection;
+    }
+    return containerBlock;
+  },
+  
+  compose: function(containerBlock) {
+    var dataBlocks = [];
+    var dataConnections = [];
+    var currentBlock = containerBlock.getInputTargetBlock('STACK');
+    while (currentBlock) {
+      dataBlocks.push(currentBlock);
+      dataConnections.push(currentBlock.valueConnection_);
+      currentBlock = currentBlock.nextConnection && currentBlock.nextConnection.targetBlock();
+    }
+    // Disconnect any deleted blocks
+    for (var i = 0; i < this.dataCount_; i++) {
+      if (dataConnections[i] && dataBlocks.indexOf(dataConnections[i].sourceBlock_) === -1) {
+        dataConnections[i].dispose();
+      }
+    }
+    this.dataCount_ = dataBlocks.length;
+    this.updateShape_();
+    // Reconnect any reattached blocks
+    for (var i = 0; i < this.dataCount_; i++) {
+      if (dataConnections[i]) {
+        Blockly.Mutator.reconnect(dataConnections[i], this, 'DATA' + i);
+      }
+    }
+  },
+  
+  saveConnections: function(containerBlock) {
+    var dataBlock = containerBlock.getInputTargetBlock('STACK');
+    var i = 0;
+    while (dataBlock) {
+      var input = this.getInput('DATA' + i);
+      dataBlock.valueConnection_ = input && input.connection.targetConnection;
+      i++;
+      dataBlock = dataBlock.nextConnection && dataBlock.nextConnection.targetBlock();
+    }
+  },
+  
+  updateShape_: function() {
+    for (var i = 0; i < this.dataCount_; i++) {
+      var inputExists = this.getInput('DATA' + i);
+      if (!inputExists) {
+        var input = this.appendValueInput('DATA' + i)
+            .setCheck("Array")
+            .appendField(new Blockly.FieldTextInput("Name"), "NAME" + i)
+            .appendField("Daten")
+            .setAlign(Blockly.ALIGN_RIGHT);
+      }
+    }
+    while (this.getInput('DATA' + i)) {
+      this.removeInput('DATA' + i);
+      i++;
+    }
+  }
+};
+
+Blockly.Blocks['data_frame_data'] = {
+  init: function() {
+    this.appendValueInput('NAME')
+        .setCheck('String')
+        .appendField("Name");
+    this.appendValueInput('VECTOR')
+        .setCheck('Array')
+        .appendField("Vector");
+    this.setPreviousStatement(true, 'data_frame_data');
+    this.setNextStatement(true, 'data_frame_data');
+    this.setColour("#D9D9D9");
+    this.setTooltip("Data input");
+    this.contextMenu = false;
+  },
+};
+
+Blockly.Blocks['data_frame_data_container'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Data");
+    this.appendStatementInput('STACK')
+        .setCheck('data_frame_data');
+    this.setColour("#D9D9D9");
+    this.setTooltip("Container for data inputs");
+    this.contextMenu = false;
+  },
+};
+
+
+
+
+
+
