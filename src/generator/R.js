@@ -1296,6 +1296,67 @@ RGenerator['convert_data_type'] = function(block) {
   return [code, RGenerator.ORDER_ATOMIC];
 };
 
+RGenerator['data_frame'] = function(block) {
+  var code = 'data.frame(';
+  var dataBlocks = block.getChildren('data_frame_data');
+  for (var i = 0; i < dataBlocks.length; i++) {
+    var dataBlock = dataBlocks[i];
+    var name = RGenerator.valueToCode(dataBlock, 'NAME', RGenerator.ORDER_ATOMIC) || 'NULL';
+    var vector = RGenerator.valueToCode(dataBlock, 'VECTOR', RGenerator.ORDER_ATOMIC) || 'NULL';
+    if (i > 0) {
+      code += ', ';
+    }
+    code += name + ' = ' + vector;
+  }
+  code += ')';
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['filter'] = function(block) {
+  var column = RGenerator.valueToCode(block, 'COLUMN', RGenerator.ORDER_ATOMIC);
+  var operator = RGenerator.valueToCode(block, 'OPERATOR', RGenerator.ORDER_ATOMIC);
+  var value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_ATOMIC);
+  
+  var code = `filter(${column} ${operator} ${value})`;
+  
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['select'] = function(block) {
+  var columns = RGenerator.valueToCode(block, 'COLUMNS', RGenerator.ORDER_ATOMIC);
+  
+  var code = `select(${columns})`;
+  
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['mutate'] = function(block) {
+  var newColumn = RGenerator.valueToCode(block, 'NEW_COLUMN', RGenerator.ORDER_ATOMIC);
+  var expression = RGenerator.valueToCode(block, 'EXPRESSION', RGenerator.ORDER_ATOMIC);
+  
+  var code = `mutate(${newColumn} = ${expression})`;
+  
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['summarize'] = function(block) {
+  var column = RGenerator.valueToCode(block, 'COLUMN', RGenerator.ORDER_ATOMIC);
+  var aggregate = RGenerator.valueToCode(block, 'AGGREGATE', RGenerator.ORDER_ATOMIC);
+  var newColumn = RGenerator.valueToCode(block, 'NEW_COLUMN', RGenerator.ORDER_ATOMIC);
+  
+  var code = `summarize(${newColumn} = ${aggregate}(${column}))`;
+  
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['group_by'] = function(block) {
+  var columns = RGenerator.valueToCode(block, 'COLUMNS', RGenerator.ORDER_ATOMIC);
+  
+  var code = `group_by(${columns})`;
+  
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
 
 // Kategorie Mathematik 
 
@@ -1310,6 +1371,16 @@ RGenerator['array_input'] = function(block) {
   const code = `c(${array})`;
   return [code, RGenerator.ORDER_ATOMIC];
 };
+
+RGenerator['split_vector'] = function(block) {
+  var vector = RGenerator.valueToCode(block, 'ARRAY', RGenerator.ORDER_ATOMIC);
+  var subsetSize = RGenerator.valueToCode(block, 'SUBSET_SIZE', RGenerator.ORDER_ATOMIC);
+  
+  var code = `split(${vector}, rep(1:${subsetSize}, length(${vector}) %/% ${subsetSize}))`;
+  
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
 
 RGenerator['matrix'] = function(block) {
   var rows = RGenerator.valueToCode(block, 'ROWS', RGenerator.ORDER_ATOMIC) || '0';
@@ -1332,7 +1403,7 @@ RGenerator['arithmetic'] = function(block) {
 RGenerator['round_number'] = function(block) {
   var number = RGenerator.valueToCode(block, 'NUMBER', RGenerator.ORDER_NONE) || '';
 
-  var code = 'round(' + number + ', 1)';
+  var code = 'round(' + number + ', 2)';
 
   return [code, RGenerator.ORDER_ATOMIC];
 };
@@ -1497,6 +1568,26 @@ RGenerator['two_sample_t_test'] = function(block) {
   return code;
 };
 
+RGenerator['predict'] = function(block) {
+  var model = RGenerator.valueToCode(block, 'MODEL', RGenerator.ORDER_ATOMIC);
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+
+  var code = `predict(${model}, newdata = ${data})`;
+
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['kriging'] = function(block) {
+  var x = RGenerator.valueToCode(block, 'X', RGenerator.ORDER_ATOMIC);
+  var y = RGenerator.valueToCode(block, 'Y', RGenerator.ORDER_ATOMIC);
+  var coordinates = RGenerator.valueToCode(block, 'COORDINATES', RGenerator.ORDER_ATOMIC);
+  var model = RGenerator.valueToCode(block, 'MODEL', RGenerator.ORDER_ATOMIC);
+
+  var code = `krige(${y} ~ 1, locations = ${x}, newdata = ${coordinates}, model = ${model})$predict`;
+
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
 // Kategorie Datenvisualisierung
 
 RGenerator['boxplot'] = function(block) {
@@ -1562,21 +1653,7 @@ RGenerator['display_table'] = function(block) {
   return code;
 };
 
-RGenerator['data_frame'] = function(block) {
-  var code = 'data.frame(';
-  var dataBlocks = block.getChildren('data_frame_data');
-  for (var i = 0; i < dataBlocks.length; i++) {
-    var dataBlock = dataBlocks[i];
-    var name = RGenerator.valueToCode(dataBlock, 'NAME', RGenerator.ORDER_ATOMIC) || 'NULL';
-    var vector = RGenerator.valueToCode(dataBlock, 'VECTOR', RGenerator.ORDER_ATOMIC) || 'NULL';
-    if (i > 0) {
-      code += ', ';
-    }
-    code += name + ' = ' + vector;
-  }
-  code += ')';
-  return [code, RGenerator.ORDER_ATOMIC];
-};
+
 
 
 

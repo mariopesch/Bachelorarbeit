@@ -116,11 +116,18 @@ function App(props) {
               <Block type="save_variable" />
               <Block type="save_as_array" />
               <Block type="lists_sort" />  
-              <Block type="convert_data_type" />      
+              <Block type="convert_data_type" /> 
+              <Block type="data_frame" />
+              <Block type="filter" />
+              <Block type="select" />
+              <Block type="mutate" />
+              <Block type="summarize" />
+              <Block type="group_by" />     
               </Category>
               <Category name="Mathematik" colour="#C1B0DC">
               <Block type="number" />
               <Block type="array_input" />
+              <Block type="split" />
               <Block type="matrix" />
               <Block type="arithmetic" />
               <Block type="round_number" />
@@ -144,9 +151,10 @@ function App(props) {
               <Block type="correlation_analysis" />
               <Block type="one_sample_t_test" />
               <Block type="two_sample_t_test" />
+              <Block type="predict" />
+              <Block type="kriging" />
               </Category>
               <Category name="Datenvisualisierung" colour="#DA5D87">
-              <Block type="data_frame" />
               <Block type="boxplot" />
               <Block type="scatter_plot" />
               <Block type="bar_chart" />
