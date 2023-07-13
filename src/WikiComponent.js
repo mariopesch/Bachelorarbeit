@@ -3,16 +3,33 @@ import React from 'react';
 const WikiComponent = () => {
   return (
       <div className="wiki-container">
-         <h2>Nützliche Links, Infos, Metadaten (?)...</h2>
-        <div className="WikiLinksContainer">
+         <h2>Wiki des Blockly4R Tools</h2>
+          <h4>Hier findest du nützliche Infos, die dir bei der Bearbeitung der Aufgaben helfen</h4>
+          <p>Basiswissen Statisitk</p>
           <ul className="WikiLinks">
-          <li>https://opensensemap.org/explore/615f2969c031ff001b118a3e</li>
+          <li>Info über Mittelwert</li>
+          <li>Info über Median</li>
+          <li>Info über sd</li>
+          <li>Info über Regression und Modelle trainieren</li>
+          <li>Info über t-Tests</li>
+          <li>Info über Predictions</li>
+          <li>Info über Visualisierungsformen</li>
+          <li>... Graphen, Plots, Histogramme...</li>
+          <li>[Links zu Statistikseite]</li>
             {/* Add more links as needed */}
           </ul>
-          <p>Wie zitiere ich Daten?</p>
           <p>Was sind Metadaten?</p>
+          <ul>
+          <li>[Metadaten sind...]</li>
+            {/* Add more links as needed */}
+          </ul>
+          <p>Wie werden Daten korrekt zitiert?</p>
+          <ul>
+          <li>[Daten werden korrekt zitiert, indem...]</li>
+            {/* Add more links as needed */}
+          </ul>
         </div>
-      </div>
+    
     
   );
 };

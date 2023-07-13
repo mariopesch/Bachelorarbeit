@@ -8,7 +8,7 @@ function APIComponent() {
   }, []);
 
   const fetchData = async () => {
-    fetch(`https://api.opensensemap.org/boxes/615f292bc031ff001b117192`)
+    fetch(`https://api.opensensemap.org/boxes/615f2969c031ff001b118a3e/sensors?count=30`)
     .then(function(response) {
       return response.json();
   }).then(function(boxData) {
@@ -16,7 +16,6 @@ function APIComponent() {
 
     
   })
-
 }
 
 

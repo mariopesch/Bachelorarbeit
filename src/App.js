@@ -74,25 +74,20 @@ function App(props) {
                 wheel: false
               }}
               toolboxXml={`
-    <xml xmlns="https://developers.google.com/blockly/xml">
-      <block type="load_libraries"></block>
-    </xml>
-  `}
+        <xml xmlns="https://developers.google.com/blockly/xml">
+          <block type="load_libraries"></block>
+        </xml>
+      `}
+        initialXml={`
+        <xml xmlns="http://www.w3.org/1999/xhtml">
+        <block type="load_libraries"></block>
+        </xml>
+          `}
             >
               <div className="custom-toolbox-wrapper"></div>
               <Category name="Senseboxen" colour="#4F6272">
               <Block type="choose_box" />
               <Block type="box_id" />
-              <Block type="get_temperature_latest" />
-              <Block type="get_humidity_latest" />
-              <Block type="get_distanceLeft_latest" />
-              <Block type="get_distanceRight_latest" />
-              <Block type="get_PM10_latest" />
-              <Block type="get_PM25_latest" />
-              <Block type="get_accelerationX_latest" />
-              <Block type="get_accelerationY_latest" />
-              <Block type="get_speed_latest" />
-              <Block type="get_coordinates" />
               </Category>
               <Category name="Sensor-Anfragen" colour="#697B93">
                 <Block type="get_temperature" />
@@ -168,7 +163,7 @@ function App(props) {
           <div className="result-container">
           <Tabs>
     <TabList>
-      <Tab>Ergebnisse</Tab>
+      <Tab>About</Tab>
       <Tab>Map</Tab>
       <Tab>Wiki</Tab>
       <Tab>Analyseideen</Tab>

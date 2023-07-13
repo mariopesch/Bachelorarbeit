@@ -33,161 +33,6 @@ Blockly.Blocks['box_id'] = {
   }
 };
 
-Blockly.Blocks['get_temperature_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Temperatur (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("Gibt die zuletzt gemessene Temperatur in °C an");
-    this.setHelpUrl("");
-  }
-};
-
-
-Blockly.Blocks['get_humidity_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Rel.Luftfeuchte (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_distanceLeft_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Abstand links (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_distanceRight_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Abstand rechts (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_PM10_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Feinstaub PM10 (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_PM25_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Feinstaub PM25 (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_accelerationX_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Beschleunigung X-Achse (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_accelerationY_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Beschleunigung Y-Achse (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_accelerationZ_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Beschleunigung Z-Achse (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_speed_latest'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Geschwindigkeit (zuletzt)");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['get_coordinates'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Aktuelle Koordinaten");
-    this.appendValueInput("BOX_ID")
-        .setCheck("String")
-        .appendField("Box");
-    this.setOutput(true, "Number");
-    this.setColour("#4F6272");
-    this.setTooltip("Letzter Standort der Box");
-    this.setHelpUrl("");
-  }
-};
-
 // Kategorie Sensor-Anfragen
 
 Blockly.Blocks['get_temperature'] = {
@@ -327,6 +172,20 @@ Blockly.Blocks['get_speed'] = {
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_coordinates'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Aktuelle Koordinaten");
+    this.appendValueInput("BOX_ID")
+        .setCheck("String")
+        .appendField("Box");
+    this.setOutput(true, "Number");
+    this.setColour("#697B93");
+    this.setTooltip("Letzter Standort der Box");
     this.setHelpUrl("");
   }
 };

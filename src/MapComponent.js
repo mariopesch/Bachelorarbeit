@@ -6,7 +6,7 @@ const MapComponent = () => {
   const position = [52.51, 13.38];
   return (
     <div className="map-component">
-      <h2>Leaflet Map</h2>
+      <h2>Karte von Berlin</h2>
       <div className="map-container">
         <MapContainer center={position} zoom={11} scrollWheelZoom={true} style={{ height: "50vh", width: "100%"}}>
           <TileLayer
@@ -14,6 +14,8 @@ const MapComponent = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         </MapContainer>
       </div>
+      <p>Hier findest du die letzten gemessenen Standorte der mobilen SenseBoxen auf den Fahrrädern in Berlin</p>
+
     </div>
   );
 };
