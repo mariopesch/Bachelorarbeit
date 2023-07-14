@@ -6,7 +6,7 @@ const ResultsComponent = () => {
          <h2>Das Blockly4R Tool</h2>
         <div className="ResultsContainer">
           <p>Blockly4R ist eine blockbasierte Programmierumgebung, die den Einstieg in den Umgang mit Daten erleichtern soll.</p>
-          <p>Ohne Wissen über komplizierten Code, kann mit Daten gearbeitet werden und erste Erfahrungen mit statistischer Datenanalyse gemacht werden.</p>
+          <p>Ohne Wissen über komplizierten Code, kann mit Daten gearbeitet und erste Erfahrungen mit statistischer Datenanalyse gemacht werden.</p>
           <p>Die Daten stammen von mobilen SenseBoxen auf Fahrrädern. Das sind kleine Umweltmessstationen, die verschiedenste Werte messen.</p>
           <p>Die Benutzung ist ganz einfach:</p>
           <ul className="Results">

@@ -80,6 +80,7 @@ html, body {
 }
 
 .convert-button,
+.load-button,
 .copy-button {
   width: 150px; /* Adjust the width as per your preference */
   flex: 1;
@@ -89,6 +90,19 @@ html, body {
   color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.select-example {
+  width: 150px; /* Adjust the width as per your preference */
+  flex: 1;
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #8393B3;
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
   cursor: pointer;
 }

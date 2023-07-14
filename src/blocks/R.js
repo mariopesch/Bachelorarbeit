@@ -358,6 +358,38 @@ Blockly.Blocks['save_variable'] = {
   }
 };
 
+Blockly.Blocks['save_sensor_variable'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Variable");
+    this.appendValueInput("VARIABLE_NAME")
+        .setCheck("String")
+        .appendField("Variablenname");
+    this.appendDummyInput()
+        .appendField("Wert")
+        .appendField(new Blockly.FieldDropdown([
+          ["Temperatur", "temp"],
+          ["Feuchtigkeit", "humidity"],
+          ["Abstand links", "disL"],
+          ["Abstand rechts", "disR"],
+          ["PM10", "pm10"],
+          ["PM25", "pm25"],
+          ["Beschleunigung X-Achse", "accX"],
+          ["Beschleunigung Y-Achse", "accY"],
+          ["Beschleunigung Z-Achse", "accZ"],
+          ["Geschwindigkeit", "speed"]
+        ]), "Wähle Sensor");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#B7C3F3");
+    this.setTooltip("Speichert eine Variable");
+    this.setHelpUrl("");
+  }
+};
+
+
+
 Blockly.Blocks['save_as_array'] = {
   init: function() {
     this.appendValueInput("VALUE")
@@ -808,7 +840,6 @@ Blockly.Blocks['if_else'] = {
 Blockly.Blocks['mean'] = {
   init: function() {
     this.appendValueInput("DATA")
-        .setCheck("Array")
         .appendField("Mittelwert");
     this.setOutput(true, "Number");
     this.setColour("#DD7596");
@@ -816,6 +847,7 @@ Blockly.Blocks['mean'] = {
     this.setHelpUrl("");
   }
 };
+
 Blockly.Blocks['median'] = {
   init: function() {
     this.appendValueInput("DATA")

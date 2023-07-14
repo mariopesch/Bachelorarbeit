@@ -115,7 +115,7 @@ RGenerator['get_temperature'] = function (block) {
   `  temp[[1]]$value\n` +
   
   `}\n\n` +
-  `c(fetchTemp())\n`;
+  `fetchTemp()\n`;
 
   return [code, RGenerator.ORDER_NONE];
 };
@@ -135,7 +135,7 @@ RGenerator['get_humidity'] = function(block) {
   `  hum <- req$sensors$lastMeasurements$measurements\n` +
   `  hum[[2]]$value\n` +
   `}\n\n` +
-  `c(fetchHumidity())\n`;
+  `fetchHumidity()\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -152,7 +152,7 @@ RGenerator['get_distanceLeft'] = function(block) {
   `  req <- fromJSON(paste0(url))\n` +
   `  disL <- req$sensors$lastMeasurements$measurements\n` +
   `  disL[[3]]$value\n` +  `}\n\n` +
-  `c(fetchDistanceLeft())\n`;
+  `fetchDistanceLeft()\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -169,7 +169,7 @@ RGenerator['get_distanceRight'] = function(block) {
   `  req <- fromJSON(paste0(url))\n` +
   `  disR <- req$sensors$lastMeasurements$measurements\n` +
   `  disR[[4]]$value\n` +  `}\n\n` +
-  `c(fetchDistanceRight())\n`;
+  `fetchDistanceRight()\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -186,7 +186,7 @@ RGenerator['get_PM10'] = function(block) {
   `  req <- fromJSON(paste0(url))\n` +
   `  PM10 <- req$sensors$lastMeasurements$measurements\n` +
   `  PM10[[5]]$value\n` +  `}\n\n` +
-  `c(fetchPM10())\n`;
+  `fetchPM10()\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -202,7 +202,7 @@ RGenerator['get_PM25'] = function(block) {
   `  req <- fromJSON(paste0(url))\n` +
   `  PM25 <- req$sensors$lastMeasurements$measurements\n` +
   `  PM25[[6]]$value\n` +  `}\n\n` +
-  `c(fetchPM25())\n`;
+  `fetchPM25()\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -219,7 +219,7 @@ RGenerator['get_accelerationX'] = function(block) {
   `  req <- fromJSON(paste0(url))\n` +
   `  accX <- req$sensors$lastMeasurements$measurements\n` +
   `  accX[[7]]$value\n` +  `}\n\n` +
-  `c(fetchAccelerationX())\n`;
+  `fetchAccelerationX()\n`;
 
 return [code, RGenerator.ORDER_NONE];
 };
@@ -357,6 +357,41 @@ RGenerator['save_variable'] = function(block) {
   var code = variableName + ' <- ' + data + '\n';
   return code;
 };
+
+RGenerator['save_sensor_variable'] = function(block) {
+  var variableName = RGenerator.valueToCode(block, 'VARIABLE_NAME', RGenerator.ORDER_ATOMIC);
+  var selectedVariable = block.getFieldValue('Wähle Sensor');
+
+  var valueCode = '';
+  if (selectedVariable === 'temp') {
+    valueCode = 'fetchTemp()';
+  } else if (selectedVariable === 'humidity') {
+    valueCode = 'fetchHumidity()';
+  } else if (selectedVariable === 'disL') {
+    valueCode = 'fetchDistanceleft()';
+  } else if (selectedVariable === 'disR') {
+    valueCode = 'fetchDistanceRight()';
+  } else if (selectedVariable === 'pm10') {
+    valueCode = 'fetchPM10()';
+  } else if (selectedVariable === 'pm25') {
+    valueCode = 'fetchPM25()';
+  } else if (selectedVariable === 'accX') {
+    valueCode = 'fetchAccelerationX()';
+  } else if (selectedVariable === 'accY') {
+    valueCode = 'fetchAccelerationY()';
+  } else if (selectedVariable === 'accZ') {
+    valueCode = 'fetchAccelerationZ()';
+  } else if (selectedVariable === 'speed') {
+    valueCode = 'fetchSpeed()';
+  }
+
+  var code = variableName + ' <- ' + valueCode + '\n';
+
+  return code;
+};
+
+
+
 
 RGenerator['save_as_array'] = function(block) {
   const value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_ATOMIC) || '';
@@ -575,8 +610,10 @@ RGenerator['if_else'] = function(block) {
 
 RGenerator['mean'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var code = 'mean(' + data + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
+
+  // Convert data to numeric before calculating the mean
+  var code = 'mean(as.numeric(' + data + '))';
+  return [code, RGenerator.ORDER_FUNCTION_CALL];
 };
 
 RGenerator['median'] = function(block) {
@@ -744,11 +781,6 @@ RGenerator['display_table'] = function(block) {
   var code = 'print(as.data.frame(' + data + '))\n';
   return code;
 };
-
-
-
-
-
 
 
 

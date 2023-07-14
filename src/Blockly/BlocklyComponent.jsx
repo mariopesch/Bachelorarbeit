@@ -38,6 +38,65 @@ function BlocklyComponent(props) {
     document.execCommand('copy');
   };
 
+
+  // Function to load example blocks
+  const loadExample1Blocks = () => {
+    fetch('/exampleBlocks1.xml')
+      .then(response => response.text())
+      .then(xml => {
+        const domParser = new DOMParser();
+        const xmlDoc = domParser.parseFromString(xml, 'text/xml');
+        Blockly.Xml.domToWorkspace(xmlDoc.documentElement, primaryWorkspace.current);
+      })
+      .catch(error => {
+        console.error('Failed to load example blocks:', error);
+      });
+  };
+   // Function to load example blocks
+   const loadExample2Blocks = () => {
+    fetch('/exampleBlocks2.xml')
+      .then(response => response.text())
+      .then(xml => {
+        const domParser = new DOMParser();
+        const xmlDoc = domParser.parseFromString(xml, 'text/xml');
+        Blockly.Xml.domToWorkspace(xmlDoc.documentElement, primaryWorkspace.current);
+      })
+      .catch(error => {
+        console.error('Failed to load example blocks:', error);
+      });
+  };
+   // Function to load example blocks
+   const loadExample3Blocks = () => {
+    fetch('/exampleBlocks3.xml')
+      .then(response => response.text())
+      .then(xml => {
+        const domParser = new DOMParser();
+        const xmlDoc = domParser.parseFromString(xml, 'text/xml');
+        Blockly.Xml.domToWorkspace(xmlDoc.documentElement, primaryWorkspace.current);
+      })
+      .catch(error => {
+        console.error('Failed to load example blocks:', error);
+      });
+  };
+// Define the example options
+const exampleOptions = [
+  { label: 'Beispiel 1', value: 'example1' },
+  { label: 'Beispiel 2', value: 'example2' },
+  { label: 'Beispiel 3', value: 'example3' },
+];
+
+  const [selectedExample, setSelectedExample] = useState(null);
+
+  const loadExampleBlocks = () => {
+    if (selectedExample === 'example1') {
+      loadExample1Blocks();
+    } else if (selectedExample === 'example2') {
+      loadExample2Blocks();
+    } else if (selectedExample === 'example3') {
+      loadExample3Blocks();
+    }
+  };
+
   useEffect(() => {
     const { initialXml, children, ...rest } = props;
     primaryWorkspace.current = Blockly.inject(blocklyDiv.current, {
@@ -47,7 +106,7 @@ function BlocklyComponent(props) {
 
     if (initialXml) {
       Blockly.Xml.domToWorkspace(
-        Blockly.Xml.textToDom(initialXml),
+        Blockly.utils.xml.textToDom(initialXml),
         primaryWorkspace.current
       );
     }
@@ -62,6 +121,21 @@ function BlocklyComponent(props) {
         <button className="copy-button" onClick={copyCodeToClipboard}>
           R Code in Zwischenablage
         </button>
+        <select value={selectedExample} onChange={(event) => setSelectedExample(event.target.value)} className="select-example">
+          <option value="">Wähle ein Beispiel</option>
+          {exampleOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <button className="load-button" onClick={loadExampleBlocks} disabled={!selectedExample}>
+          Lade Beispiel
+        </button>
+        <div className="button-container">
+       
+      </div>
+
       </div>
 
       <RCodeSnippet rcode={rcode} />

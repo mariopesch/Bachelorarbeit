@@ -1,0 +1,47 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="get_temperature" x="0" y="50">
+    <value name="BOX_ID">
+      <block type="choose_box" boxId="box3"></block>
+    </value>
+  </block>
+  <block type="save_sensor_variable" x="0" y="120">
+    <value name="VARIABLE_NAME">
+      <block type="string_input">
+        <field name="String">tempBox3</field>
+      </block>
+    </value>
+  </block>
+  <block type="get_temperature" x="0" y="220">
+    <value name="BOX_ID">
+      <block type="choose_box" boxId="box10"></block>
+    </value>
+  </block>
+  <block type="save_sensor_variable" x="0" y="290">
+    <value name="VARIABLE_NAME">
+      <block type="string_input">
+        <field name="String">tempBox10</field>
+      </block>
+    </value>
+  </block>
+  <block type="comparison" id="block1" x="0" y="390">
+    <value name="LEFT">
+      <block type="mean">
+        <value name="DATA">
+          <block type="string_input">
+            <field name="String">tempBox3</field>
+          </block>
+        </value>
+      </block>
+    </value>
+    <field name="OPERATOR">></field>
+    <value name="RIGHT">
+      <block type="mean">
+        <value name="DATA">
+          <block type="string_input">
+            <field name="String">tempBox10</field>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+</xml>

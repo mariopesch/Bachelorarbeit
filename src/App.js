@@ -98,6 +98,7 @@ function App(props) {
                 <Block type="get_PM25" />
                 <Block type="get_accelerationX" />
                 <Block type="get_accelerationY" />
+                <Block type="get_accelerationZ" />
                 <Block type="get_speed" />
               </Category>
               <Category name="Listen und Text" colour="#8393B3">
@@ -109,6 +110,7 @@ function App(props) {
               <Category name="Operationen" colour="#B7C3F3">
               <Block type="load_libraries" />
               <Block type="save_variable" />
+              <Block type="save_sensor_variable" />
               <Block type="save_as_array" />
               <Block type="lists_sort" />  
               <Block type="convert_data_type" /> 

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const IdeaComponent = () => {
+  
   return (
       <div className="idea-container">
          <h2>Ideen zur Nutzung des Tools und Analyseaufgaben</h2>
