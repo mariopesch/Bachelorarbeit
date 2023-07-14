@@ -75,6 +75,22 @@ html, body {
   position: relative;
 }
 
+.custom-marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+}
+
+.marker-dot {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+
 .button-container {
   display: flex;
 }
