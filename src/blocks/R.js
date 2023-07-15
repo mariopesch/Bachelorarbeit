@@ -42,6 +42,8 @@ Blockly.Blocks['get_temperature'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);    
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -57,6 +59,8 @@ Blockly.Blocks['get_humidity'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);    
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -71,6 +75,8 @@ Blockly.Blocks['get_distanceLeft'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);   
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -85,6 +91,8 @@ Blockly.Blocks['get_distanceRight'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -99,6 +107,8 @@ Blockly.Blocks['get_PM10'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -113,6 +123,8 @@ Blockly.Blocks['get_PM25'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -127,6 +139,8 @@ Blockly.Blocks['get_accelerationX'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -141,6 +155,8 @@ Blockly.Blocks['get_accelerationY'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -155,6 +171,8 @@ Blockly.Blocks['get_accelerationZ'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -169,6 +187,8 @@ Blockly.Blocks['get_speed'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setOutput(true, "Number");
     this.setColour("#697B93");
     this.setTooltip("");
@@ -183,8 +203,10 @@ Blockly.Blocks['get_coordinates'] = {
     this.appendValueInput("BOX_ID")
         .setCheck("String")
         .appendField("Box");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setOutput(true, "Number");
-    this.setColour("#697B93");
+    this.setColour("#4F6272");
     this.setTooltip("Letzter Standort der Box");
     this.setHelpUrl("");
   }
@@ -388,21 +410,100 @@ Blockly.Blocks['save_sensor_variable'] = {
   }
 };
 
-
-
 Blockly.Blocks['save_as_array'] = {
   init: function() {
-    this.appendValueInput("VALUE")
-        .setCheck("Number")
-        .appendField("Als Array");
-    this.appendValueInput("ARRAY")
-        .setCheck("Array")
+    this.appendDummyInput()
         .appendField("Array");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
+    this.setStyle('list_blocks');
     this.setColour("#B7C3F3");
-    this.setTooltip("Speichert einen Wert als Array");
-    this.setHelpUrl("");
+    this.itemCount_ = 3;
+    this.updateShape_();
+    this.setOutput(true, 'Array');
+    this.setMutator(new Blockly.Mutator(['save_as_array_item']));
+    this.setTooltip(Blockly.Msg.LISTS_CREATE_WITH_TOOLTIP);
+  },
+  mutationToDom: function() {
+    var container = Blockly.utils.xml.createElement('mutation');
+    container.setAttribute('items', this.itemCount_);
+    return container;
+  },
+  domToMutation: function(xmlElement) {
+    this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
+    this.updateShape_();
+  },
+  decompose: function(workspace) {
+    var containerBlock = workspace.newBlock('save_as_array_container');
+    containerBlock.initSvg();
+    var connection = containerBlock.getInput('STACK').connection;
+    for (var i = 0; i < this.itemCount_; i++) {
+      var itemBlock = workspace.newBlock('save_as_array_item');
+      itemBlock.initSvg();
+      connection.connect(itemBlock.previousConnection);
+      connection = itemBlock.nextConnection;
+    }
+    return containerBlock;
+  },
+  compose: function(containerBlock) {
+    var itemBlock = containerBlock.getInputTargetBlock('STACK');
+    var connections = [];
+    while (itemBlock) {
+      connections.push(itemBlock.valueConnection_);
+      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+    }
+    this.itemCount_ = connections.length;
+    this.updateShape_();
+    for (var i = 0; i < this.itemCount_; i++) {
+      Blockly.Mutator.reconnect(connections[i], this, 'ADD' + i);
+    }
+  },
+  saveConnections: function(containerBlock) {
+    var itemBlock = containerBlock.getInputTargetBlock('STACK');
+    var i = 0;
+    while (itemBlock) {
+      var input = this.getInput('ADD' + i);
+      itemBlock.valueConnection_ = input && input.connection.targetConnection;
+      i++;
+      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+    }
+  },
+  updateShape_: function() {
+    for (var i = 0; i < this.itemCount_; i++) {
+      var inputExists = this.getInput('ADD' + i);
+      if (!inputExists) {
+        this.appendValueInput('ADD' + i)
+          .setAlign(Blockly.ALIGN_RIGHT)
+          .appendField('item');
+      }
+    }
+    while (this.getInput('ADD' + i)) {
+      this.removeInput('ADD' + i);
+      i++;
+    }
+  }
+};
+
+Blockly.Blocks['save_as_array_container'] = {
+  init: function() {
+    this.setStyle('list_blocks');
+    this.setColour("#B7C3F3");
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.LISTS_CREATE_WITH_CONTAINER_TITLE_ADD);
+    this.appendStatementInput('STACK');
+    this.setTooltip(Blockly.Msg.LISTS_CREATE_WITH_CONTAINER_TOOLTIP);
+    this.contextMenu = false;
+  }
+};
+
+Blockly.Blocks['save_as_array_item'] = {
+  init: function() {
+    this.setStyle('list_blocks');
+    this.setColour("#B7C3F3");
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.LISTS_CREATE_WITH_ITEM_TITLE);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(Blockly.Msg.LISTS_CREATE_WITH_ITEM_TOOLTIP);
+    this.contextMenu = false;
   }
 };
 

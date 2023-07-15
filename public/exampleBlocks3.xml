@@ -1,44 +1,81 @@
 <xml xmlns="http://www.w3.org/1999/xhtml">
   <block type="get_speed" x="0" y="50">
     <value name="BOX_ID">
-      <block type="choose_box" boxId="box3"></block>
+      <block type="choose_box">
+        <field name="Number">3</field>
+      </block>
     </value>
   </block>
   <block type="save_sensor_variable" x="0" y="120">
     <value name="VARIABLE_NAME">
       <block type="string_input">
-        <field name="String">tempBox3</field>
+        <field name="String">speedBox3</field>
       </block>
     </value>
+    <field name="Wähle Sensor">speed</field>
   </block>
-  <block type="get_temperature" x="0" y="220">
+  
+  <block type="get_speed" x="0" y="220">
     <value name="BOX_ID">
-      <block type="choose_box" boxId="box10"></block>
+      <block type="choose_box">
+        <field name="Number">5</field>
+      </block>
     </value>
   </block>
   <block type="save_sensor_variable" x="0" y="290">
     <value name="VARIABLE_NAME">
       <block type="string_input">
-        <field name="String">tempBox10</field>
+        <field name="String">speedBox5</field>
+      </block>
+    </value>
+    <field name="Wähle Sensor">speed</field>
+  </block>
+  
+  <block type="get_speed" x="0" y="390">
+    <value name="BOX_ID">
+      <block type="choose_box">
+        <field name="Number">23</field>
       </block>
     </value>
   </block>
-  <block type="comparison" id="block1" x="0" y="390">
-    <value name="LEFT">
-      <block type="mean">
-        <value name="DATA">
-          <block type="string_input">
-            <field name="String">tempBox3</field>
-          </block>
-        </value>
+  <block type="save_sensor_variable" x="0" y="460">
+    <value name="VARIABLE_NAME">
+      <block type="string_input">
+        <field name="String">speedBox23</field>
       </block>
     </value>
-    <field name="OPERATOR">></field>
-    <value name="RIGHT">
-      <block type="mean">
-        <value name="DATA">
-          <block type="string_input">
-            <field name="String">tempBox10</field>
+    <field name="Wähle Sensor">speed</field>
+  </block>
+  
+  
+  <block type="max_min" x="0" y="560">
+    <value name="VALUES">
+      <block type="save_as_array">
+        <value name="ADD0">
+          <block type="mean">
+            <value name="DATA">
+              <block type="string_input">
+                <field name="String">speedBox3</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="ADD1">
+          <block type="mean">
+            <value name="DATA">
+              <block type="string_input">
+                <field name="String">speedBox5</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="ADD2">
+          <block type="mean">
+            <value name="DATA">
+              <block type="string_input">
+                <field name="String">speedBox23</field>
+              </block>
+            </value>
           </block>
         </value>
       </block>

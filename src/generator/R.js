@@ -390,15 +390,27 @@ RGenerator['save_sensor_variable'] = function(block) {
   return code;
 };
 
-
-
-
 RGenerator['save_as_array'] = function(block) {
-  const value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_ATOMIC) || '';
-  const array = RGenerator.valueToCode(block, 'ARRAY', RGenerator.ORDER_ATOMIC) || '';
-  const code = `${array} <- c(${array}, ${value})\n`;
+  var elements = new Array(block.itemCount_);
+  for (var i = 0; i < block.itemCount_; i++) {
+    elements[i] = RGenerator.valueToCode(block, 'ADD' + i, RGenerator.ORDER_NONE) || 'NULL';
+  }
+
+  var code = 'c(' + elements.join(', ') + ')';
+
+  return [code, RGenerator.ORDER_ATOMIC];
+};
+
+RGenerator['save_as_array_container'] = function(block) {
+  var code = '';
   return code;
 };
+
+RGenerator['save_as_array_item'] = function(block) {
+  var code = '';
+  return code;
+};
+
 
 RGenerator['lists_sort'] = function(block) {
   var list = RGenerator.valueToCode(block, 'LIST', RGenerator.ORDER_ATOMIC) || '[]';
@@ -632,10 +644,11 @@ RGenerator['summary'] = function(block) {
   var code = '';
   for (var i = 0; i < block.itemCount_; i++) {
     var data = RGenerator.valueToCode(block, 'INPUT' + i, RGenerator.ORDER_ATOMIC);
-    code += 'summary(' + data + ')\n';
+    code += 'summary(as.numeric(' + data + '))\n';
   }
   return code;
 };
+
 
 RGenerator['moving_average'] = function(block) {
   var arrayInput = RGenerator.valueToCode(block, 'ARRAY', RGenerator.ORDER_ATOMIC);
@@ -730,16 +743,32 @@ RGenerator['boxplot'] = function(block) {
 };
 
 RGenerator['scatter_plot'] = function(block) {
-  var xValues = RGenerator.valueToCode(block, 'X_VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
-  var yValues = RGenerator.valueToCode(block, 'Y_VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var xValues = RGenerator.valueToCode(block, 'X_VALUES', RGenerator.ORDER_NONE) || '';
+  var yValues = RGenerator.valueToCode(block, 'Y_VALUES', RGenerator.ORDER_NONE) || '';
   var showLine = block.getFieldValue('SHOW_LINE') === 'TRUE';
 
-  var code = 'plot(' + xValues + ', ' + yValues + ', pch = 19, frame = FALSE)\n';
+  var code = '';
+
+  // Adjust length of xValues and yValues if they have different lengths
+  code += 'if (length(' + xValues + ') != length(' + yValues + ')) {\n';
+  code += '  if (length(' + xValues + ') > length(' + yValues + ')) {\n';
+  code += '    ' + xValues + ' <- ' + xValues + '[1:length(' + yValues + ')]\n';
+  code += '  } else {\n';
+  code += '    ' + yValues + ' <- ' + yValues + '[1:length(' + xValues + ')]\n';
+  code += '  }\n';
+  code += '}\n';
+
+  code += 'plot(' + xValues + ', ' + yValues + ', pch = 19, frame = FALSE)\n';
+
   if (showLine) {
-    code += 'abline(lm(' + yValues + ' ~ ' + xValues + '), col = "blue")\n';
+    code += 'model <- lm(' + yValues + ' ~ ' + xValues + ')\n';
+    code += 'abline(coef(model)[1], coef(model)[2], col = "blue")\n';
   }
+
   return code;
 };
+
+
 
 RGenerator['bar_chart'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);

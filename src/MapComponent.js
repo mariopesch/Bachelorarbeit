@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
 const MapComponent = () => {
   const position = [52.51, 13.38];
@@ -47,11 +50,12 @@ const MapComponent = () => {
     fetchSenseBoxesData();
   }, []);
 
-  const markerIcon = L.icon({
-    iconUrl: 'marker-icon.png',
-    iconSize: [27, 30],
-    iconAnchor: [12, 41],
+  const customMarkerIcon = L.icon({
+    iconUrl: markerIcon,
+    iconSize: [27, 41],
+    iconAnchor: [13, 41],
     popupAnchor: [1, -34],
+    shadowUrl: markerShadow,
     shadowSize: [41, 41],
     shadowAnchor: [13, 41],
   });
@@ -69,12 +73,14 @@ const MapComponent = () => {
             <Marker
               key={senseBox._id}
               position={[senseBox.currentLocation.coordinates[1], senseBox.currentLocation.coordinates[0]]}
-              icon={markerIcon}
-            />
+              icon={customMarkerIcon}
+            >
+              <Popup>{senseBox.name}</Popup>
+            </Marker>
           ))}
         </MapContainer>
       </div>
-      <p>Hier findest du die letzten gemessenen Standorte der mobilen SenseBoxen auf den Fahrrädern in Berlin</p>
+      <p>Hier findest du die letzten gemessenen Standorte der mobilen SenseBoxen auf den Fahrrädern in Berlin.</p>
     </div>
   );
 };

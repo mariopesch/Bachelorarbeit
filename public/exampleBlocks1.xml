@@ -1,7 +1,9 @@
 <xml xmlns="http://www.w3.org/1999/xhtml">
   <block type="get_temperature" x="0" y="50">
     <value name="BOX_ID">
-      <block type="choose_box" boxId="box3"></block>
+      <block type="choose_box">
+        <field name="Number">3</field>
+      </block>
     </value>
   </block>
   <block type="save_sensor_variable" x="0" y="120">
@@ -13,7 +15,9 @@
   </block>
   <block type="get_temperature" x="0" y="220">
     <value name="BOX_ID">
-      <block type="choose_box" boxId="box10"></block>
+      <block type="choose_box">
+        <field name="Number">10</field>
+      </block>
     </value>
   </block>
   <block type="save_sensor_variable" x="0" y="290">

@@ -88,6 +88,7 @@ function App(props) {
               <Category name="Senseboxen" colour="#4F6272">
               <Block type="choose_box" />
               <Block type="box_id" />
+              <Block type="get_coordinates" />
               </Category>
               <Category name="Sensor-Anfragen" colour="#697B93">
                 <Block type="get_temperature" />
