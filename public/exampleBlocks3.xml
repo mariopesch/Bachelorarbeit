@@ -5,80 +5,88 @@
         <field name="Number">3</field>
       </block>
     </value>
-  </block>
-  <block type="save_sensor_variable" x="0" y="120">
-    <value name="VARIABLE_NAME">
-      <block type="string_input">
-        <field name="String">speedBox3</field>
-      </block>
-    </value>
-    <field name="Wähle Sensor">speed</field>
-  </block>
-  
-  <block type="get_speed" x="0" y="220">
-    <value name="BOX_ID">
-      <block type="choose_box">
-        <field name="Number">5</field>
-      </block>
-    </value>
-  </block>
-  <block type="save_sensor_variable" x="0" y="290">
-    <value name="VARIABLE_NAME">
-      <block type="string_input">
-        <field name="String">speedBox5</field>
-      </block>
-    </value>
-    <field name="Wähle Sensor">speed</field>
-  </block>
-  
-  <block type="get_speed" x="0" y="390">
-    <value name="BOX_ID">
-      <block type="choose_box">
-        <field name="Number">23</field>
-      </block>
-    </value>
-  </block>
-  <block type="save_sensor_variable" x="0" y="460">
-    <value name="VARIABLE_NAME">
-      <block type="string_input">
-        <field name="String">speedBox23</field>
-      </block>
-    </value>
-    <field name="Wähle Sensor">speed</field>
-  </block>
-  
-  
-  <block type="max_min" x="0" y="560">
-    <value name="VALUES">
-      <block type="save_as_array">
-        <value name="ADD0">
-          <block type="mean">
-            <value name="DATA">
-              <block type="string_input">
-                <field name="String">speedBox3</field>
-              </block>
-            </value>
+    <next>
+      <block type="save_sensor_variable">
+        <value name="VARIABLE_NAME">
+          <block type="string_input">
+            <field name="String">speedBox3</field>
           </block>
         </value>
-        <value name="ADD1">
-          <block type="mean">
-            <value name="DATA">
-              <block type="string_input">
-                <field name="String">speedBox5</field>
+        <field name="Wähle Sensor">speed</field>
+        <next>
+          <block type="get_speed">
+            <value name="BOX_ID">
+              <block type="choose_box">
+                <field name="Number">5</field>
               </block>
             </value>
-          </block>
-        </value>
-        <value name="ADD2">
-          <block type="mean">
-            <value name="DATA">
-              <block type="string_input">
-                <field name="String">speedBox23</field>
+            <next>
+              <block type="save_sensor_variable">
+                <value name="VARIABLE_NAME">
+                  <block type="string_input">
+                    <field name="String">speedBox5</field>
+                  </block>
+                </value>
+                <field name="Wähle Sensor">speed</field>
+                <next>
+                  <block type="get_speed">
+                    <value name="BOX_ID">
+                      <block type="choose_box">
+                        <field name="Number">23</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="save_sensor_variable">
+                        <value name="VARIABLE_NAME">
+                          <block type="string_input">
+                            <field name="String">speedBox23</field>
+                          </block>
+                        </value>
+                        <field name="Wähle Sensor">speed</field>
+                        <next>
+                          <block type="max_min">
+                            <value name="VALUES">
+                              <block type="save_as_array">
+                                <value name="ADD0">
+                                  <block type="mean">
+                                    <value name="DATA">
+                                      <block type="string_input">
+                                        <field name="String">speedBox3</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <value name="ADD1">
+                                  <block type="mean">
+                                    <value name="DATA">
+                                      <block type="string_input">
+                                        <field name="String">speedBox5</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <value name="ADD2">
+                                  <block type="mean">
+                                    <value name="DATA">
+                                      <block type="string_input">
+                                        <field name="String">speedBox23</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
               </block>
-            </value>
+            </next>
           </block>
-        </value>
+        </next>
       </block>
-    </value>
+    </next>
   </block>
 </xml>

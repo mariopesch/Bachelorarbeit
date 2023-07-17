@@ -5,40 +5,48 @@
         <field name="Number">6</field>
       </block>
     </value>
-  </block>
-  <block type="save_sensor_variable" x="0" y="120">
-    <value name="VARIABLE_NAME">
-      <block type="string_input">
-        <field name="String">tempBox6</field>
+    <next>
+      <block type="save_sensor_variable">
+        <value name="VARIABLE_NAME">
+          <block type="string_input">
+            <field name="String">tempBox6</field>
+          </block>
+        </value>
+        <field name="Wähle Sensor">humidity</field>
+        <next>
+          <block type="get_humidity">
+            <value name="BOX_ID">
+              <block type="choose_box">
+                <field name="Number">6</field>
+              </block>
+            </value>
+            <next>
+              <block type="save_sensor_variable">
+                <value name="VARIABLE_NAME">
+                  <block type="string_input">
+                    <field name="String">humidityBox6</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="scatter_plot">
+                    <value name="X_VALUES">
+                      <block type="string_input">
+                        <field name="String">tempBox6</field>
+                      </block>
+                    </value>
+                    <value name="Y_VALUES">
+                      <block type="string_input">
+                        <field name="String">humidityBox6</field>
+                      </block>
+                    </value>
+                    <field name="SHOW_LINE">TRUE</field>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
       </block>
-    </value>
-    <field name="Wähle Sensor">humidity</field>
-  </block>
-  <block type="get_humidity" x="0" y="220">
-    <value name="BOX_ID">
-      <block type="choose_box">
-        <field name="Number">6</field>
-      </block>
-    </value>
-  </block>
-  <block type="save_sensor_variable" x="0" y="290">
-    <value name="VARIABLE_NAME">
-      <block type="string_input">
-        <field name="String">humidityBox6</field>
-      </block>
-    </value>
-  </block>
-  <block type="scatter_plot" x="0" y="390">
-    <value name="X_VALUES">
-      <block type="string_input">
-        <field name="String">tempBox6</field>
-      </block>
-    </value>
-    <value name="Y_VALUES">
-      <block type="string_input">
-        <field name="String">humidityBox6</field>
-      </block>
-    </value>
-    <field name="SHOW_LINE">TRUE</field>
+    </next>
   </block>
 </xml>

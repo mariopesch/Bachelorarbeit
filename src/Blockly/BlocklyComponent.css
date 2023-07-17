@@ -9,3 +9,15 @@
   display: flex;
   flex-direction: row;
 }
+.blocklyBlock {
+  margin-bottom: 0 !important;
+}
+
+.blocklyFlyout .blocklyBlock {
+  margin-bottom: 1px !important;
+}
+
+.blocklyBlock > .blocklyBlockDragSurface {
+  margin-bottom: -1px !important;
+}
+

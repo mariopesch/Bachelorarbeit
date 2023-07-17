@@ -16,8 +16,8 @@ const IdeaComponent = () => {
           </ul>
         <p>Weitere Aufgaben:</p>
           <ul className="Beginner">
-          <li>Hole dir die Sensorwerte einer Box deiner Wahl, für die du dich interessierst. Speichere sie in einer Variable ab und lasse dir eine Zusammenfassung über deine Stichprobe ausgeben. Was sagen die einzelnen Werte aus? Warum ist der Median unterschiedlich vom Mittelwert und wofür gebraucht man Informationen über die Quantile?</li>
           <li>Wo befindet sich Box #29 aktuell? Benutze dafür die Blöcke und suche sie anschließend auf der Karte.</li>
+          <li>Hole dir die Sensorwerte einer Box deiner Wahl, für die du dich interessierst. Speichere sie in einer Variable ab und lasse dir eine Zusammenfassung über deine Stichprobe ausgeben. Was sagen die einzelnen Werte aus? Warum ist der Median unterschiedlich vom Mittelwert und kannst du das Streuungsmaß mit den Quantilen bestimmen?</li>
           <li>Gib dir die letzten Feinstaubmessungen (PM10) von SenseBox #6 an. Überschreiten die Messwerte den gesetzlich festgelegten Grenzwert von 50 µg/m³? </li>
           <li>LM trainieren und prediction machen oder krieging???? Oder t-Test???</li>
           </ul>

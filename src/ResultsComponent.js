@@ -19,7 +19,7 @@ const ResultsComponent = () => {
             {/* Add more links as needed */}
           </ul>
           <h3>Screenshot von Plot o.Ä.</h3>
-          <p>Wenn du Hilfe bei der Bearbeitung der Aufgaben benötigst, klicke auf die einzelnen Blöcke oder schaue im Wiki vorbei</p>
+          <p>Wenn du Hilfe bei der Bearbeitung der Aufgaben benötigst, klicke auf die einzelnen Blöcke oder schaue im Wiki vorbei.</p>
         <p>Informiere dich im Wiki auch über Metadaten und die korrekte Zitierweise von Daten!</p>
         </div>
       </div>

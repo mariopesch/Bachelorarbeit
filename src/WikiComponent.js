@@ -11,12 +11,14 @@ const WikiComponent = () => {
           </ul>
           <p>Basiswissen Statisitk:</p>
           <ul className="WikiLinks">
+          <li>Info über Hypothese</li>
           <li>Info über Mittelwert</li>
           <li>Info über Median</li>
           <li>Info über sd</li>
-          <li>Info über Regression und Modelle trainieren</li>
+          <li>Info über Quantile</li>
+          <li>Info über Regression</li>
           <li>Info über t-Tests</li>
-          <li>Info über Predictions</li>
+          <li>Info über Korrelation? Vielleicht noch Block entfernen</li>
           <li>Info über Visualisierungsformen</li>
           <li>... Graphen, Plots, Histogramme...</li>
           <li>[Links zu Statistikseite]</li>
@@ -32,6 +34,7 @@ const WikiComponent = () => {
           <li>[Daten werden korrekt zitiert, indem...]</li>
             {/* Add more links as needed */}
           </ul>
+          <p>Noch mehr Informationen kannst du hier nachlesen: https://datatab.de/tutorial</p>
         </div>
     
     
