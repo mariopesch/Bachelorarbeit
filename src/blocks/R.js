@@ -1373,10 +1373,10 @@ Blockly.Blocks['boxplot'] = {
         .appendField(new Blockly.FieldTextInput(""), "TITLE");
     this.appendDummyInput()
         .appendField("X-Achse")
-        .appendField(new Blockly.FieldTextInput("Value"), "X_LABEL");
+        .appendField(new Blockly.FieldTextInput("Variable"), "X_LABEL");
     this.appendDummyInput()
         .appendField("Y-Achse")
-        .appendField(new Blockly.FieldTextInput("Frequency"), "Y_LABEL");
+        .appendField(new Blockly.FieldTextInput("Wert"), "Y_LABEL");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
@@ -1476,6 +1476,8 @@ Blockly.Blocks['heatmap'] = {
         .appendField(new Blockly.FieldDropdown([["Red", "red"], ["Blue", "blue"], ["Green", "green"]]), "COLOR_SCHEME");
     this.setInputsInline(false);
     this.setOutput(true, null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setColour("#DA5D87");
     this.setTooltip("Erstellt eine Heatmap");
     this.setHelpUrl("");

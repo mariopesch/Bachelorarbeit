@@ -1,4 +1,6 @@
 import React from 'react';
+import boxplotImage from './boxplotPM10Box6.png'; 
+
 
 const ResultsComponent = () => {
   return (
@@ -18,7 +20,9 @@ const ResultsComponent = () => {
           <li>Dort erhälst du die Analyseergebnisse und -visualisierungen deiner Blöcke, die zum Beispiel so aussehen können: </li>
             {/* Add more links as needed */}
           </ul>
-          <h3>Screenshot von Plot o.Ä.</h3>
+          <div className="image-container">
+          <img src={boxplotImage} alt="Boxplot PM10 Box 6" className="boxplot-image"/>
+          </div>
           <p>Wenn du Hilfe bei der Bearbeitung der Aufgaben benötigst, klicke auf die einzelnen Blöcke oder schaue im Wiki vorbei.</p>
         <p>Informiere dich im Wiki auch über Metadaten und die korrekte Zitierweise von Daten!</p>
         </div>

@@ -122,3 +122,49 @@ html, body {
   font-size: 12px;
   cursor: pointer;
 }
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32vh; 
+}
+.boxplot-image {
+  width: 50%; 
+  height: auto; 
+}
+.info-popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid #697B93;
+  padding: 20px;
+  z-index: 999;
+}
+
+.info-popup {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.close-button {
+  background-color: #697B93;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.clickable-item {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.clickable-item:hover {
+  font-weight: bold;
+}
+.bold {
+  font-weight: bold;
+}
