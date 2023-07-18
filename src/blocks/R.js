@@ -775,13 +775,13 @@ Blockly.Blocks['number'] = {
 Blockly.Blocks['array_input'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Array")
+        .appendField("Gruppe")
         .appendField(new Blockly.FieldTextInput("1, 2, 3"), "ARRAY");
     this.setOutput(true, "Array");
     this.setColour("#C1B0DC");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip("Nimmt ein Array als Input");
+    this.setTooltip("Nimmt ein Array als Input. Ein Array ist eine Datenstruktur, die Daten desselben Typs als eine Gruppe speichert");
     this.setHelpUrl("");
     this.setInputsInline(true);
   }
@@ -790,10 +790,10 @@ Blockly.Blocks['split'] = {
   init: function() {
     this.appendValueInput('ARRAY')
         .setCheck('Array')
-        .appendField('Split Array');
+        .appendField('Split Gruppe');
     this.appendValueInput('SUBSET_SIZE')
         .setCheck('Number')
-        .appendField('Größe des Subsets');
+        .appendField('Größe der Untergruppe');
     this.setOutput(true, 'Array');
     this.setColour('#C1B0DC');
     this.setPreviousStatement(true, null);
@@ -988,7 +988,7 @@ Blockly.Blocks['mean'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip("Berechnet den Mittelwert");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/statistik-rechner/deskriptive-statistik/mittelwert-modalwert-median-rechner");
   }
 };
 
@@ -1001,7 +1001,7 @@ Blockly.Blocks['median'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip("Berechnet den Median");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/statistik-rechner/deskriptive-statistik/mittelwert-modalwert-median-rechner");
   }
 };
 Blockly.Blocks['sd'] = {
@@ -1013,7 +1013,7 @@ Blockly.Blocks['sd'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip("Berechnet die Standardabweichung");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/statistik-rechner/deskriptive-statistik/standardabweichung-varianz-rechner");
   }
 };
 
@@ -1156,7 +1156,7 @@ Blockly.Blocks['lm'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip("Passt ein lineares Regressionsmodell an");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/statistik-rechner/regression");
   }
 };
 
@@ -1172,6 +1172,8 @@ Blockly.Blocks['anova'] = {
     this.setNextStatement(true, null);
     this.setMutator(new Blockly.Mutator(['anova_item']));
     this.setTooltip('Führt ANOVA auf eine variable Anzahl an Daten aus');
+    this.setHelpUrl("https://datatab.de/statistik-rechner/hypothesentest/anova");
+
   },
   
   mutationToDom: function() {
@@ -1280,7 +1282,7 @@ Blockly.Blocks['correlation_analysis'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip("Berechnet die Korrelation zwischen Stichproben");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/statistik-rechner/korrelation");
   }
 };
 Blockly.Blocks['one_sample_t_test'] = {
@@ -1298,7 +1300,7 @@ Blockly.Blocks['one_sample_t_test'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip("Führt den Einstichproben-t-Test mit einem Sample und einem gegebenen Mittelwert aus");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/statistik-rechner/hypothesentest/t-test");
   }
 };
 Blockly.Blocks['two_sample_t_test'] = {
@@ -1315,7 +1317,7 @@ Blockly.Blocks['two_sample_t_test'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip("Führt den Zweistichprobe-t-Test mit zwei gegebenen Samples aus");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/tutorial/unabh%C3%A4ngiger-t-test");
   }
 };
 
@@ -1381,7 +1383,7 @@ Blockly.Blocks['boxplot'] = {
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
     this.setTooltip("Erstellt einen Box Plot");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/statistik-rechner/diagramme/boxplot-erstellen");
   }
 };
 
@@ -1402,7 +1404,7 @@ Blockly.Blocks['scatter_plot'] = {
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
     this.setTooltip("Erstellt einen Scatter Pot");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/tutorial/diagramme");
     this.setInputsInline(false);
   }
 };
@@ -1423,7 +1425,7 @@ Blockly.Blocks['bar_chart'] = {
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
     this.setTooltip("Erstellt ein Balkendiagramm");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/tutorial/diagramme");
   }
 };
 Blockly.Blocks['line_chart'] = {
@@ -1442,7 +1444,7 @@ Blockly.Blocks['line_chart'] = {
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
     this.setTooltip("Erstellt ein Säulendiagramm");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/tutorial/diagramme");
   }
 };
 Blockly.Blocks['histogram'] = {
@@ -1463,7 +1465,7 @@ Blockly.Blocks['histogram'] = {
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
     this.setTooltip("Erstellt ein Histogramm");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://datatab.de/tutorial/diagramme");
   }
 };
 Blockly.Blocks['heatmap'] = {

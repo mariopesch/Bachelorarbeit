@@ -169,7 +169,7 @@ function App(props) {
       <Tab>About</Tab>
       <Tab>Map</Tab>
       <Tab>Wiki</Tab>
-      <Tab>Analyseideen</Tab>
+      <Tab>Aufgaben</Tab>
     </TabList>
 
     <TabPanel>
