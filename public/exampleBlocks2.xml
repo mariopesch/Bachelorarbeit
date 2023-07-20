@@ -9,7 +9,7 @@
       <block type="save_sensor_variable">
         <value name="VARIABLE_NAME">
           <block type="string_input">
-            <field name="String">tempBox6</field>
+            <field name="String">humidityBox6</field>
           </block>
         </value>
         <field name="Wähle Sensor">humidity</field>
@@ -24,7 +24,7 @@
               <block type="save_sensor_variable">
                 <value name="VARIABLE_NAME">
                   <block type="string_input">
-                    <field name="String">humidityBox6</field>
+                    <field name="String">tempBox6</field>
                   </block>
                 </value>
                 <next>

@@ -694,13 +694,28 @@ RGenerator['correlation_analysis'] = function(block) {
   return code;
 };
 
-RGenerator['one_sample_t_test'] = function(block) {
+RGenerator['one_sample_t_test'] = function (block) {
   var sample = RGenerator.valueToCode(block, 'SAMPLE', RGenerator.ORDER_ATOMIC) || 'NULL';
   var populationMean = RGenerator.valueToCode(block, 'POPULATION_MEAN', RGenerator.ORDER_ATOMIC) || 'NULL';
 
-  var code = 't.test(' + sample + ', mu = ' + populationMean + ')$p.value';
+  // Set the direction of the t-test based on the block's dropdown value
+  var direction = block.getFieldValue('DIRECTION');
+  var code = 'result <- t.test(' + sample + ', mu = ' + populationMean + ', alternative = "' + direction + '")\n';
+  code += 't_value <- result$statistic\n';
+  code += 'distribution_table <- result[[';
+
+  // Set the corresponding component of the result object based on the direction
+  if (direction === 'less') {
+    code += '"p.value"]]\n';
+  } else {
+    code += '"conf.int"]]\n';
+  }
+  code += 'result';
   return code;
 };
+
+
+
 
 RGenerator['two_sample_t_test'] = function(block) {
   var sample1 = RGenerator.valueToCode(block, 'SAMPLE_1', RGenerator.ORDER_ATOMIC) || 'NULL';
@@ -767,7 +782,6 @@ RGenerator['scatter_plot'] = function(block) {
 
   return code;
 };
-
 
 
 RGenerator['bar_chart'] = function(block) {

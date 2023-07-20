@@ -1288,12 +1288,15 @@ Blockly.Blocks['correlation_analysis'] = {
 Blockly.Blocks['one_sample_t_test'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Einstichproben-t-Test")
+        .appendField("Einstichproben-t-Test");
     this.appendValueInput("SAMPLE")
         .appendField("Sample");
     this.appendValueInput("POPULATION_MEAN")
         .setCheck("Number")
         .appendField("Mittelwert");
+    this.appendDummyInput()
+        .appendField("Richtung")
+        .appendField(new Blockly.FieldDropdown([["kleiner als", "less"], ["größer als", "greater"]]), "DIRECTION");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
     this.setColour("#DD7596");
@@ -1303,6 +1306,7 @@ Blockly.Blocks['one_sample_t_test'] = {
     this.setHelpUrl("https://datatab.de/statistik-rechner/hypothesentest/t-test");
   }
 };
+
 Blockly.Blocks['two_sample_t_test'] = {
   init: function() {
     this.appendDummyInput()
