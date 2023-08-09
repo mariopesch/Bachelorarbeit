@@ -12,11 +12,11 @@ const IdeaComponent = () => {
          <h2>Ideen zur Nutzung des Tools und Analyseaufgaben</h2>
         <div className="IdeasContainer">
         <p><strong>Aufgaben mit Beispielen:</strong></p>
-        <p>Benutze die Beispiele mithilfe der Buttons oben links und mache dich mit der Benutzung und Funktion der Blöcke vertraut. Klicke auf die Aufgaben, um die einzelen Aufgabenstellungen zu lesen.</p>
+        <p>Benutze die Beispiele mithilfe der Buttons oben links und mache dich mit der Benutzung und Funktion der Blöcke vertraut. Bevor du dir den Code ausgeben lässt, versuche zu verstehen, wie die Blöcke arbeiten. Klicke auf die Aufgaben, um die einzelen Aufgabenstellungen zu lesen.</p>
           <ul className="Examples">
           <li onClick={() => handleInfoClick('Lade das 1. Beispiel und schaue dir die Blöcke an. Was wäre eine mögliche These, die die vorliegenden Daten untersuchen könnte? Kannst du dir deine These mit den Ergebnissen auch beantworten?')} className="clickable-item">Aufgabe 1</li>
           <li onClick={() => handleInfoClick('Lade das 2. Beispiel und stelle deine Daten mithilfe eines Scatterplots dar. Was genau zeigt er an und wie würdest du ihn interpretieren?')} className="clickable-item">Aufgabe 2</li>
-          <li onClick={() => handleInfoClick('Lade das 3. Beispiel und finde heraus, welche der drei verwendeten Senseboxen in letzter Zeit am schnellsten unterwegs war. Wie kommt das Tool auf das Ergebnis und was müsstest du verändern, um die langsamste Sensebox zu finden?')} className="clickable-item">Aufgabe 3</li>
+          <li onClick={() => handleInfoClick('Lade das 3. Beispiel und finde heraus, was die größte durchschnittlichste Geschwindigkeit in km/h der drei verwendeten Boxen in letzter Zeit war. Wie kommt das Tool auf das Ergebnis und was müsstest du verändern, um die langsamste Geschwindigkeit zu finden?')} className="clickable-item">Aufgabe 3</li>
           </ul>
         <p><strong>Weitere Aufgaben:</strong></p>
         <p>Versuche nun die freien Aufgaben zu lösen. Klicke auf die Aufgabe, um die Aufgabenstellung zu lesen und nutze die Hilfen im Wiki oder in der Blockbeschreibung, falls du nicht weiterkommst.</p>

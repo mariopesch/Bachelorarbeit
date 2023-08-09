@@ -23,7 +23,7 @@ const ResultsComponent = () => {
           <div className="image-container">
           <img src={boxplotImage} alt="Boxplot PM10 Box 6" className="boxplot-image"/>
           </div>
-          <p>Wenn du Hilfe bei der Bearbeitung der Aufgaben benötigst, klicke auf die einzelnen Blöcke oder schaue im Wiki vorbei.</p>
+          <p>Wenn du Hilfe bei der Bearbeitung der Aufgaben benötigst, ziehe die Maus auf die einzelnen Blöcke oder schaue im Wiki vorbei.</p>
         <p>Informiere dich im Wiki auch über Metadaten und die korrekte Zitierweise von Daten!</p>
         </div>
       </div>
