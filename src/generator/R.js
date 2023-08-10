@@ -45,7 +45,7 @@ RGenerator['choose_box'] = function(block) {
 };
 
 function generateUniqueID(number) {
-  // Logic to generate a unique ID based on the provided number
+  // Jeder SenseBox Nummer der aktiven Futurium-Boxen wird die ID zugewiesen
   if (number === '2') {
     return '615f2945c031ff001b117bae';
   } else if (number === '3') {
@@ -119,8 +119,6 @@ RGenerator['get_temperature'] = function (block) {
 
   return [code, RGenerator.ORDER_NONE];
 };
-
-
 
 RGenerator['get_humidity'] = function(block) {
   const boxId = RGenerator.valueToCode(
@@ -330,7 +328,7 @@ RGenerator['string_length'] = function(block) {
   RGenerator.ORDER_MEMBER) || '\'\'';
   var result = 'nchar(' + "'" + text + "'" + ')';
   //return ['nchar(' + text + ')', RGenerator.ORDER_MEMBER];
-  return result;
+  return [result, RGenerator.ORDER_NONE];
 };
 
 RGenerator['string_input'] = function(block) {
@@ -341,7 +339,7 @@ RGenerator['string_input'] = function(block) {
 RGenerator['print'] = function(block) {
   var value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_NONE) || '';
   var code = 'print(' + value + ')\n';
-  return code;
+  return [code, RGenerator.ORDER_NONE];
 };
 
 // Kategorie Operationen 
@@ -355,7 +353,7 @@ RGenerator['save_variable'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
   var variableName = RGenerator.valueToCode(block, 'VARIABLE_NAME', RGenerator.ORDER_ATOMIC);
   var code = variableName + ' <- ' + data + '\n';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['save_sensor_variable'] = function(block) {
@@ -387,7 +385,7 @@ RGenerator['save_sensor_variable'] = function(block) {
 
   var code = variableName + ' <- ' + valueCode + '\n';
 
-  return code;
+  return code ;
 };
 
 RGenerator['save_as_array'] = function(block) {
@@ -615,7 +613,7 @@ RGenerator['if_else'] = function(block) {
     code += 'else {\n' + ifBody + '}\n';
   }
   
-  return code;
+  return [code, RGenerator.ORDER_NONE];
 };
 
 // Kategorie Datenanalyse
@@ -646,7 +644,7 @@ RGenerator['summary'] = function(block) {
     var data = RGenerator.valueToCode(block, 'INPUT' + i, RGenerator.ORDER_ATOMIC);
     code += 'summary(as.numeric(' + data + '))\n';
   }
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 
@@ -680,7 +678,7 @@ RGenerator['anova'] = function(block) {
   code += groups.join(', ') + ')\n';
   code += 'summary(result)\n';
 
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 
@@ -691,7 +689,7 @@ RGenerator['correlation_analysis'] = function(block) {
   var method = block.getFieldValue('METHOD');
   
   var code = 'cor.test(' + var1 + ', ' + var2 + ', method = "' + method + '")$estimate\n';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['one_sample_t_test'] = function (block) {
@@ -711,7 +709,7 @@ RGenerator['one_sample_t_test'] = function (block) {
     code += '"conf.int"]]\n';
   }
   code += 'result';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 
@@ -722,7 +720,7 @@ RGenerator['two_sample_t_test'] = function(block) {
   var sample2 = RGenerator.valueToCode(block, 'SAMPLE_2', RGenerator.ORDER_ATOMIC) || 'NULL';
 
   var code = 't.test(' + sample1 + ', ' + sample2 + ')$p.value';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['predict'] = function(block) {
@@ -754,12 +752,12 @@ RGenerator['boxplot'] = function(block) {
   var yLabel = block.getFieldValue('Y_LABEL');
   
   var code = 'boxplot(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['scatter_plot'] = function(block) {
-  var xValues = RGenerator.valueToCode(block, 'X_VALUES', RGenerator.ORDER_NONE) || '';
-  var yValues = RGenerator.valueToCode(block, 'Y_VALUES', RGenerator.ORDER_NONE) || '';
+  var xValues = RGenerator.valueToCode(block, 'X_VALUES', RGenerator.ORDER_ATOMIC) || '';
+  var yValues = RGenerator.valueToCode(block, 'Y_VALUES', RGenerator.ORDER_ATOMIC) || '';
   var showLine = block.getFieldValue('SHOW_LINE') === 'TRUE';
 
   var code = '';
@@ -789,7 +787,7 @@ RGenerator['bar_chart'] = function(block) {
   var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
   var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
   var code = 'barplot(' + data + ', xlab=' + xLabel + ', ylab=' + yLabel + ')';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['line_chart'] = function(block) {
@@ -797,7 +795,7 @@ RGenerator['line_chart'] = function(block) {
   var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
   var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
   var code = 'plot(' + data + ', type="l", xlab=' + xLabel + ', ylab=' + yLabel + ')';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['histogram'] = function(block) {
@@ -807,7 +805,7 @@ RGenerator['histogram'] = function(block) {
   var yLabel = block.getFieldValue('Y_LABEL');
   
   var code = 'hist(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['heatmap'] = function(block) {
@@ -815,14 +813,14 @@ RGenerator['heatmap'] = function(block) {
   var colorScheme = block.getFieldValue('COLOR_SCHEME');
   
   var code = 'heatmap(' + data + ', col = "' + colorScheme + '")\n';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['display_table'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC) || '';
 
   var code = 'print(as.data.frame(' + data + '))\n';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 

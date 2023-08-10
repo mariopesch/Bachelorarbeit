@@ -1,5 +1,5 @@
 import React from 'react';
-import boxplotImage from './boxplotPM10Box6.png'; 
+import boxplotImage from '../boxplotPM10Box6.png'; 
 
 
 const ResultsComponent = () => {

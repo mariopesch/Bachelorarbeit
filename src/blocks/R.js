@@ -12,7 +12,7 @@ Blockly.Blocks['choose_box'] = {
     }
     
     this.appendDummyInput()
-        .appendField("Sensebox #")
+        .appendField("SenseBox #")
         .appendField(new Blockly.FieldDropdown(numberOptions), "Number");
     this.setOutput(true, "String");
     this.setColour("#4F6272");
@@ -388,7 +388,7 @@ Blockly.Blocks['save_variable'] = {
 Blockly.Blocks['save_sensor_variable'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Variable (für Senseboxwerte)");
+        .appendField("Variable (für SenseBoxwerte)");
     this.appendValueInput("VARIABLE_NAME")
         .setCheck("String")
         .appendField("Variablenname");
@@ -1501,5 +1501,20 @@ Blockly.Blocks['display_table'] = {
   }
 };
 
-// Kombinierte Blöcke:
+export function extractTooltipFromBlock(block) {
+  // Extrahiere den Tooltip-Text aus dem Block
+  const tooltip = block.getInputs().find(input => input.name === 'TOOLTIP');
+  if (tooltip && tooltip.connection.targetBlock()) {
+    return tooltip.connection.targetBlock().getFieldValue('TEXT');
+  }
+  return null;
+}
+
+export function getBlockTooltip(block) {
+  const extractedTooltip = extractTooltipFromBlock(block);
+  if (extractedTooltip) {
+    return extractedTooltip;
+  }
+  return block.tooltip;
+}
 

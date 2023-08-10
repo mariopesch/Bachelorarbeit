@@ -30,12 +30,12 @@ import BlocklyComponent, { Block, Category } from './Blockly';
 import './blocks/R';
 import './blocks/customblocks';
 import './generator/R';
-import APIComponent from './APIComponent';
+import APIComponent from './Components/APIComponent';
 import DataContext from './DataContext';
-import MapComponent from './MapComponent';
-import WikiComponent from './WikiComponent';
-import IdeaComponent from './IdeaComponent';
-import ResultsComponent from './ResultsComponent';
+import MapComponent from './Components/MapComponent';
+import WikiComponent from './Components/WikiComponent';
+import IdeaComponent from './Components/IdeaComponent';
+import ResultsComponent from './Components/ResultsComponent';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
@@ -85,7 +85,7 @@ function App(props) {
           `}
             >
               <div className="custom-toolbox-wrapper"></div>
-              <Category name="Senseboxen" colour="#4F6272">
+              <Category name="SenseBoxen" colour="#4F6272">
               <Block type="choose_box" />
               <Block type="box_id" />
               <Block type="get_coordinates" />

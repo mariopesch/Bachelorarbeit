@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 function APIComponent() {
-  const [boxData, setData] = useState(null);
 
   useEffect(() => {
     fetchData();
