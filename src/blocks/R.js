@@ -540,10 +540,9 @@ Blockly.Blocks['convert_data_type'] = {
         .appendField('Kovertiere Datentyp');
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown([
+          ['numerisch', 'as.numeric'],
           ['string', 'as.character'],
-          ['integer', 'as.integer'],
-          ['numeric', 'as.numeric'],
-          ['logical', 'as.logical']
+          ['logisch', 'as.logical']
         ]), 'TYPE');
     this.setOutput(true, null);
     this.setColour("#B7C3F3");
