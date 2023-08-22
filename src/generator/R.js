@@ -666,23 +666,6 @@ RGenerator['lm'] = function(block) {
   return [code, RGenerator.ORDER_NONE];
 };
 
-RGenerator['anova'] = function(block) {
-  var code = 'result <- anova(';
-  var groups = [];
-
-  for (var i = 0; i < block.itemCount_; i++) {
-    var values = RGenerator.valueToCode(block, 'GROUP' + i, RGenerator.ORDER_ATOMIC) || 'NULL';
-    groups.push(values);
-  }
-
-  code += groups.join(', ') + ')\n';
-  code += 'summary(result)\n';
-
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-
-
-
 RGenerator['correlation_analysis'] = function(block) {
   var var1 = RGenerator.valueToCode(block, 'VAR1', RGenerator.ORDER_ATOMIC);
   var var2 = RGenerator.valueToCode(block, 'VAR2', RGenerator.ORDER_ATOMIC);

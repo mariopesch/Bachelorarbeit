@@ -145,7 +145,6 @@ function App(props) {
               <Block type="summary" />
               <Block type="moving_average" />
               <Block type="lm" />
-              <Block type="anova" />
               <Block type="correlation_analysis" />
               <Block type="one_sample_t_test" />
               <Block type="two_sample_t_test" />

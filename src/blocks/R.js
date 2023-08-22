@@ -1019,14 +1019,14 @@ Blockly.Blocks['summary'] = {
   init: function() {
     this.setStyle('list_blocks');
     this.appendDummyInput()
-      .appendField("Summe");
+      .appendField("Zusammenfassung");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.itemCount_ = 1;
     this.updateShape_();
     this.setMutator(new Blockly.Mutator(['summary_input']));
     this.setColour("#DD7596");
-    this.setTooltip("Berechnet die Summe der gegebenen Werte.");
+    this.setTooltip("Berechnet die Zusammenfassung der Stichprobe. Das Ergebnis beinhaltet den kleinsten und größten Wert, den Mittelwert, Median sowie das 1. und 3. Quartil.");
     this.setHelpUrl("");
   },
   
@@ -1157,111 +1157,6 @@ Blockly.Blocks['lm'] = {
     this.setHelpUrl("https://datatab.de/statistik-rechner/regression");
   }
 };
-
-Blockly.Blocks['anova'] = {
-  init: function() {
-    this.appendDummyInput()
-    .appendField("ANOVA");
-    this.setStyle('list_blocks');
-    this.setColour("#DD7596");
-    this.itemCount_ = 2;
-    this.updateShape_();
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setMutator(new Blockly.Mutator(['anova_item']));
-    this.setTooltip('Führt ANOVA auf eine variable Anzahl an Daten aus.');
-    this.setHelpUrl("https://datatab.de/statistik-rechner/hypothesentest/anova");
-
-  },
-  
-  mutationToDom: function() {
-    var container = Blockly.utils.xml.createElement('mutation');
-    container.setAttribute('items', this.itemCount_);
-    return container;
-  },
-  
-  domToMutation: function(xmlElement) {
-    this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
-    this.updateShape_();
-  },
-  
-  decompose: function(workspace) {
-    var containerBlock = workspace.newBlock('anova_container');
-    containerBlock.initSvg();
-    var connection = containerBlock.getInput('STACK').connection;
-    for (var i = 0; i < this.itemCount_; i++) {
-      var itemBlock = workspace.newBlock('anova_item');
-      itemBlock.initSvg();
-      connection.connect(itemBlock.previousConnection);
-      connection = itemBlock.nextConnection;
-    }
-    return containerBlock;
-  },
-  
-  compose: function(containerBlock) {
-    var itemBlock = containerBlock.getInputTargetBlock('STACK');
-    var connections = [];
-    while (itemBlock) {
-      connections.push(itemBlock.valueConnection_);
-      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
-    }
-    this.itemCount_ = connections.length;
-    this.updateShape_();
-    for (var i = 0; i < this.itemCount_; i++) {
-      Blockly.Mutator.reconnect(connections[i], this, 'ITEM' + i);
-    }
-  },
-  
-  saveConnections: function(containerBlock) {
-    var itemBlock = containerBlock.getInputTargetBlock('STACK');
-    var i = 0;
-    while (itemBlock) {
-      var input = this.getInput('ITEM' + i);
-      itemBlock.valueConnection_ = input && input.connection.targetConnection;
-      i++;
-      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
-    }
-  },
-  
-  updateShape_: function() {
-    for (var i = 0; i < this.itemCount_; i++) {
-      var inputExists = this.getInput('ITEM' + i);
-      if (!inputExists) {
-        this.appendValueInput('ITEM' + i)
-          .setAlign(Blockly.ALIGN_RIGHT)
-          .appendField('Gruppe');
-      }
-    }
-    while (this.getInput('ITEM' + i)) {
-      this.removeInput('ITEM' + i);
-      i++;
-    }
-  }
-};
-
-Blockly.Blocks['anova_container'] = {
-  init: function() {
-    this.setColour("#DD7596");
-    this.appendDummyInput()
-        .appendField('Gruppen');
-    this.appendStatementInput('STACK');
-    this.setTooltip('');
-    this.contextMenu = false;
-  }
-};
-
-Blockly.Blocks['anova_item'] = {
-  init: function() {
-    this.setColour("#DD7596");
-    this.appendDummyInput()
-        .appendField('Gruppe');
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setTooltip('');
-    this.contextMenu = false;
-  }
-};
-
 
 Blockly.Blocks['correlation_analysis'] = {
   init: function() {

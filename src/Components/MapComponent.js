@@ -80,8 +80,8 @@ const MapComponent = () => {
           ))}
         </MapContainer>
       </div>
-      <p>Hier findest du die letzten gemessenen Standorte der mobilen SenseBoxen auf den Fahrrädern in Berlin.</p>
-    </div>
+      <p>Hier findest du die letzten gemessenen Standorte der mobilen SenseBoxen auf den Fahrrädern in Berlin. Klicke auf die Marker, um die Namen der SenseBoxen anzuzeigen.</p>
+      </div>
   );
 };
 
