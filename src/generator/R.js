@@ -644,8 +644,9 @@ RGenerator['summary'] = function(block) {
     var data = RGenerator.valueToCode(block, 'INPUT' + i, RGenerator.ORDER_ATOMIC);
     code += 'summary(as.numeric(' + data + '))\n';
   }
-  return [code, RGenerator.ORDER_ATOMIC];
+  return code;  
 };
+
 
 
 RGenerator['moving_average'] = function(block) {
@@ -677,11 +678,13 @@ RGenerator['correlation_analysis'] = function(block) {
 
 RGenerator['one_sample_t_test'] = function (block) {
   var sample = RGenerator.valueToCode(block, 'SAMPLE', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var numericSample = 'as.numeric(' + sample + ')';  // Convert the input sample to numeric
+
   var populationMean = RGenerator.valueToCode(block, 'POPULATION_MEAN', RGenerator.ORDER_ATOMIC) || 'NULL';
 
   // Set the direction of the t-test based on the block's dropdown value
   var direction = block.getFieldValue('DIRECTION');
-  var code = 'result <- t.test(' + sample + ', mu = ' + populationMean + ', alternative = "' + direction + '")\n';
+  var code = 'result <- t.test(' + numericSample + ', mu = ' + populationMean + ', alternative = "' + direction + '")\n';
   code += 't_value <- result$statistic\n';
   code += 'distribution_table <- result[[';
 

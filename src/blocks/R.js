@@ -418,7 +418,7 @@ Blockly.Blocks['save_sensor_variable'] = {
 Blockly.Blocks['save_as_array'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Array");
+        .appendField("Liste");
     this.setStyle('list_blocks');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -763,6 +763,7 @@ Blockly.Blocks['group_by'] = {
 Blockly.Blocks['number'] = {
   init: function() {
     this.appendDummyInput()
+    .appendField("Zahl")
         .appendField(new Blockly.FieldNumber(0), "VALUE");
     this.setOutput(true, "Number");
     this.setColour("#C1B0DC");

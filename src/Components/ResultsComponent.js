@@ -14,7 +14,7 @@ const ResultsComponent = () => {
           <ul className="Results">
           <li>Wähle den passenden Block aus den Blockkategorien auf der linken Seite</li>
           <li>Füge die Blöcke wie Puzzleteile zusammen. Sie beinhalten den Code, der die Daten verarbeitet</li>
-          <li>Du kannst dir den Code in der Programmiersprache R über "R Code anzeigen" ansehen</li>
+          <li>Zeige dir den Code in der Programmiersprache R über "R Code anzeigen" an</li>
           <li>Speichere den von dir erzeugten Code in der Zwischenablage mithilfe von "R Code in Zwischenablage"</li>
           <li>Füge den Code in RStudio ein und führe ihn aus.</li>
           <li>Dort erhälst du die Analyseergebnisse und -visualisierungen deiner Blöcke, die zum Beispiel so aussehen können: </li>
