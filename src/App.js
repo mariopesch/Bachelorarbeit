@@ -110,33 +110,25 @@ function App(props) {
               </Category>
               <Category name="Operationen" colour="#B7C3F3">
               <Block type="load_libraries" />
-              <Block type="save_variable" />
-              <Block type="save_sensor_variable" />
-              <Block type="save_as_array" />
-              <Block type="lists_sort" />  
+              <Block type="save_sensor_variable" /> 
               <Block type="convert_data_type" /> 
-              <Block type="data_frame" />
-              <Block type="filter" />
-              <Block type="select" />
-              <Block type="mutate" />
-              <Block type="summarize" />
-              <Block type="group_by" />     
+              <Block type="max_min" />
+              <Block type="lists_sort" /> 
+              <Block type="split" />
               </Category>
               <Category name="Mathematik" colour="#C1B0DC">
               <Block type="number" />
               <Block type="array_input" />
-              <Block type="split" />
+              <Block type="save_as_array" />
               <Block type="matrix" />
               <Block type="arithmetic" />
               <Block type="round_number" />
               <Block type="square_root" />
-              <Block type="max_min" />
               </Category>
               <Category name="Logik" colour="#CA9CC5">
               <Block type="boolean" />
               <Block type="logic_operations" />
               <Block type="comparison" />
-              <Block type="if_else" />
               </Category>
               <Category name="Datenanalyse" colour="#DD7596">
               <Block type="mean" />

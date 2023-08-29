@@ -218,7 +218,7 @@ Blockly.Blocks['get_coordinates'] = {
 Blockly.Blocks['lists_create_with'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Liste");
+        .appendField("Liste (Text)");
     this.setStyle('list_blocks');
     this.setColour("#8393B3");
     this.itemCount_ = 2;
@@ -336,20 +336,20 @@ Blockly.Blocks['string_input'] = {
         .appendField(new Blockly.FieldTextInput(""), "String");
     this.setOutput(true, "String");
     this.setColour("#8393B3");
- this.setTooltip("Nimmt einen Text Input an.");
- this.setHelpUrl("");
+    this.setTooltip("Nimmt einen Text als Input an. Der Block gibt die Anzahl der Zeichen inklusive Leer- und Sonderzeichen an.");
+    this.setHelpUrl("");
   }
 };
 
 Blockly.Blocks['print'] = {
   init: function() {
-    this.appendValueInput('VALUE')
-        .setCheck(null)
+    this.appendValueInput('String')
+        .setCheck('String')  
         .appendField('Print');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#8393B3");
-    this.setTooltip('Printed den Text Input.');
+    this.setTooltip('Printed den übergebenen Text und gibt ihn aus..');
     this.setHelpUrl('');
   }
 };
@@ -368,22 +368,6 @@ Blockly.Blocks['load_libraries'] = {
   }
 };
 
-Blockly.Blocks['save_variable'] = {
-  init: function() {
-    this.appendValueInput("DATA")
-        .setCheck(null)
-        .appendField("Variable (beliebig)");
-    this.appendValueInput("VARIABLE_NAME")
-        .setCheck("String")
-        .appendField("Variablenname");
-    this.setInputsInline(false);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour("#B7C3F3");
-    this.setTooltip("Speichert eine beliebige Variable unter einem frei wählbaren Namen. Berücksichtige aber, dass Sonderzeichen und Umlaute nicht verwendet werden sollten. Eine gängige Vorgangsweise ist es, kurze und prägnante Bezeichnungen zu wählen, die entweder durch einen Unterstrich oder durch die camel case Notation strukturiert werden, beispielsweise: price_item4 oder priceItem4.");
-    this.setHelpUrl("");
-  }
-};
 
 Blockly.Blocks['save_sensor_variable'] = {
   init: function() {
@@ -410,24 +394,129 @@ Blockly.Blocks['save_sensor_variable'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#B7C3F3");
-    this.setTooltip("Dieser Block soll für die Speicherung der SenseBox Sensorwerte verwendet werden. Wähle dazu den zu speichernden Wert aus der Liste und verknüpfe ihn mit einem frei wählbaren Namen (Konventionen s.o Variable (beliebig)) mithilfe des Text-Blocks.");
+    this.setTooltip("Speichert einen SenseBox Sensor Wert unter einem Variablennamen, um die Werte später wiederverwenden zu können. Wähle dazu den zu speichernden Wert aus der Liste und verknüpfe ihn mit einem frei wählbaren Namen mithilfe des Text-Blocks. Berücksichtige aber, dass Sonderzeichen und Umlaute nicht verwendet werden sollten. Eine gängige Vorgangsweise ist es, kurze und prägnante Bezeichnungen zu wählen, die entweder durch einen Unterstrich oder durch die camel case Notation strukturiert werden, beispielsweise: price_item4 oder priceItem4.");
     this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['convert_data_type'] = {
+  init: function() {
+    this.appendValueInput('VALUE')
+        .setCheck(null)
+        .appendField('Kovertiere Datentyp');
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([
+          ['numerisch', 'as.numeric'],
+          ['string', 'as.character'],
+          ['logisch', 'as.logical']
+        ]), 'TYPE');
+    this.setOutput(true, null);
+    this.setColour("#B7C3F3");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('Konvertiert den Datentyp einer Eingabe in String, Int, Num oder Logical. Manche funktionen in R können nur mit einem bestimmten Datentyp arbeiten. So kann z.B. max() zur Bestimmung des größten Werts in einem Array nur numerische Werte miteinander vergleichen, aber keine Wörter.');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['max_min'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([
+          ["maximum", "max"],
+          ["minimum", "min"]
+        ]), "FUNCTION")
+        .appendField("von");
+    this.appendValueInput("VALUES")
+        .setCheck("Array");
+    this.setOutput(true, "Number");
+    this.setColour("#B7C3F3");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip("Berechnet den größten oder den kleinsten Wert einer Liste/ eines Arrays.");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['lists_sort'] = {
+  init: function() {
+    this.appendValueInput('LIST')
+        .setCheck('Array')
+        .appendField('Sortiere Liste');
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([
+          ['aufsteigend', 'ASCENDING'],
+          ['absteigend', 'DESCENDING']
+        ]), 'ORDER');
+    this.setOutput(true, 'Array');
+    this.setColour("#B7C3F3");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('Sortiert eine Liste (Array) aufsteigend oder absteigend.');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['split'] = {
+  init: function() {
+    this.appendValueInput('ARRAY')
+        .setCheck('Array')
+        .appendField('Split Liste');
+    this.appendValueInput('SUBSET_SIZE')
+        .setCheck('Number')
+        .appendField('Größe der Untermenge');
+    this.setOutput(true, 'Array');
+    this.setColour('#B7C3F3');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('Splittet ein Array in eine beliebig große Untermenge.');
+    this.setHelpUrl('');
+  }
+};
+
+
+// Kategorie Mathematik
+
+Blockly.Blocks['number'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Zahl")
+        .appendField(new Blockly.FieldNumber(0), "VALUE");
+    this.setOutput(true, "Number");
+    this.setColour("#C1B0DC");
+    this.setTooltip("Nimmt eine Zahl als Input.");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['array_input'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Liste")
+        .appendField(new Blockly.FieldTextInput("1, 2, 3"), "ARRAY");
+    this.setOutput(true, "Array");
+    this.setColour("#C1B0DC");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip("Nimmt ein Array als Input. Ein Array ist eine Datenstruktur, die Daten desselben Typs als eine Liste speichert. Der Inhalt der Liste kann hier direkt eingetragen werden.");
+    this.setHelpUrl("");
+    this.setInputsInline(true);
   }
 };
 
 Blockly.Blocks['save_as_array'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Liste");
+        .appendField("Liste (Zahlen)");
     this.setStyle('list_blocks');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#B7C3F3");
+    this.setColour("#C1B0DC");
     this.itemCount_ = 3;
     this.updateShape_();
     this.setOutput(true, 'Array');
     this.setMutator(new Blockly.Mutator(['save_as_array_item']));
-    this.setTooltip("Speichert beliebig viele Werte (z.B. numerische Werte) als ein Feld, also als eine Art Liste. Füge items hinzu, um den Inhalt deiner Liste zu vergrößern.");
+    this.setTooltip("Speichert beliebig viele Werte (z.B. Sensorwerte der Boxen) als eine Art Liste. Füge items hinzu, um den Inhalt deiner Liste zu vergrößern und füge dann die Blöcke an, die den Inhalt der Liste repräsentieren.");
   },
   mutationToDom: function() {
     var container = Blockly.utils.xml.createElement('mutation');
@@ -514,296 +603,6 @@ Blockly.Blocks['save_as_array_item'] = {
   }
 };
 
-Blockly.Blocks['lists_sort'] = {
-  init: function() {
-    this.appendValueInput('LIST')
-        .setCheck('Array')
-        .appendField('Sortiere Liste');
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([
-          ['aufsteigend', 'ASCENDING'],
-          ['absteigend', 'DESCENDING']
-        ]), 'ORDER');
-    this.setOutput(true, 'Array');
-    this.setColour("#B7C3F3");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('Sortiert eine Liste (Array) aufsteigend oder absteigend.');
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.Blocks['convert_data_type'] = {
-  init: function() {
-    this.appendValueInput('VALUE')
-        .setCheck(null)
-        .appendField('Kovertiere Datentyp');
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([
-          ['numerisch', 'as.numeric'],
-          ['string', 'as.character'],
-          ['logisch', 'as.logical']
-        ]), 'TYPE');
-    this.setOutput(true, null);
-    this.setColour("#B7C3F3");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('Konvertiert den Datentyp einer Eingabe in String, Int, Num oder Logical. Manche funktionen in R können nur mit einem bestimmten Datentyp arbeiten. So kann z.B. max() zur Bestimmung des größten Werts in einem Array nur numerische Werte miteinander vergleichen, aber keine Wörter.');
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.Blocks['data_frame'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Data Frame");
-    this.setColour("#B7C3F3");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip("Erstellt einen Data Frame.");
-    this.setHelpUrl("");
-    this.dataCount_ = 1;
-    this.updateShape_();
-    this.setMutator(new Blockly.Mutator(['data_frame_data']));
-  },
-  
-  mutationToDom: function() {
-    var container = Blockly.utils.xml.createElement('mutation');
-    container.setAttribute('dataCount', this.dataCount_);
-    return container;
-  },
-  
-  domToMutation: function(xmlElement) {
-    this.dataCount_ = parseInt(xmlElement.getAttribute('dataCount'), 10);
-    this.updateShape_();
-  },
-  
-  decompose: function(workspace) {
-    var containerBlock = workspace.newBlock('data_frame_data_container');
-    containerBlock.initSvg();
-    var connection = containerBlock.getInput('STACK').connection;
-    for (var i = 0; i < this.dataCount_; i++) {
-      var dataBlock = workspace.newBlock('data_frame_data');
-      dataBlock.initSvg();
-      connection.connect(dataBlock.previousConnection);
-      connection = dataBlock.nextConnection;
-    }
-    return containerBlock;
-  },
-  
-  compose: function(containerBlock) {
-    var dataBlocks = [];
-    var dataConnections = [];
-    var currentBlock = containerBlock.getInputTargetBlock('STACK');
-    while (currentBlock) {
-      dataBlocks.push(currentBlock);
-      dataConnections.push(currentBlock.valueConnection_);
-      currentBlock = currentBlock.nextConnection && currentBlock.nextConnection.targetBlock();
-    }
-    // Disconnect any deleted blocks
-    for (var i = 0; i < this.dataCount_; i++) {
-      if (dataConnections[i] && dataBlocks.indexOf(dataConnections[i].sourceBlock_) === -1) {
-        dataConnections[i].dispose();
-      }
-    }
-    this.dataCount_ = dataBlocks.length;
-    this.updateShape_();
-    // Reconnect any reattached blocks
-    for (var i = 0; i < this.dataCount_; i++) {
-      if (dataConnections[i]) {
-        Blockly.Mutator.reconnect(dataConnections[i], this, 'DATA' + i);
-      }
-    }
-  },
-  
-  saveConnections: function(containerBlock) {
-    var dataBlock = containerBlock.getInputTargetBlock('STACK');
-    var i = 0;
-    while (dataBlock) {
-      var input = this.getInput('DATA' + i);
-      dataBlock.valueConnection_ = input && input.connection.targetConnection;
-      i++;
-      dataBlock = dataBlock.nextConnection && dataBlock.nextConnection.targetBlock();
-    }
-  },
-  
-  updateShape_: function() {
-    for (var i = 0; i < this.dataCount_; i++) {
-      var inputExists = this.getInput('DATA' + i);
-      if (!inputExists) {
-        var input = this.appendValueInput('DATA' + i)
-            .setCheck("Array")
-            .appendField(new Blockly.FieldTextInput("Name"), "NAME" + i)
-            .appendField("Daten")
-            .setAlign(Blockly.ALIGN_RIGHT);
-      }
-    }
-    while (this.getInput('DATA' + i)) {
-      this.removeInput('DATA' + i);
-      i++;
-    }
-  }
-};
-
-Blockly.Blocks['data_frame_data'] = {
-  init: function() {
-    this.appendValueInput('NAME')
-        .setCheck('String')
-        .appendField("Name");
-    this.appendValueInput('VECTOR')
-        .setCheck('Array')
-        .appendField("Vector");
-    this.setPreviousStatement(true, 'data_frame_data');
-    this.setNextStatement(true, 'data_frame_data');
-    this.setColour("#B7C3F3");
-    this.setTooltip("Daten Input für den Data Frame.");
-    this.contextMenu = false;
-  },
-};
-
-Blockly.Blocks['data_frame_data_container'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Data");
-    this.appendStatementInput('STACK')
-        .setCheck('data_frame_data');
-    this.setColour("#B7C3F3");
-    this.setTooltip("");
-    this.contextMenu = false;
-  },
-};
-
-Blockly.Blocks['filter'] = {
-  init: function() {
-    this.appendValueInput('COLUMN')
-        .setCheck('String')
-        .appendField('Filter Spalte');
-    this.appendValueInput('OPERATOR')
-        .setCheck('String')
-        .appendField('Operator');
-    this.appendValueInput('VALUE')
-        .setCheck('Number')
-        .appendField('Wert');
-    this.setOutput(true, 'String');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour('#B7C3F3');
-    this.setTooltip('Filtert den Data Frame nach einer Spalte');
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.Blocks['select'] = {
-  init: function() {
-    this.appendValueInput('COLUMNS')
-        .setCheck('Array')
-        .appendField('Wähle Spalte');
-    this.setOutput(true, 'Array');
-    this.setColour('#B7C3F3');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('Wählt eine bestimmte Spalte aus dem Data Frame aus.');
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.Blocks['mutate'] = {
-  init: function() {
-    this.appendValueInput('NEW_COLUMN')
-        .setCheck('String')
-        .appendField('Name neue Spalte');
-    this.appendValueInput('EXPRESSION')
-        .setCheck('String')
-        .appendField('Ausdruck');
-    this.setOutput(true, 'String');
-    this.setColour('#B7C3F3');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('Fügt eine neue Spalte zum Data Frame hinzu oder modifiziert bestehende.');
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.Blocks['summarize'] = {
-  init: function() {
-    this.appendValueInput('COLUMN')
-        .setCheck('String')
-        .appendField('Fasse Spalte zusammen');
-    this.appendValueInput('AGGREGATE')
-        .setCheck('String')
-        .appendField('Aggregatfunktion');
-    this.appendValueInput('NEW_COLUMN')
-        .setCheck('String')
-        .appendField('Name neue Spalte');
-    this.setOutput(true, 'String');
-    this.setColour('#B7C3F3');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('Fasst Daten aus einem Data Frame mithilfe einer Aggregatsfunktion zusammen.');
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.Blocks['group_by'] = {
-  init: function() {
-    this.appendValueInput('COLUMNS')
-        .setCheck('Array')
-        .appendField('Gruppieren nach Spalten');
-    this.setOutput(true, 'Array');
-    this.setColour('#B7C3F3');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('Gruppiert einen Data Frame nach Spalten.');
-    this.setHelpUrl('');
-  }
-};
-
-// Kategorie Mathematik
-
-Blockly.Blocks['number'] = {
-  init: function() {
-    this.appendDummyInput()
-    .appendField("Zahl")
-        .appendField(new Blockly.FieldNumber(0), "VALUE");
-    this.setOutput(true, "Number");
-    this.setColour("#C1B0DC");
-    this.setTooltip("Nimmt eine Zahl als Input.");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['array_input'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Gruppe")
-        .appendField(new Blockly.FieldTextInput("1, 2, 3"), "ARRAY");
-    this.setOutput(true, "Array");
-    this.setColour("#C1B0DC");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip("Nimmt ein Array als Input. Ein Array ist eine Datenstruktur, die Daten desselben Typs als eine Gruppe speichert.");
-    this.setHelpUrl("");
-    this.setInputsInline(true);
-  }
-};
-Blockly.Blocks['split'] = {
-  init: function() {
-    this.appendValueInput('ARRAY')
-        .setCheck('Array')
-        .appendField('Split Gruppe');
-    this.appendValueInput('SUBSET_SIZE')
-        .setCheck('Number')
-        .appendField('Größe der Untergruppe');
-    this.setOutput(true, 'Array');
-    this.setColour('#C1B0DC');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('Splittet ein Array/ einen Vektor in eine Untermenge.');
-    this.setHelpUrl('');
-  }
-};
-
-
 Blockly.Blocks['matrix'] = {
   init: function() {
     this.appendDummyInput()
@@ -822,7 +621,7 @@ Blockly.Blocks['matrix'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip("Erstellt eine m x n Matrix, also eine rechteckige Anordnung von Werten als Tabelle mit m Zeilen und n Spalten. Zuerst werden die Spalten von oben nach unten gefüllt.");
+    this.setTooltip("Erstellt eine m x n Matrix, also eine rechteckige Anordnung von Werten als Tabelle mit m Zeilen und n Spalten. Zuerst werden die Spalten von oben nach unten gefüllt. Gib die Menge an Spalten und Zeilen mithilfe einer Zahl an und fülle das Array mit einer Liste. Der Block verteilt den Inhalt dann auf die angegebenen Spalten und Zeilen.");
     this.setHelpUrl("");
   }
 };
@@ -879,25 +678,6 @@ Blockly.Blocks['square_root'] = {
   }
 };
 
-Blockly.Blocks['max_min'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([
-          ["maximum", "max"],
-          ["minimum", "min"]
-        ]), "FUNCTION")
-        .appendField("von");
-    this.appendValueInput("VALUES")
-        .setCheck("Array");
-    this.setOutput(true, "Number");
-    this.setColour("#C1B0DC");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip("Berechnet den größten und den kleinsten Wert einer Liste/ eines Arrays.");
-    this.setHelpUrl("");
-  }
-};
-
 // Kategorie Logik 
 
 Blockly.Blocks['boolean'] = {
@@ -929,7 +709,7 @@ Blockly.Blocks['logic_operations'] = {
     this.setColour("#CA9CC5");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Führt logische Operationen auf booleschen Werten aus.');
+    this.setTooltip('Führt logische Operationen auf booleschen Werten aus. Die Werte true und false können mit den Operationen "und" "oder" und "nicht" kombiniert werden.');
     this.setHelpUrl('');
   }
 };
@@ -954,24 +734,6 @@ Blockly.Blocks['comparison'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip('Vergleicht zwei Werte miteinander, ob sie größer, größer gleich, kleiner, kleiner gleich, gleich oder ungleich sind.');
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.Blocks['if_else'] = {
-  init: function() {
-    this.appendValueInput('CONDITION')
-        .appendField(new Blockly.FieldDropdown([
-          ['if', 'IF'],
-          ['else if', 'ELSEIF'],
-          ['else', 'ELSE']
-        ]), 'CONDITION_TYPE');
-    this.appendStatementInput('IF_BODY')
-        .appendField('do');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour("#CA9CC5");
-    this.setTooltip("Fragt eine Bedingung (wahr oder falsch) ab und führt darauf basierend eine Handlung aus, die in dem 'do' Teil eingefügt wird. Ist die Bedingung wahr, wird die eingefügte Anweisung asugeführt.");
     this.setHelpUrl('');
   }
 };
@@ -1301,7 +1063,7 @@ Blockly.Blocks['scatter_plot'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
-    this.setTooltip("Erstellt einen Scatter Pot aus zwei Stichproben. Es müssen Werte für die x-Achse und die y-Achse angegeben werden und es kann zudem ausgewählt werden, ob eine Regressionslinie in die Graphik eingezeichnet werden soll.");
+    this.setTooltip("Erstellt einen Scatter Plot aus zwei Stichproben. Es müssen Werte für die x-Achse und die y-Achse angegeben werden und es kann zudem ausgewählt werden, ob eine Regressionslinie in die Graphik eingezeichnet werden soll.");
     this.setHelpUrl("https://datatab.de/tutorial/diagramme");
     this.setInputsInline(false);
   }
