@@ -4,7 +4,7 @@
 
 ## About Blockly4R
 
-Dies ist das Repository zum Blockly4R Tool. Es bietet einen einfachen und schnellen Einstieg in das blockbasierte Programmieren und die Datenanalyse und -visualierung von räumlichen Daten der SenseBoxen.
+Dies ist das Repository zum Blockly4R Tool. Es bietet einen einfachen und schnellen Einstieg in das blockbasierte Programmieren und die Datenanalyse und -visualierung von räumlichen Daten von SenseBoxen.
 
 Die Anleitung zur Benutzung befindet sich auf der Startseite der Anwendung. 
 
