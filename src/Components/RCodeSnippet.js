@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Einbindung des rdrr.io Code Snippets
 
 const RCodeSnippet = ({ rcode }) => {
 

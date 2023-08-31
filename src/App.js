@@ -21,6 +21,7 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
+// App Bestandteil des Blockly4R Tools zum Kombinieren der einzelnen Components
 
 import React, {useState } from 'react';
 import './App.css';
@@ -83,7 +84,7 @@ function App(props) {
         <block type="load_libraries"></block>
         </xml>
           `}
-            >
+            > 
               <div className="custom-toolbox-wrapper"></div>
               <Category name="SenseBoxen" colour="#4F6272">
               <Block type="choose_box" />
@@ -135,7 +136,6 @@ function App(props) {
               <Block type="median" />
               <Block type="sd" />
               <Block type="summary" />
-              <Block type="moving_average" />
               <Block type="lm" />
               <Block type="correlation_analysis" />
               <Block type="one_sample_t_test" />
@@ -149,7 +149,6 @@ function App(props) {
               <Block type="bar_chart" />
               <Block type="line_chart" />
               <Block type="histogram" />
-              <Block type="heatmap" />
               <Block type="display_table" />
               </Category>
               </BlocklyComponent>

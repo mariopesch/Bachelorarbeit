@@ -1,6 +1,8 @@
 import * as Blockly from 'blockly';
 import 'blockly/javascript';
 
+// Blockdefinitionen für das Blockly4R Tool
+
 // Kategorie: Senseboxen 
 Blockly.Blocks['choose_box'] = {
   init: function() {
@@ -50,8 +52,6 @@ Blockly.Blocks['get_temperature'] = {
     this.setHelpUrl("");
   }
 };
-
-
 
 Blockly.Blocks['get_humidity'] = {
   init: function() {
@@ -323,7 +323,7 @@ Blockly.Blocks['string_length'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#8393B3");
-    this.setTooltip("Berechnet die Länge eines Texts.");
+    this.setTooltip("Berechnet die Länge eines Texts. Das Ergebnis die Anzahl aller Zeichen des Textes, inklusive Leer- und Sonderzeichen.");
     this.setHelpUrl("");
     this.setInputsInline(true);
   }
@@ -336,7 +336,7 @@ Blockly.Blocks['string_input'] = {
         .appendField(new Blockly.FieldTextInput(""), "String");
     this.setOutput(true, "String");
     this.setColour("#8393B3");
-    this.setTooltip("Nimmt einen Text als Input an. Der Block gibt die Anzahl der Zeichen inklusive Leer- und Sonderzeichen an.");
+    this.setTooltip("Nimmt einen Text als Input an.");
     this.setHelpUrl("");
   }
 };
@@ -349,7 +349,7 @@ Blockly.Blocks['print'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#8393B3");
-    this.setTooltip('Printed den übergebenen Text und gibt ihn aus..');
+    this.setTooltip('Printed den übergebenen Text und gibt ihn aus.');
     this.setHelpUrl('');
   }
 };
@@ -394,7 +394,7 @@ Blockly.Blocks['save_sensor_variable'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#B7C3F3");
-    this.setTooltip("Speichert einen SenseBox Sensor Wert unter einem Variablennamen, um die Werte später wiederverwenden zu können. Wähle dazu den zu speichernden Wert aus der Liste und verknüpfe ihn mit einem frei wählbaren Namen mithilfe des Text-Blocks. Berücksichtige aber, dass Sonderzeichen und Umlaute nicht verwendet werden sollten. Eine gängige Vorgangsweise ist es, kurze und prägnante Bezeichnungen zu wählen, die entweder durch einen Unterstrich oder durch die camel case Notation strukturiert werden, beispielsweise: price_item4 oder priceItem4.");
+    this.setTooltip("Speichert einen SenseBox Sensorwert unter einem Variablennamen, um die Werte später wiederverwenden zu können. Wähle dazu den zu speichernden Wert aus der Liste und verknüpfe ihn mit einem frei wählbaren Namen mithilfe des Text-Blocks. Berücksichtige aber, dass Sonderzeichen und Umlaute nicht verwendet werden sollten. Eine gängige Vorgangsweise ist es, kurze und prägnante Bezeichnungen zu wählen, die entweder durch einen Unterstrich oder durch die camel case Notation strukturiert werden, beispielsweise: price_item4 oder priceItem4.");
     this.setHelpUrl("");
   }
 };
@@ -414,7 +414,7 @@ Blockly.Blocks['convert_data_type'] = {
     this.setColour("#B7C3F3");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Konvertiert den Datentyp einer Eingabe in String, Int, Num oder Logical. Manche funktionen in R können nur mit einem bestimmten Datentyp arbeiten. So kann z.B. max() zur Bestimmung des größten Werts in einem Array nur numerische Werte miteinander vergleichen, aber keine Wörter.');
+    this.setTooltip('Konvertiert den Datentyp einer Eingabe in String, Int, Num oder Logical. Manche Funktionen in R können nur mit einem bestimmten Datentyp arbeiten. So kann z.B. max() zur Bestimmung des größten Werts in einem Array nur numerische Werte miteinander vergleichen, aber keine Wörter. Auch Plots arbeiten mit numerischen Werten. Hast du also deine Sensorwerte in einer Textvariable gespeichert, musst du sie umwandeln, bevor sie visualisiert werden können.');
     this.setHelpUrl('');
   }
 };
@@ -433,7 +433,7 @@ Blockly.Blocks['max_min'] = {
     this.setColour("#B7C3F3");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip("Berechnet den größten oder den kleinsten Wert einer Liste/ eines Arrays.");
+    this.setTooltip("Berechnet den größten oder den kleinsten Wert einer Liste (Array).");
     this.setHelpUrl("");
   }
 };
@@ -469,7 +469,7 @@ Blockly.Blocks['split'] = {
     this.setColour('#B7C3F3');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Splittet ein Array in eine beliebig große Untermenge.');
+    this.setTooltip('Splittet eine Liste (Array) in eine beliebig große Untermenge.');
     this.setHelpUrl('');
   }
 };
@@ -494,11 +494,11 @@ Blockly.Blocks['array_input'] = {
     this.appendDummyInput()
         .appendField("Liste")
         .appendField(new Blockly.FieldTextInput("1, 2, 3"), "ARRAY");
-    this.setOutput(true, "Array");
+    this.setOutput("Data");
     this.setColour("#C1B0DC");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip("Nimmt ein Array als Input. Ein Array ist eine Datenstruktur, die Daten desselben Typs als eine Liste speichert. Der Inhalt der Liste kann hier direkt eingetragen werden.");
+    this.setTooltip("Nimmt eine Liste (Array) als Input. Ein Array ist eine Datenstruktur, die Daten desselben Typs als eine Liste speichert. Der Inhalt der Liste kann hier direkt eingetragen werden.");
     this.setHelpUrl("");
     this.setInputsInline(true);
   }
@@ -516,7 +516,7 @@ Blockly.Blocks['save_as_array'] = {
     this.updateShape_();
     this.setOutput(true, 'Array');
     this.setMutator(new Blockly.Mutator(['save_as_array_item']));
-    this.setTooltip("Speichert beliebig viele Werte (z.B. Sensorwerte der Boxen) als eine Art Liste. Füge items hinzu, um den Inhalt deiner Liste zu vergrößern und füge dann die Blöcke an, die den Inhalt der Liste repräsentieren.");
+    this.setTooltip("Speichert beliebig viele Werte (z.B. Sensorwerte der Boxen) als eine Liste (Array). Füge items hinzu, um den Inhalt deiner Liste zu vergrößern und füge dann die Blöcke an, die den Inhalt der Liste repräsentieren.");
   },
   mutationToDom: function() {
     var container = Blockly.utils.xml.createElement('mutation');
@@ -621,7 +621,7 @@ Blockly.Blocks['matrix'] = {
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip("Erstellt eine m x n Matrix, also eine rechteckige Anordnung von Werten als Tabelle mit m Zeilen und n Spalten. Zuerst werden die Spalten von oben nach unten gefüllt. Gib die Menge an Spalten und Zeilen mithilfe einer Zahl an und fülle das Array mit einer Liste. Der Block verteilt den Inhalt dann auf die angegebenen Spalten und Zeilen.");
+    this.setTooltip("Erstellt eine m x n Matrix, also eine rechteckige Anordnung von Werten als Tabelle mit m Zeilen und n Spalten. Zuerst werden die Spalten von oben nach unten gefüllt. Gib die Menge an Spalten und Zeilen mithilfe einer Zahl an und fülle die Matrix mit einer Liste. Der Block verteilt den Inhalt der Liste dann auf die angegebenen Spalten und Zeilen.");
     this.setHelpUrl("");
   }
 };
@@ -660,7 +660,7 @@ Blockly.Blocks['round_number'] = {
     this.setColour("#C1B0DC");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Rundet eine Dezimalzahl auf zwei Nachkommastellen');
+    this.setTooltip('Rundet eine Dezimalzahl auf zwei Nachkommastellen.');
     this.setHelpUrl('');
   }
 };
@@ -668,12 +668,12 @@ Blockly.Blocks['square_root'] = {
   init: function() {
     this.appendValueInput('NUMBER')
         .setCheck('Number')
-        .appendField('Wurzel aus');
+        .appendField('Quadratwurzel aus');
     this.setOutput(true, 'Number');
     this.setColour("#C1B0DC");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Berechnet die Wurzel aus einer Eingabe.');
+    this.setTooltip('Berechnet die Quadratwurzel aus einer Eingabe.');
     this.setHelpUrl('');
   }
 };
@@ -733,7 +733,7 @@ Blockly.Blocks['comparison'] = {
     this.setColour("#CA9CC5");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Vergleicht zwei Werte miteinander, ob sie größer, größer gleich, kleiner, kleiner gleich, gleich oder ungleich sind.');
+    this.setTooltip('Vergleicht zwei Werte miteinander, ob sie größer, größer gleich, kleiner, kleiner gleich, gleich oder ungleich sind. Das Ergebnis besteht aus einem booleschen Wert: "TRUE" (wahr) oder "FALSE" (falsch)');
     this.setHelpUrl('');
   }
 };
@@ -744,7 +744,7 @@ Blockly.Blocks['mean'] = {
   init: function() {
     this.appendValueInput("DATA")
         .appendField("Mittelwert");
-    this.setOutput(true, "Number");
+    this.setOutput("Number");
     this.setColour("#DD7596");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -789,7 +789,7 @@ Blockly.Blocks['summary'] = {
     this.updateShape_();
     this.setMutator(new Blockly.Mutator(['summary_input']));
     this.setColour("#DD7596");
-    this.setTooltip("Berechnet die Zusammenfassung der Stichprobe. Das Ergebnis beinhaltet den kleinsten und größten Wert, den Mittelwert, Median sowie das 1. und 3. Quartil.");
+    this.setTooltip("Berechnet die Zusammenfassung der Stichprobe. Das Ergebnis beinhaltet den kleinsten und größten Wert, den Mittelwert, den Median sowie das 1. und 3. Quartil.");
     this.setHelpUrl("");
   },
   
@@ -885,31 +885,15 @@ Blockly.Blocks['summary_container'] = {
   }
 };
 
-
-Blockly.Blocks['moving_average'] = {
-  init: function() {
-    this.appendValueInput('ARRAY')
-        .setCheck('Array')
-        .appendField('Moving Average');
-    this.appendValueInput('WINDOW_SIZE')
-        .setCheck('Number')
-        .appendField('Fenstergröße');
-    this.setOutput(true, 'Array');
-    this.setColour('#DD7596');
-    this.setTooltip('Berechnet den simplen moving average einer Liste/ eines Arrays.');
-    this.setHelpUrl('');
-  }
-};
-
 Blockly.Blocks['lm'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Lineares Regressions Modell");
     this.appendValueInput("Y")
-        .setCheck("Array")
+        .setCheck(null)
         .appendField("Abhängige Variable Y");
     this.appendValueInput("X")
-        .setCheck("Array")
+        .setCheck(null)
         .appendField("Unabhängige Variable X");
     this.setInputsInline(false);
     this.setOutput(true, "String");
@@ -952,13 +936,13 @@ Blockly.Blocks['one_sample_t_test'] = {
         .appendField("Mittelwert");
     this.appendDummyInput()
         .appendField("Richtung")
-        .appendField(new Blockly.FieldDropdown([["kleiner als", "less"], ["größer als", "greater"]]), "DIRECTION");
+        .appendField(new Blockly.FieldDropdown([["größer als", "greater"],["kleiner als", "less"]]), "DIRECTION");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
     this.setColour("#DD7596");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip("Führt den Einstichproben-t-Test mit einem Sample und einem gegebenen Mittelwert aus.");
+    this.setTooltip("Führt den Einstichproben-t-Test mit einem Sample und einem Mittelwert aus.");
     this.setHelpUrl("https://datatab.de/statistik-rechner/hypothesentest/t-test");
   }
 };
@@ -976,7 +960,7 @@ Blockly.Blocks['two_sample_t_test'] = {
     this.setColour("#DD7596");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip("Führt den Zweistichprobe-t-Test mit zwei gegebenen Samples aus.");
+    this.setTooltip("Führt den Zweistichprobe-t-Test mit zwei Samples aus.");
     this.setHelpUrl("https://datatab.de/tutorial/unabh%C3%A4ngiger-t-test");
   }
 };
@@ -1018,7 +1002,7 @@ Blockly.Blocks['kriging'] = {
     this.setColour('#DD7596');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Führt kriging Interpolation durch.');
+    this.setTooltip('Führt eine kriging Interpolation durch.');
     this.setHelpUrl('');
   }
 };
@@ -1028,7 +1012,7 @@ Blockly.Blocks['kriging'] = {
 Blockly.Blocks['boxplot'] = {
   init: function() {
     this.appendValueInput("DATA")
-        .setCheck(null)
+        .setCheck('Array')
         .appendField("Box Plot");
     this.appendDummyInput()
         .appendField("Titel")
@@ -1042,10 +1026,11 @@ Blockly.Blocks['boxplot'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
-    this.setTooltip("Erstellt einen Box Plot aus einem Datensatz. Der Titel des Plots ins frei wählbar und auf der x-Achse befindet sich der Variablenname und auf der y-Achse die Werte der Variable.");
+    this.setTooltip("Erstellt einen Box Plot aus einem Datensatz. Der Titel des Plots ist frei wählbar und auf der x-Achse befindet sich der Variablenname und auf der y-Achse die Werte der Variable.");
     this.setHelpUrl("https://datatab.de/statistik-rechner/diagramme/boxplot-erstellen");
   }
 };
+
 
 Blockly.Blocks['scatter_plot'] = {
   init: function() {
@@ -1071,42 +1056,44 @@ Blockly.Blocks['scatter_plot'] = {
 
 Blockly.Blocks['bar_chart'] = {
   init: function() {
-    this.appendValueInput("DATA")
-        .setCheck("Array")
-        .appendField("Balkendiagramm");
-    this.appendValueInput("X_AXIS")
-        .setCheck("String")
-        .appendField("X-Achse");
-    this.appendValueInput("Y_AXIS")
-        .setCheck("String")
-        .appendField("Y-Achse");
+    this.appendValueInput('DATA')
+        .setCheck('Array')
+        .appendField('Säulendiagramm');
+    this.appendValueInput('X_AXIS')
+        .setCheck('String')
+        .appendField('X-Achse');
+    this.appendValueInput('Y_AXIS')
+        .setCheck('String')
+        .appendField('Y-Achse');
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#DA5D87");
-    this.setTooltip("Erstellt ein Balkendiagramm.");
-    this.setHelpUrl("https://datatab.de/tutorial/diagramme");
+    this.setColour('#DA5D87');
+    this.setTooltip('Erstellt ein Säulendiagramm aus den gegebenen Daten. Die Beschriftung der x-Achse und y-Achse erfolgt durch einen Text-Block.');
+    this.setHelpUrl('https://datatab.de/tutorial/diagramme');
   }
 };
-Blockly.Blocks['line_chart'] = {
-  init: function() {
-    this.appendValueInput("DATA")
-        .setCheck("Array")
-        .appendField("Säulendiagramm");
-    this.appendValueInput("X_AXIS")
-        .setCheck("String")
-        .appendField("X-Achse");
-    this.appendValueInput("Y_AXIS")
-        .setCheck("String")
-        .appendField("Y-Achse");
-    this.setInputsInline(false);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour("#DA5D87");
-    this.setTooltip("Erstellt ein Säulendiagramm.");
-    this.setHelpUrl("https://datatab.de/tutorial/diagramme");
-  }
-};
+
+  Blockly.Blocks['line_chart'] = {
+    init: function() {
+      this.appendValueInput('DATA')
+          .setCheck('Array')
+          .appendField('Liniendiagramm');
+      this.appendValueInput('X_AXIS')
+          .setCheck('String')
+          .appendField('X-Achse');
+      this.appendValueInput('Y_AXIS')
+          .setCheck('String')
+          .appendField('Y-Achse');
+      this.setInputsInline(false);
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour('#DA5D87');
+      this.setTooltip('Erstellt ein Liniendiagramm aus den gegebenen Daten. Die Beschriftung der x-Achse und y-Achse erfolgt durch einen Text-Block.');
+      this.setHelpUrl('https://datatab.de/tutorial/diagramme');
+    }
+  };
+  
 Blockly.Blocks['histogram'] = {
   init: function() {
     this.appendValueInput("DATA")
@@ -1124,27 +1111,11 @@ Blockly.Blocks['histogram'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
-    this.setTooltip("Erstellt ein Histogramm.");
+    this.setTooltip("Erstellt ein Histogramm aus den gegebenen Daten.");
     this.setHelpUrl("https://datatab.de/tutorial/diagramme");
   }
 };
-Blockly.Blocks['heatmap'] = {
-  init: function() {
-    this.appendValueInput("DATA")
-        .setCheck(null)
-        .appendField("Heatmap");
-    this.appendDummyInput()
-        .appendField("Farbschema")
-        .appendField(new Blockly.FieldDropdown([["Red", "red"], ["Blue", "blue"], ["Green", "green"]]), "COLOR_SCHEME");
-    this.setInputsInline(false);
-    this.setOutput(true, null);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour("#DA5D87");
-    this.setTooltip("Erstellt eine Heatmap.");
-    this.setHelpUrl("");
-  }
-};
+
 Blockly.Blocks['display_table'] = {
   init: function() {
     this.appendValueInput("DATA")
@@ -1153,7 +1124,7 @@ Blockly.Blocks['display_table'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#DA5D87");
-    this.setTooltip("Stellt den Datensatz aus der Eingabe in tabellarischer Form dar.");
+    this.setTooltip("Stellt die eigegebenen Daten in tabellarischer Form dar.");
     this.setHelpUrl("");
   }
 };

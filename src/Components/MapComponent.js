@@ -6,9 +6,13 @@ import L from 'leaflet';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
+// Erstellung der Karte
+
 const MapComponent = () => {
   const position = [52.51, 13.38];
   const [senseBoxes, setSenseBoxes] = useState([]);
+
+// Laden der Marker mit Pop-Up für Box-Standorte
 
   const fetchSenseBoxesData = async () => {
     try {

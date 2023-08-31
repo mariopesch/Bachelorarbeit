@@ -24,10 +24,10 @@
 // More on defining blocks:
 // https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks
 
+//JS Blöcke vorinstalliert. Nicht benötigt für Blockly4R
 
 import * as Blockly from 'blockly/core';
 
-// Since we're using json to initialize the field, we'll need to import it.
 import '../fields/BlocklyReactField';
 import '../fields/DateField';
 

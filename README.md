@@ -23,6 +23,6 @@ npm run start
 ```
 
 
-Öffne [http://localhost:3000/](http://localhost:3000/)
+Öffne [http://localhost:3000/](http://localhost:3000/), um das Tool zu verwenden.
 
 

@@ -63,7 +63,7 @@ function BlocklyComponent(props) {
       ...rest,
     });
   
-    // Tooltip für Blöcke hinzufügen
+    // Tooltip für Blöcke hinzufügen (wird noch nicht benutzt)
     primaryWorkspace.current.addChangeListener(function (event) {
       if (event.type === Blockly.Events.UI && event.element === 'click') {
         if (event.blockId) {

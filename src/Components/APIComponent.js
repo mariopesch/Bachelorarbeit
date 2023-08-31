@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+// Anbindung an OpenSenseMap API
+
 function APIComponent() {
 
   useEffect(() => {

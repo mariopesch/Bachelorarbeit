@@ -525,7 +525,7 @@ RGenerator['comparison'] = function(block) {
     code = '(' + code + ')';
   }
 
-  return [code, RGenerator.ORDER_NONE];
+  return code;
 };
 
 // Kategorie Datenanalyse
@@ -541,13 +541,13 @@ RGenerator['mean'] = function(block) {
 RGenerator['median'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
   var code = 'median(' + data + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
+  return code;
 };
 
 RGenerator['sd'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
   var code = 'sd(' + data + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
+  return code;
 };
 
 RGenerator['summary'] = function(block) {
@@ -557,18 +557,6 @@ RGenerator['summary'] = function(block) {
     code += 'summary(as.numeric(' + data + '))\n';
   }
   return code;  
-};
-
-
-
-RGenerator['moving_average'] = function(block) {
-  var arrayInput = RGenerator.valueToCode(block, 'ARRAY', RGenerator.ORDER_ATOMIC);
-  var windowSizeInput = RGenerator.valueToCode(block, 'WINDOW_SIZE', RGenerator.ORDER_ATOMIC);
-
-  var code =
-    'simple_moving_average(' + arrayInput + ', ' + windowSizeInput + ')';
-
-  return [code, RGenerator.ORDER_NONE];
 };
 
 RGenerator['lm'] = function(block) {
@@ -590,7 +578,7 @@ RGenerator['correlation_analysis'] = function(block) {
 
 RGenerator['one_sample_t_test'] = function (block) {
   var sample = RGenerator.valueToCode(block, 'SAMPLE', RGenerator.ORDER_ATOMIC) || 'NULL';
-  var numericSample = 'as.numeric(' + sample + ')';  // Convert the input sample to numeric
+  var numericSample = 'as.numeric(' + sample + ')';  
 
   var populationMean = RGenerator.valueToCode(block, 'POPULATION_MEAN', RGenerator.ORDER_ATOMIC) || 'NULL';
 
@@ -607,17 +595,16 @@ RGenerator['one_sample_t_test'] = function (block) {
     code += '"conf.int"]]\n';
   }
   code += 'result';
-  return [code, RGenerator.ORDER_ATOMIC];
+  return code;
 };
-
-
-
 
 RGenerator['two_sample_t_test'] = function(block) {
   var sample1 = RGenerator.valueToCode(block, 'SAMPLE_1', RGenerator.ORDER_ATOMIC) || 'NULL';
   var sample2 = RGenerator.valueToCode(block, 'SAMPLE_2', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var numericSample1 = 'as.numeric(' + sample1 + ')';
+  var numericSample2 = 'as.numeric(' + sample2 + ')';
 
-  var code = 't.test(' + sample1 + ', ' + sample2 + ')$p.value';
+  var code = 't.test(' + numericSample1 + ', ' + numericSample2 + ')$p.value';
   return [code, RGenerator.ORDER_ATOMIC];
 };
 
@@ -644,14 +631,16 @@ RGenerator['kriging'] = function(block) {
 // Kategorie Datenvisualisierung
 
 RGenerator['boxplot'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var numericData = 'as.numeric(' + data + ')';
   var title = block.getFieldValue('TITLE');
   var xLabel = block.getFieldValue('X_LABEL');
   var yLabel = block.getFieldValue('Y_LABEL');
   
-  var code = 'boxplot(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
-  return [code, RGenerator.ORDER_ATOMIC];
+  var code = 'boxplot(' + numericData + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
+  return code;
 };
+
 
 RGenerator['scatter_plot'] = function(block) {
   var xValues = RGenerator.valueToCode(block, 'X_VALUES', RGenerator.ORDER_ATOMIC) || '';
@@ -681,20 +670,24 @@ RGenerator['scatter_plot'] = function(block) {
 
 
 RGenerator['bar_chart'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
-  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
-  var code = 'barplot(' + data + ', xlab=' + xLabel + ', ylab=' + yLabel + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var xLabel = '"' + RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC) + '"';
+  var yLabel = '"' + RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC) + '"';
+
+  var code = 'barplot(' + data + ', xlab=' + xLabel + ', ylab=' + yLabel + ')\n';
+  return code;
 };
 
+
 RGenerator['line_chart'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var xLabel = RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC);
-  var yLabel = RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC);
-  var code = 'plot(' + data + ', type="l", xlab=' + xLabel + ', ylab=' + yLabel + ')';
-  return [code, RGenerator.ORDER_ATOMIC];
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC) || 'NULL';
+  var xLabel = '"' + RGenerator.valueToCode(block, 'X_AXIS', RGenerator.ORDER_ATOMIC) + '"';
+  var yLabel = '"' + RGenerator.valueToCode(block, 'Y_AXIS', RGenerator.ORDER_ATOMIC) + '"';
+
+  var code = 'plot(' + data + ', type="b", xlab=' + xLabel + ', ylab=' + yLabel + ')\n';
+  return code;
 };
+
 
 RGenerator['histogram'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
@@ -706,20 +699,14 @@ RGenerator['histogram'] = function(block) {
   return [code, RGenerator.ORDER_ATOMIC];
 };
 
-RGenerator['heatmap'] = function(block) {
-  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
-  var colorScheme = block.getFieldValue('COLOR_SCHEME');
-  
-  var code = 'heatmap(' + data + ', col = "' + colorScheme + '")\n';
-  return [code, RGenerator.ORDER_ATOMIC];
-};
-
 RGenerator['display_table'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC) || '';
 
-  var code = 'print(as.data.frame(' + data + '))\n';
-  return [code, RGenerator.ORDER_ATOMIC];
+  var code = 'print("Table:");\n';
+  code += 'print(as.data.frame(' + data + '))\n';
+  return code;
 };
+
 
 
 
