@@ -399,6 +399,23 @@ Blockly.Blocks['save_sensor_variable'] = {
   }
 };
 
+Blockly.Blocks['save_variable'] = {
+  init: function() {
+    this.appendValueInput("DATA")
+        .setCheck(null)
+        .appendField("Variable (beliebig)");
+    this.appendValueInput("VARIABLE_NAME")
+        .setCheck("String")
+        .appendField("Variablenname");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#B7C3F3");
+    this.setTooltip("Speichert eine beliebige Variable (keine Sensorwerte!) unter einem frei wählbaren Namen. en sollten.");
+    this.setHelpUrl("");
+  }
+};
+
 Blockly.Blocks['convert_data_type'] = {
   init: function() {
     this.appendValueInput('VALUE')
@@ -905,26 +922,6 @@ Blockly.Blocks['lm'] = {
   }
 };
 
-Blockly.Blocks['correlation_analysis'] = {
-  init: function() {
-    this.appendValueInput("VAR1")
-        .setCheck(null)
-        .appendField("Korrelationsanalyse");
-    this.appendValueInput("VAR2")
-        .setCheck(null)
-        .appendField("mit");
-    this.appendDummyInput()
-        .appendField("Methode")
-        .appendField(new Blockly.FieldDropdown([["Pearson", "pearson"], ["Spearman", "spearman"], ["Kendall", "kendall"]]), "METHOD");
-    this.setInputsInline(false);
-    this.setOutput(true, "Number");
-    this.setColour("#DD7596");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip("Berechnet die Korrelation zwischen Stichproben.");
-    this.setHelpUrl("https://datatab.de/statistik-rechner/korrelation");
-  }
-};
 Blockly.Blocks['one_sample_t_test'] = {
   init: function() {
     this.appendDummyInput()
@@ -965,47 +962,37 @@ Blockly.Blocks['two_sample_t_test'] = {
   }
 };
 
-Blockly.Blocks['predict'] = {
+Blockly.Blocks['correlation'] = {
   init: function() {
-    this.appendValueInput('MODEL')
-        .setCheck('String')
-        .appendField('Vorhersage mit Modell');
-    this.appendValueInput('DATA')
-        .setCheck('String')
-        .appendField('Data');
-    this.setOutput(true, 'String');
-    this.setColour('#DD7596');
+    this.appendValueInput("VAR1")
+        .setCheck(null)
+        .appendField("Korrelation zwischen Variable");
+    this.appendValueInput("VAR2")
+        .setCheck(null)
+        .appendField("und Variable");
+    this.setOutput(true, "String");
+    this.setColour("#DD7596");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Tätigt eine Vorhersage mithilfe eines trainierten Modells.');
-    this.setHelpUrl('');
+    this.setTooltip("Berechnet die Korrelation zwischen zwei Variablen. Der Block verwendet die Pearson Methode und sein Ergebnis ist ein Korrelationskoeffizient, der mithilfe der Informationen im Wiki interpretiert werden kann.");
+    this.setHelpUrl("");
   }
 };
 
-Blockly.Blocks['kriging'] = {
+Blockly.Blocks['outlier_detection'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("Kriging")
-    this.appendValueInput('X')
-        .setCheck('Array')
-        .appendField('X');
-    this.appendValueInput('Y')
-        .setCheck('Array')
-        .appendField('Y');
-    this.appendValueInput('COORDINATES')
-        .setCheck('Array')
-        .appendField('Koordinaten');
-    this.appendValueInput('MODEL')
-        .setCheck('String')
-        .appendField('Modell');
+    this.appendValueInput('DATA')
+        .setCheck(null)
+        .appendField('Bestimmung Ausreißer');
     this.setOutput(true, 'Array');
     this.setColour('#DD7596');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Führt eine kriging Interpolation durch.');
+    this.setTooltip('Identifiziert potenzielle Ausreißer einer Stichprobe. Der Block arbeitet mit einem Schwellenwert und dem übergebenen Variablennamen der Daten. Ist ein Messwert der eingegebenen Daten größer als dieser Schwellenwert, wird dieser als Ausreißer behandelt und zum Ergebnis des Blocks gezählt. Die Zahl in Klammern ist die Menge der Ausreißer in der Stichprobe.');
     this.setHelpUrl('');
   }
 };
+
 
 // Kategorie Datenvisualisierung
 

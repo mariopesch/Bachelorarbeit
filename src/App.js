@@ -112,6 +112,7 @@ function App(props) {
               <Category name="Operationen" colour="#B7C3F3">
               <Block type="load_libraries" />
               <Block type="save_sensor_variable" /> 
+              <Block type="save_variable" /> 
               <Block type="convert_data_type" /> 
               <Block type="max_min" />
               <Block type="lists_sort" /> 
@@ -137,11 +138,10 @@ function App(props) {
               <Block type="sd" />
               <Block type="summary" />
               <Block type="lm" />
-              <Block type="correlation_analysis" />
               <Block type="one_sample_t_test" />
               <Block type="two_sample_t_test" />
-              <Block type="predict" />
-              <Block type="kriging" />
+              <Block type="correlation" />
+              <Block type="outlier_detection" />
               </Category>
               <Category name="Datenvisualisierung" colour="#DA5D87">
               <Block type="boxplot" />

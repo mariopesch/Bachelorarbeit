@@ -380,6 +380,14 @@ RGenerator['save_sensor_variable'] = function(block) {
   return code ;
 };
 
+RGenerator['save_variable'] = function(block) {
+  var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
+  var variableName = RGenerator.valueToCode(block, 'VARIABLE_NAME', RGenerator.ORDER_ATOMIC);
+  var code = variableName + ' <- ' + data + '\n';
+  return code;
+};
+
+
 RGenerator['convert_data_type'] = function(block) {
   var value = RGenerator.valueToCode(block, 'VALUE', RGenerator.ORDER_ATOMIC);
   var dataType = block.getFieldValue('TYPE');
@@ -563,17 +571,27 @@ RGenerator['lm'] = function(block) {
   var yVariable = RGenerator.valueToCode(block, 'Y', RGenerator.ORDER_ATOMIC);
   var xVariable = RGenerator.valueToCode(block, 'X', RGenerator.ORDER_ATOMIC);
 
-  var code = 'model <- lm(' + yVariable + ' ~ ' + xVariable + ')\n';
-  return [code, RGenerator.ORDER_NONE];
-};
+  // Determine the lengths of the data vectors
+  var yLength = 'length(' + yVariable + ')';
+  var xLength = 'length(' + xVariable + ')';
 
-RGenerator['correlation_analysis'] = function(block) {
-  var var1 = RGenerator.valueToCode(block, 'VAR1', RGenerator.ORDER_ATOMIC);
-  var var2 = RGenerator.valueToCode(block, 'VAR2', RGenerator.ORDER_ATOMIC);
-  var method = block.getFieldValue('METHOD');
-  
-  var code = 'cor.test(' + var1 + ', ' + var2 + ', method = "' + method + '")$estimate\n';
-  return [code, RGenerator.ORDER_ATOMIC];
+  // Adjust the size of the bigger variable to match the size of the smaller
+  var adjustCode = '';
+  adjustCode += 'if (' + yLength + ' != ' + xLength + ') {\n';
+  adjustCode += '  if (' + yLength + ' > ' + xLength + ') {\n';
+  adjustCode += '    ' + yVariable + ' <- ' + yVariable + '[1:' + xLength + ']\n';
+  adjustCode += '  } else {\n';
+  adjustCode += '    ' + xVariable + ' <- ' + xVariable + '[1:' + yLength + ']\n';
+  adjustCode += '  }\n';
+  adjustCode += '}\n';
+
+  // Generate the code for the linear regression model
+  var regressionCode = 'model <- lm(' + yVariable + ' ~ ' + xVariable + ')\n';
+
+  // Return the model as output
+  var outputCode = 'model';
+
+  return [adjustCode + regressionCode + outputCode, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['one_sample_t_test'] = function (block) {
@@ -608,25 +626,39 @@ RGenerator['two_sample_t_test'] = function(block) {
   return [code, RGenerator.ORDER_ATOMIC];
 };
 
-RGenerator['predict'] = function(block) {
-  var model = RGenerator.valueToCode(block, 'MODEL', RGenerator.ORDER_ATOMIC);
+RGenerator['correlation'] = function(block) {
+  var var1 = RGenerator.valueToCode(block, 'VAR1', RGenerator.ORDER_ATOMIC);
+  var var2 = RGenerator.valueToCode(block, 'VAR2', RGenerator.ORDER_ATOMIC);
+
+  // Convert vectors to numeric and handle missing values
+  var code = 'var1 <- as.numeric(' + var1 + ')\n';
+  code += 'var2 <- as.numeric(' + var2 + ')\n';
+  code += 'min_len <- min(length(var1), length(var2))\n';
+  code += 'var1 <- var1[1:min_len]\n';
+  code += 'var2 <- var2[1:min_len]\n';
+  code += 'complete_cases <- complete.cases(var1, var2)\n';
+  code += 'var1 <- var1[complete_cases]\n';
+  code += 'var2 <- var2[complete_cases]\n';
+
+  // Calculate correlation matrix
+  code += 'correlation <- cor(var1, var2)\n';
+  code += 'correlation';
+  
+  return code;
+};
+
+
+
+
+RGenerator['outlier_detection'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
 
-  var code = `predict(${model}, newdata = ${data})`;
-
-  return [code, RGenerator.ORDER_ATOMIC];
+  var code = 'outliers <- ' + data + '[abs(scale(as.numeric(' + data + '))) > 3]\n';
+  code += 'outliers';
+  return code;
 };
 
-RGenerator['kriging'] = function(block) {
-  var x = RGenerator.valueToCode(block, 'X', RGenerator.ORDER_ATOMIC);
-  var y = RGenerator.valueToCode(block, 'Y', RGenerator.ORDER_ATOMIC);
-  var coordinates = RGenerator.valueToCode(block, 'COORDINATES', RGenerator.ORDER_ATOMIC);
-  var model = RGenerator.valueToCode(block, 'MODEL', RGenerator.ORDER_ATOMIC);
 
-  var code = `krige(${y} ~ 1, locations = ${x}, newdata = ${coordinates}, model = ${model})$predict`;
-
-  return [code, RGenerator.ORDER_ATOMIC];
-};
 
 // Kategorie Datenvisualisierung
 
