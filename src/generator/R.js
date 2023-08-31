@@ -309,7 +309,7 @@ RGenerator['lists_create_with'] = function(block) {
     }
   }
 
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['lists_create_with_container'] = function(block) {
@@ -325,13 +325,13 @@ RGenerator['lists_create_with_item'] = function(block) {
 RGenerator['string_length'] = function(block) {
   var text = RGenerator.valueToCode(block, 'String',
   RGenerator.ORDER_MEMBER) || '\'\'';
-  var result = 'nchar(' + "'" + text + "'" + ')';
-  return result;
+  var code = 'nchar(' + "'" + text + "'" + ')';
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['string_input'] = function(block) {
-  var string = block.getFieldValue('String');
-  return [string, RGenerator.ORDER_ATOMIC];
+  var code = block.getFieldValue('String');
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['print'] = function(block) {
@@ -470,7 +470,7 @@ RGenerator['matrix'] = function(block) {
   var values = RGenerator.valueToCode(block, 'VALUES', RGenerator.ORDER_ATOMIC) || 'NULL';
 
   var code = 'matrix(c(' + values + '), nrow = ' + rows + ', ncol = ' + cols + ')';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['arithmetic'] = function(block) {
@@ -518,7 +518,7 @@ RGenerator['logic_operations'] = function(block) {
     code = a + ' ' + operator + ' ' + b;
   }
 
-  return [code, RGenerator.ORDER_LOGICAL];
+  return code;
 };
 
 RGenerator['comparison'] = function(block) {
@@ -528,7 +528,6 @@ RGenerator['comparison'] = function(block) {
 
   var code = left + ' ' + operator + ' ' + right;
 
-  // Add parentheses to improve readability
   if (operator === '>=' || operator === '<=' || operator === '!=' || operator === '==') {
     code = '(' + code + ')';
   }
@@ -549,21 +548,18 @@ RGenerator['mean'] = function(block) {
 RGenerator['median'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
   var code = 'median(' + data + ')';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['sd'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
   var code = 'sd(' + data + ')';
-  return code;
+  return [code, RGenerator.ORDER_ATOMIC];
 };
 
 RGenerator['summary'] = function(block) {
-  var code = '';
-  for (var i = 0; i < block.itemCount_; i++) {
-    var data = RGenerator.valueToCode(block, 'INPUT' + i, RGenerator.ORDER_ATOMIC);
-    code += 'summary(as.numeric(' + data + '))\n';
-  }
+    var data = RGenerator.valueToCode(block, 'INPUT', RGenerator.ORDER_ATOMIC);
+    var code = 'summary(as.numeric(' + data + '))\n';
   return code;  
 };
 
@@ -571,11 +567,10 @@ RGenerator['lm'] = function(block) {
   var yVariable = RGenerator.valueToCode(block, 'Y', RGenerator.ORDER_ATOMIC);
   var xVariable = RGenerator.valueToCode(block, 'X', RGenerator.ORDER_ATOMIC);
 
-  // Determine the lengths of the data vectors
   var yLength = 'length(' + yVariable + ')';
   var xLength = 'length(' + xVariable + ')';
 
-  // Adjust the size of the bigger variable to match the size of the smaller
+  // Länge der Variablen bei ungleicher Länge aneinander anpassen
   var adjustCode = '';
   adjustCode += 'if (' + yLength + ' != ' + xLength + ') {\n';
   adjustCode += '  if (' + yLength + ' > ' + xLength + ') {\n';
@@ -585,13 +580,11 @@ RGenerator['lm'] = function(block) {
   adjustCode += '  }\n';
   adjustCode += '}\n';
 
-  // Generate the code for the linear regression model
   var regressionCode = 'model <- lm(' + yVariable + ' ~ ' + xVariable + ')\n';
 
-  // Return the model as output
   var outputCode = 'model';
 
-  return [adjustCode + regressionCode + outputCode, RGenerator.ORDER_ATOMIC];
+  return [adjustCode + regressionCode + outputCode];
 };
 
 RGenerator['one_sample_t_test'] = function (block) {
@@ -600,13 +593,11 @@ RGenerator['one_sample_t_test'] = function (block) {
 
   var populationMean = RGenerator.valueToCode(block, 'POPULATION_MEAN', RGenerator.ORDER_ATOMIC) || 'NULL';
 
-  // Set the direction of the t-test based on the block's dropdown value
   var direction = block.getFieldValue('DIRECTION');
   var code = 'result <- t.test(' + numericSample + ', mu = ' + populationMean + ', alternative = "' + direction + '")\n';
   code += 't_value <- result$statistic\n';
   code += 'distribution_table <- result[[';
 
-  // Set the corresponding component of the result object based on the direction
   if (direction === 'less') {
     code += '"p.value"]]\n';
   } else {
@@ -622,15 +613,15 @@ RGenerator['two_sample_t_test'] = function(block) {
   var numericSample1 = 'as.numeric(' + sample1 + ')';
   var numericSample2 = 'as.numeric(' + sample2 + ')';
 
-  var code = 't.test(' + numericSample1 + ', ' + numericSample2 + ')$p.value';
-  return [code, RGenerator.ORDER_ATOMIC];
+  var code = 't.test(' + numericSample1 + ', ' + numericSample2 + ')';
+  return code;
 };
 
 RGenerator['correlation'] = function(block) {
   var var1 = RGenerator.valueToCode(block, 'VAR1', RGenerator.ORDER_ATOMIC);
   var var2 = RGenerator.valueToCode(block, 'VAR2', RGenerator.ORDER_ATOMIC);
 
-  // Convert vectors to numeric and handle missing values
+  // Länge der Variablen bei ungleicher Länge aneinander anpassen
   var code = 'var1 <- as.numeric(' + var1 + ')\n';
   code += 'var2 <- as.numeric(' + var2 + ')\n';
   code += 'min_len <- min(length(var1), length(var2))\n';
@@ -640,15 +631,11 @@ RGenerator['correlation'] = function(block) {
   code += 'var1 <- var1[complete_cases]\n';
   code += 'var2 <- var2[complete_cases]\n';
 
-  // Calculate correlation matrix
   code += 'correlation <- cor(var1, var2)\n';
   code += 'correlation';
   
   return code;
 };
-
-
-
 
 RGenerator['outlier_detection'] = function(block) {
   var data = RGenerator.valueToCode(block, 'DATA', RGenerator.ORDER_ATOMIC);
@@ -657,8 +644,6 @@ RGenerator['outlier_detection'] = function(block) {
   code += 'outliers';
   return code;
 };
-
-
 
 // Kategorie Datenvisualisierung
 
@@ -681,7 +666,7 @@ RGenerator['scatter_plot'] = function(block) {
 
   var code = '';
 
-  // Adjust length of xValues and yValues if they have different lengths
+  // Länge der Variablen bei ungleicher Länge aneinander anpassen
   code += 'if (length(' + xValues + ') != length(' + yValues + ')) {\n';
   code += '  if (length(' + xValues + ') > length(' + yValues + ')) {\n';
   code += '    ' + xValues + ' <- ' + xValues + '[1:length(' + yValues + ')]\n';
@@ -728,7 +713,7 @@ RGenerator['histogram'] = function(block) {
   var yLabel = block.getFieldValue('Y_LABEL');
   
   var code = 'hist(' + data + ', main = "' + title + '", xlab = "' + xLabel + '", ylab = "' + yLabel + '")\n';
-  return [code, RGenerator.ORDER_ATOMIC];
+  return code;
 };
 
 RGenerator['display_table'] = function(block) {
